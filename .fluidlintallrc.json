@@ -1,0 +1,27 @@
+{
+    "sources": {
+        "md": ["./src/**/*.md"],
+        "js": ["./src/**/*.js", "./*.js"],
+        "json": ["./src/**/*.json", "./*.json"],
+        "css": ["./src/css/*.css"],
+        "scss": ["./src/scss/*.scss"]
+    },
+    "eslint": {
+        "js": {
+            "options": {
+            }
+        }
+    },
+    "markdownlint": {
+        "options": {
+            "config": {
+                "single-h1": false
+            }
+        }
+    },
+    "lintspaces": {
+        "newlines": {
+            "excludes": ["tests/**/images/**/*"]
+        }
+    }
+}

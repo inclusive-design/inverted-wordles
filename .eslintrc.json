@@ -1,0 +1,17 @@
+{
+    "extends": "eslint-config-fluid",
+    "env": {
+        "es6": true,
+        "node": true,
+        "browser": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "strict": ["error", "global"],
+        "no-loop-func": 0,
+        "no-console": 0
+    },
+    "ignorePatterns": ["dist", "!.eslintrc.js", "!.eleventy.js"]
+}
