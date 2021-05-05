@@ -13,6 +13,7 @@
         "@11ty/eleventy": "0.12.1",
         "@11ty/eleventy-navigation": "0.2.0",
         "@11ty/eleventy-plugin-rss": "1.1.1",
+        "@octokit/core": "3.4.0",
         "axios": "0.21.1",
         "nunjucks": "3.2.3",
         "sanitize.css": "12.0.1",

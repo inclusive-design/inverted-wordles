@@ -1,0 +1,29 @@
+---
+title: Answer A Question
+permalink: "/answer/{{ question.title | slug }}/"
+---
+
+{% extends 'layouts/base.njk' %}
+
+{% block content %}
+<div class="answer">
+    <form id="answersForm">
+        <h1>{{ question.title }}</h1>
+        <span>Note: The max length for each answer is {{ question.entryMaxLength }} characters.</span>
+
+        <fieldset>
+            <legend>{{ question.title | safe }}</legend>
+            {% for i in range(0, question.entries) %}
+            <input type="text" autocomplete="false" {{ "autofocus" if i == 0 }} name="answer" maxlength="{{ question.entryMaxLength }}" placeholder="Enter a word or a phase" value="an answer">
+            {% endfor %}
+        </fieldset>
+
+        <input type="hidden" name="branch" value="{{ question.branch }}">
+        <button type="submit">Submit Your Answer</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block footerScripts %}
+<script src="/js/submit_answer.js"></script>
+{% endblock %}
