@@ -49,7 +49,7 @@ exports.handler = async function(event, context, callback) {
 				    owner: process.env.WORDLES_REPO_OWNER,
 				    repo: process.env.WORDLES_REPO_NAME,
 				    path: "src/_data/answers.json",
-					// Including "[skip ci]" in the commit message notifies notifies Netlify not to trigger a deploy.
+					// Including "[skip ci]" in the commit message notifies Netlify not to trigger a deploy.
 					message: "chore: [skip ci] update answers.json",
 					content: new Buffer(JSON.stringify(jsonFileContent)).toString("base64"),
 					sha: fileExistenceResponse.data.sha,
