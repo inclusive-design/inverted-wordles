@@ -20,6 +20,7 @@ permalink: "/answer/{{ question.title | slug }}/"
 
         <input type="hidden" name="branch" value="{{ question.branch }}">
         <button type="submit">Submit Answer</button>
+        <span id="submit_status" role="status"></span>
     </form>
 </div>
 {% endblock %}
