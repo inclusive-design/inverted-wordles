@@ -4,9 +4,7 @@ const errorOverlay = require("eleventy-plugin-error-overlay");
 const fs = require("fs");
 
 const htmlMinifyTransform = require("./src/transforms/html-minify.js");
-const dateFilter = require("./src/filters/date.js");
 const slugFilter = require("./src/filters/slug.js");
-const randomizeFilter = require("./src/filters/randomize.js");
 
 require("./src/js/utils.js");
 
@@ -18,8 +16,6 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPlugin(errorOverlay);
 
     // Add filters.
-    eleventyConfig.addFilter("dateFilter", dateFilter);
-    eleventyConfig.addFilter("randomizeFilter", randomizeFilter);
     eleventyConfig.addFilter("slug", slugFilter);
 
     // Add transforms.
