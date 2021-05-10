@@ -1,0 +1,9 @@
+{
+    "name": "Inverted Wordles",
+    "short_name": "inverted-wordles",
+    "description": "Build inverted wordles that collect people answers to a given question and highlight minority answers.",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/"
+}
