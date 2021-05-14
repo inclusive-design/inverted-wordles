@@ -1,7 +1,7 @@
 {
     "sources": {
         "md": ["./src/**/*.md"],
-        "js": ["./src/**/*.js", "./*.js"],
+        "js": ["./src/**/*.js", "./*.js", "./functions/*.js", "./functions-common/*.js"],
         "json": ["./src/**/*.json", "./*.json"],
         "css": ["./src/css/*.css"],
         "scss": ["./src/scss/*.scss"]
