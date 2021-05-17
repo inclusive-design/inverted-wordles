@@ -77,7 +77,7 @@ inverted_wordles.makeLayout = function (instance) {
     var maxCount = Math.max.apply(null, instance.answerCounts.map(entry => entry.count));
     var wordRecs = instance.answerCounts.map(function (entry) {
         return {text: entry.word, size: instance.conventional ? 120 * entry.count / maxCount :
-            20 * maxCount / entry.count};
+            10 * maxCount / entry.count};
     });
     var element = instance.element;
     var layout = d3.layout.cloud()
