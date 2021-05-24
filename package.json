@@ -7,6 +7,7 @@
     "scripts": {
         "lint": "fluid-lint-all",
         "build": "rimraf dist && eleventy",
+        "serve": "http-server ./dist --port 3000",
         "dev": "rimraf dist && eleventy --serve --port=3000"
     },
     "dependencies": {
@@ -32,6 +33,7 @@
         "sass": "1.32.12",
         "stylelint": "13.13.1",
         "stylelint-config-fluid": "0.2.1",
-        "terser": "5.7.0"
+        "terser": "5.7.0",
+        "http-server": "0.12.3"
     }
 }

@@ -30,7 +30,7 @@ inverted_wordles.extractAnswers = function (answersFile) {
     };
     Object.values(answersFile).forEach(function (oneAnswerRec) {
         oneAnswerRec.answers.forEach(function (answer) {
-            answer.split(" ").forEach(storeAnswer);
+            answer.toLowerCase().split(" ").forEach(storeAnswer);
         });
     });
     return Object.entries(counts).map(function (entry) {
@@ -75,23 +75,36 @@ inverted_wordles.drawLayout = function (layout, words, instance) {
  */
 inverted_wordles.makeLayout = function (instance) {
     var maxCount = Math.max.apply(null, instance.answerCounts.map(entry => entry.count));
-    var wordRecs = instance.answerCounts.map(function (entry) {
-        return {text: entry.word, size: instance.conventional ? 120 * entry.count / maxCount :
-            10 * maxCount / entry.count};
-    });
     var element = instance.element;
-    var layout = d3.layout.cloud()
-        .size([element.getAttribute("width"), element.getAttribute("height")])
-        .words(wordRecs)
-        .padding(5)
-        .font("Impact")
-        .fontSize(function (d) { return d.size; })
-        .on("end", function (words) {
-            // Shocking d3 integration model
-            inverted_wordles.drawLayout(layout, words, instance);
-        });
+    var laidWords;
 
-    layout.start();
+    var layout;
+
+    for (var i = 0; i < 10; ++i) {
+        var wordRecs = instance.answerCounts.map(function (entry) {
+            return {text: entry.word, size: instance.conventional ? instance.scale * 120 * entry.count / maxCount :
+                instance.scale * 40 * maxCount / entry.count};
+        });
+        layout = d3.layout.cloud()
+            .size([element.getAttribute("width"), element.getAttribute("height")])
+            .padding(5)
+            .font("Impact")
+            .fontSize(function (d) { return d.size; })
+            // Claims to be event-driven but is actually synchronous
+            .on("end", function (words) {
+                laidWords = words;
+                // Shocking d3 integration model
+            });
+        layout.words(wordRecs);
+        layout.start();
+        if (laidWords.length < wordRecs.length) {
+            instance.scale *= 0.8;
+            console.log("Only laid out " + laidWords.length + " out of " + wordRecs.length + " words, retrying with scale factor " + instance.scale);
+        } else {
+            break;
+        }
+    }
+    inverted_wordles.drawLayout(layout, laidWords, instance);
     return layout;
 };
 
@@ -161,7 +174,10 @@ inverted_wordles.bindConventional = function (selector, instance) {
     var element = document.querySelector(selector);
     element.addEventListener("change", function () {
         instance.conventional = this.checked;
-        inverted_wordles.makeLayout(instance);
+        instance.scale = 1.0;
+        window.setTimeout(function () {
+            inverted_wordles.makeLayout(instance);
+        }, 1);
     });
 };
 
@@ -192,5 +208,7 @@ inverted_wordles.instance = {
     // The intervalID for polling github for updates
     pollInterval: null,
     // The intervalID for cancelling the polling
-    cancelPoll: null
+    cancelPoll: null,
+    // Scaling factor to ensure fit of all words
+    scale: 1.0
 };
