@@ -6,8 +6,6 @@ const fs = require("fs");
 const htmlMinifyTransform = require("./src/transforms/html-minify.js");
 const slugFilter = require("./src/filters/slug.js");
 
-require("./src/js/utils.js");
-
 module.exports = function (eleventyConfig) {
     // Watch SCSS files.
     eleventyConfig.addWatchTarget("./src/scss/");
