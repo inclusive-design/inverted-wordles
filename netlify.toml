@@ -7,7 +7,7 @@
     command = "npm run dev"
     targetPort = 3000
     publish = "dist"
-    autoLaunch = true
+    autoLaunch = false
     framework = "#custom"
     functions = "functions"
 

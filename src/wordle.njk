@@ -9,8 +9,6 @@ permalink: "/wordle/{{ question.title | slug }}/"
 {% block content %}
 <script>
     var wordle_globals = {
-        repo_owner: "{{env.repo_owner}}",
-        repo_name: "{{env.repo_name}}",
         branch: "{{question.branch}}"
     };
 </script>

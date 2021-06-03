@@ -41,6 +41,14 @@ inverted_wordles.extractAnswers = function (answersFile) {
     });
 };
 
+/** Given an array of words and counts, compute the total number of answers
+ * @param {Counts[]} counts - An array of {word, count}
+ * @return {Integer} The total number of answers
+ */
+inverted_wordles.countAnswers = function (counts) {
+    return counts.reduce((a, rec) => a + rec.count, 0);
+};
+
 /** Render the layout constructed from makeLayout into the DOM element designated in the supplied Wordle instance
  * @param {d3Layout} layout - The layout object for the Wordle
  * @param {Array} words - Array of "word" objects holding text/size defining the layout
@@ -115,42 +123,19 @@ inverted_wordles.makeLayout = function (instance) {
 inverted_wordles.handleResponse = function (instance, response) {
     response.json().then(function (answersFile) {
         var answerCounts = inverted_wordles.extractAnswers(answersFile);
-        if (answerCounts.length !== instance.answerCounts.length) {
-            console.log("Updated answerCounts to " + instance.answerCounts.length);
+        var totalAnswers = inverted_wordles.countAnswers(answerCounts);
+        if (totalAnswers !== inverted_wordles.countAnswers(instance.answerCounts)) {
+            console.log("Updated total answer count to " + totalAnswers);
             instance.answerCounts = answerCounts;
             inverted_wordles.makeLayout(instance);
         } else {
             console.log("No change in answer count");
         }
     });
-    // Unfortunately "Etag" is a censored CORS header so we will have to do change detection by brute force
-    // https://stackoverflow.com/questions/21345814/etag-header-not-returned-from-jquery-ajax-cross-origin-xhr/21346319
-    /* for (var pair of response.headers.entries()) {
-        console.log(pair[0]+ ": " + pair[1]);
-    }*/
 };
 
-// Old implementation, disused since
-// i) raw.githubusercontent does not permit CORS preflight requests configuring cache control
-// ii) its cache is hardwired to only update every 300 seconds
-/*
-inverted_wordles.fetchAnswers = function (instance) {
-    var url = inverted_wordles.stringTemplate(
-        "https://raw.githubusercontent.com/${repo_owner}/${repo_name}/${branch}/src/_data/answers.json", wordle_globals);
-    fetch(url, {
-        cache: "no-store"
-    }
-    //, {
-    //    headers: {
-    //        "Cache-Control": "no-store, max-age=0"
-    //    }
-    //}).then(function (response) {
-        inverted_wordles.handleResponse(instance, response);
-    }, function (error) {
-        console.log("Error fetching url " + url + ": ", error);
-    });
-};
-*/
+// Note this uses a dedicated Netlify/Lambda endpoint rather than polling raw.githubusercontent.com
+// as written up at https://issues.fluidproject.org/browse/FLUID-6626
 
 /** Fetch the answers file from github and perform an initial render of the world into the supplied selector. Initialise
  * data in the Wordle instance, and resolving github coordinates from the `wordle_globals` global
