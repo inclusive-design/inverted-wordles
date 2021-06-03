@@ -1,0 +1,38 @@
+---
+title: Inverted Wordle
+permalink: "/wordle/{{ question.title | slug }}/"
+---
+
+{% extends 'layouts/base.njk' %}
+
+
+{% block content %}
+<script>
+    var wordle_globals = {
+        branch: "{{question.branch}}"
+    };
+</script>
+<div class="wordle">
+    <h1>{{ question.title }}</h1>
+    <div class="wordleRender">
+        <svg width="1024" height="768">
+        </svg>
+    </div>
+</div>
+<label for="conventional">Apply conventional weighting: </label>
+<input type="checkbox" id="conventional"/> 
+{% endblock %}
+
+{% block footerScripts %}
+<script src="/lib/d3.min.js"></script>
+<script src="/lib/d3.layout.cloud.js"></script>
+<script src="/js/render_wordle.js"></script>
+<script>
+inverted_wordles.initWordle({
+    selectors: {
+        render: ".wordleRender svg",
+        conventional: "#conventional"
+    }
+});
+</script>
+{% endblock %}

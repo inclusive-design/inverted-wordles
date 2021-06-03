@@ -1,0 +1,29 @@
+// Base styles.
+
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	font-size: rem(35);
+	font-weight: 600;
+}
+
+h2 {
+	font-size: rem(24);
+	font-weight: 500;
+}
+
+h3 {
+	font-size: rem(18);
+	font-weight: 700;
+}
+
+h4 {
+	font-size: rem(16);
+	font-weight: 700;
+}
+
+body {
+  padding: 20px;
+}

@@ -1,0 +1,17 @@
+---
+title: Home
+permalink: /
+---
+
+{% extends 'layouts/base.njk' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="wordle-home">
+    Build inverted wordles that collect people answers to a given question and highlight minority answers.
+    <br/><br/>
+    Available Wordles:
+    <br/>
+    <span class="list-title">{{question.title}}:</span> <a href="/answer/{{ question.title | slug }}">Submit an answer</a> <a href="/wordle/{{ question.title | slug }}">View Wordle</a>
+</div>
+{% endblock %}
