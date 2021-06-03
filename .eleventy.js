@@ -1,5 +1,6 @@
 "use strict";
 
+const fs = require("fs");
 const errorOverlay = require("eleventy-plugin-error-overlay");
 
 const htmlMinifyTransform = require("./src/transforms/html-minify.js");
@@ -30,7 +31,18 @@ module.exports = function (eleventyConfig) {
     // Configure BrowserSync.
     eleventyConfig.setBrowserSyncConfig({
         ...eleventyConfig.browserSyncConfig,
-        ghostMode: false
+        ghostMode: false,
+        callbacks: {
+            ready: function (err, bs) {
+                bs.addMiddleware("*", (req, res) => {
+                    const content_404 = fs.readFileSync("dist/404.html");
+                    // Provides the 404 content without redirect.
+                    res.write(content_404);
+                    res.writeHead(404);
+                    res.end();
+                });
+            }
+        }
     });
 
     return {
