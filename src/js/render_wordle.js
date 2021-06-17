@@ -30,7 +30,7 @@ inverted_wordles.extractAnswers = function (answersFile) {
     };
     Object.values(answersFile).forEach(function (oneAnswerRec) {
         oneAnswerRec.answers.forEach(function (answer) {
-            answer.toLowerCase().split(" ").forEach(storeAnswer);
+            storeAnswer(answer.trim().toLowerCase());
         });
     });
     return Object.entries(counts).map(function (entry) {
