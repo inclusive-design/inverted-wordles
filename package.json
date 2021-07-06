@@ -17,7 +17,7 @@
         "@octokit/core": "3.5.1",
         "d3": "7.0.0",
         "d3-cloud": "1.2.5",
-        "data-update-github": "github:cindyli/data-update-github#github-ops",
+        "data-update-github": "github:inclusive-design/data-update-github#main",
         "nunjucks": "3.2.3",
         "sanitize.css": "12.0.1",
         "slugify": "1.5.3",
