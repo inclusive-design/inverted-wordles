@@ -5,7 +5,7 @@ const {
 } = require("@octokit/core");
 const uuid = require("uuid");
 
-const gitOpsApi = require("data-update-github");
+const gitOpsApi = require("git-ops-api");
 const fetchAnswerFile = require("../functions-common/fetchAnswerFile.js").fetchAnswerFile;
 
 /**

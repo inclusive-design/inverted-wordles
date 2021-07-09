@@ -1,6 +1,6 @@
 "use strict";
 
-const gitOpsApi = require("data-update-github");
+const gitOpsApi = require("git-ops-api");
 
 /**
  * Check if an aswer file in the given branch exists. If exists, along with the existence flag, return
