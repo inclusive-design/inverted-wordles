@@ -6,7 +6,7 @@ const {
 const uuid = require("uuid");
 
 const gitOpsApi = require("git-ops-api");
-const fetchAnswerFile = require("../functions-common/fetchAnswerFile.js").fetchAnswerFile;
+const fetchFile = require("../functions-common/fetchFile.js").fetchFile;
 
 /**
  * Create a new answers file. The new answer is written into a JSON file and keyed by a uuid.
@@ -83,7 +83,7 @@ exports.handler = async function (event) {
 
     try {
         // check if answers.json exists
-        const answerFileInfo = await fetchAnswerFile(octokit, incomingData.branch);
+        const answerFileInfo = await fetchFile(octokit, incomingData.branch, "src/_data/answers.json");
         console.log("Got answerFileInfo ", JSON.stringify(answerFileInfo));
 
         if (answerFileInfo.exists) {
