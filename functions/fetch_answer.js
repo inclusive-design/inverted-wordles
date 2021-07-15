@@ -4,7 +4,7 @@ const {
     Octokit
 } = require("@octokit/core");
 
-const fetchFile = require("../functions-common/fetchFile.js").fetchFile;
+const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
 exports.handler = async function (event) {
     console.log("Received fetch_answers request at " + new Date() + " with path " + event.path);
@@ -27,7 +27,7 @@ exports.handler = async function (event) {
     });
 
     try {
-        const answerFileInfo = await fetchFile(octokit, branch, "src/_data/answers.json");
+        const answerFileInfo = await fetchJSONFile(octokit, branch, "src/_data/answers.json");
         console.log("Got answerFileInfo ", JSON.stringify(answerFileInfo));
         return {
             statusCode: 200,

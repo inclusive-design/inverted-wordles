@@ -11,34 +11,25 @@ inverted_wordles.setFormData = function (response, options) {
         inverted_wordles.setEscapedContent(options.selectors.entryMaxLength, questionFile.entryMaxLength);
 
         let entriesHtml = "";
-        for (let i = 0; i < questionFile.entries; i++) {
-            entriesHtml += "<input type=\"text\" autocomplete=\"false\" ";
-            if (i === 0) {
-                entriesHtml += "autofocus";
-            }
-            entriesHtml += " name=\"answer\" maxlength=\"" + questionFile.entryMaxLength + "\" placeholder=\"Enter a word or a phase\">";
-        }
-
+        // Refer to https://stackoverflow.com/questions/30452263/is-there-a-mechanism-to-loop-x-times-in-es6-ecmascript-6-without-mutable-varia#answer-37417004
+        // for iterating a given number of times.
+        [...Array(questionFile.entries)].map((_, i) => {
+            entriesHtml += `<input type="text" autocomplete="false" ${ i === 0 ? "autofocus" : "" } name="answer" maxlength="${questionFile.entryMaxLength}" placeholder="Enter a word or a phase">`;
+        });
         document.querySelector(options.selectors.entryArea).innerHTML = entriesHtml;
     });
 };
 
 inverted_wordles.setEscapedContent = function (selector, content) {
-    const escapeHTML = function (html) {
-        let escape = document.createElement("textarea");
-        escape.textContent = html;
-        return escape.innerHTML;
-    };
-
     document.querySelectorAll(selector).forEach(elm => {
-        elm.innerHTML = escapeHTML(content);
+        elm.textContent = content;
     });
 };
 
 inverted_wordles.reportError = function (error, statusSelector) {
     const statusElm = document.querySelector(statusSelector);
     statusElm.className = "red";
-    statusElm.innerHTML = "There is a problem at populating the page data. Please try again later.";
+    statusElm.innerHTML = "Error at populating the page data: " + error;
 };
 
 inverted_wordles.populateForm = function (options) {
