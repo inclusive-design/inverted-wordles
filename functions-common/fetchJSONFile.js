@@ -4,8 +4,8 @@ const gitOpsApi = require("git-ops-api");
 
 /**
  * An object that contains file information.
- * @typedef {Object} FileInfo
- * The structure of FileInfo varies in three scenarios:
+ * @typedef {Object} FetchedFileInfo
+ * The structure of FetchedFileInfo varies in three scenarios:
  * 1. When the file doesn't exist:
  * @param {Boolean} exists - The value is `false`.
  * 2. When the file exists:
@@ -18,20 +18,23 @@ const gitOpsApi = require("git-ops-api");
  */
 
 /**
- * Check if an aswer file in the given branch exists. If exists, along with the existence flag, return
- * `content` and `sha` of this file that will be used at the file update.
- * @param {Object} octokit - An instance of octokit with authentication being set.
+ * Check if an JSON file in the given branch exists. If it exists, along with the existence flag, return
+ * `content` and `sha` of the file's contents.
+ * @param {Object} octokit - An instance of octokit with authentication set if necessary.
  * @param {String} branch - The name of the branch that the file existence will be checked against.
  * @param {String} filePath - The file path.
- * @return {Promise} The resolved promise contains an object defined in the typedef FileInfo.
+ * @return {Promise<FetchedFileInfo>} The yielded value of the promise contains information about the fetch status of
+ * the requested file
  */
 exports.fetchJSONFile = async (octokit, branch, filePath) => {
-    const response = await gitOpsApi.fetchRemoteFile(octokit, {
+    const fetchInfo =  {
         repoOwner: process.env.WORDLES_REPO_OWNER,
         repoName: process.env.WORDLES_REPO_NAME,
         branchName: branch,
         filePath: filePath
-    });
+    };
+    console.log("Beginning fetch with coordinates ", fetchInfo);
+    const response = await gitOpsApi.fetchRemoteFile(octokit, fetchInfo);
 
     if (response.content) {
         response.content = JSON.parse(response.content);

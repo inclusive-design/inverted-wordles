@@ -10,13 +10,12 @@ inverted_wordles.setFormData = function (response, options) {
         inverted_wordles.setEscapedContent(options.selectors.questionTitle, questionFile.title);
         inverted_wordles.setEscapedContent(options.selectors.entryMaxLength, questionFile.entryMaxLength);
 
-        let entriesHtml = "";
         // Refer to https://stackoverflow.com/questions/30452263/is-there-a-mechanism-to-loop-x-times-in-es6-ecmascript-6-without-mutable-varia#answer-37417004
         // for iterating a given number of times.
-        [...Array(questionFile.entries)].map((_, i) => {
-            entriesHtml += `<input type="text" autocomplete="false" ${ i === 0 ? "autofocus" : "" } name="answer" maxlength="${questionFile.entryMaxLength}" placeholder="Enter a word or a phase">`;
+        let entriesHtml = [...Array(questionFile.entries)].map((_, i) => {
+            return `<input type="text" autocomplete="false" ${ i === 0 ? "autofocus" : "" } name="answer" maxlength="${questionFile.entryMaxLength}" placeholder="Enter a word or a phase">`;
         });
-        document.querySelector(options.selectors.entryArea).innerHTML = entriesHtml;
+        document.querySelector(options.selectors.entryArea).innerHTML = entriesHtml.join("\n");
     });
 };
 
