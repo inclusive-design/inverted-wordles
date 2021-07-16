@@ -1,6 +1,6 @@
 ---
 title: Inverted Wordle
-permalink: "/wordle/{{ question.title | slug }}/"
+permalink: "/wordle/"
 ---
 
 {% extends 'layouts/base.njk' %}
@@ -20,7 +20,7 @@ permalink: "/wordle/{{ question.title | slug }}/"
     </div>
 </div>
 <label for="conventional">Apply conventional weighting: </label>
-<input type="checkbox" id="conventional"/> 
+<input type="checkbox" id="conventional"/>
 {% endblock %}
 
 {% block footerScripts %}

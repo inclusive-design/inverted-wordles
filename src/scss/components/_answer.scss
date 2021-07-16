@@ -30,6 +30,11 @@
         top: rem(-9999);
     }
 
+    .question-entry-area {
+        display: flex;
+        flex-direction: column;
+    }
+
     input {
         font-size: rem(25);
         height: rem(95);
@@ -46,7 +51,7 @@
         width: 100%;
     }
 
-    #submit_status {
+    #status {
         align-self: center;
         font-size: rem(24);
         margin: rem(32);
