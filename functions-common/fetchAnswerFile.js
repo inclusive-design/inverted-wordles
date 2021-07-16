@@ -12,12 +12,14 @@ const gitOpsApi = require("git-ops-api");
  * which are needed when updating this file in the upcoming process.
  */
 exports.fetchAnswerFile = async (octokit, branch) => {
-    const response = await gitOpsApi.fetchRemoteFile(octokit, {
+    var fetchInfo = {
         repoOwner: process.env.WORDLES_REPO_OWNER,
         repoName: process.env.WORDLES_REPO_NAME,
         branchName: branch,
         filePath: "src/_data/answers.json"
-    });
+    };
+    console.log("Beginning fetch with coordinates ", fetchInfo);
+    const response = await gitOpsApi.fetchRemoteFile(octokit, fetchInfo);
 
     if (response.content) {
         response.content = JSON.parse(response.content);
