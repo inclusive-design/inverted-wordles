@@ -15,13 +15,19 @@ permalink: "/wordle/"
     <h1>{{ question.title }}</h1>
 
     <div class="wordleRender">
+        {# Use "viewBox" and "preserveAspectRatio" to ensure the svg fits into viewports with different aspect ratios for the responsive design. #}
         <svg width="1024" height="768" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet">
         </svg>
     </div>
 
     <div class="wordle-controls">
         <div class="apply-conventional">
-            <input type="checkbox" id="conventional"/>
+            <label class="checkbox-holder">
+                <input class="fl-mapviz-checkbox" id="conventional" type="checkbox">
+                <span>
+                    {% include "./images/checkbox-selected.svg" %}
+                </span>
+            </label>
             <label for="conventional">Apply conventional weighting: </label>
         </div>
     </div>
