@@ -161,12 +161,13 @@ inverted_wordles.calSizeGaps = function (instance) {
  * The larger the font size, the higer should be the pitch.
  *
  * The algorithm that calculates the pitch value based on the wordle font size:
- * Note that the pitch value accepted by web speech API is a number in a range of 0 to 2 and 1 is the default value,
- * the pitch is increased/decreased at the basis of 1.
+ * Note: the pitch value accepted by web speech API is a number in a range of 0 to 2. 1 is the default value.
+ * See: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/pitch
+ * So, the pitch is calculated based on the default value.
  * 1. Find all font sizes of wordle texts;
  * 2. If the text font size === the median font size, pitch = 1;
- * 3. If the text font size >= the median font size, pitch = 1 + fontSize - medianSize / maxSize - medianSize;
- * 2. If the text font size < the median font size, pitch = 1 + fontSize - medianSize / medianSize - minSize;
+ * 3. If the text font size >= the median font size, pitch = 1 + (fontSize - medianSize) / maxSize - medianSize;
+ * 2. If the text font size < the median font size, pitch = 1 + (fontSize - medianSize) / medianSize - minSize;
  * @param {Object} instance - The calculated numbers are returned by attaching to the `instance` object
  */
 inverted_wordles.bindTTS = function (instance) {
@@ -182,7 +183,9 @@ inverted_wordles.bindTTS = function (instance) {
         // Round the pitch value to two decimals and save as a data attribute for the future reuse.
         elm.setAttribute("data-pitch", pitch.toFixed(2));
 
-        elm.addEventListener("mouseover", (e) => {
+        // The "pointerover" event covers the mouseover event and pointer over events via user's fingers
+        // and other means. See https://stackoverflow.com/questions/22773548/difference-between-the-mouseover-and-pointerover-in-visualstatemanager
+        elm.addEventListener("pointerover", (e) => {
             // Cancel the previous announcement
             instance.synth.cancel();
 
