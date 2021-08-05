@@ -186,9 +186,13 @@ inverted_wordles.bindTTS = function (instance) {
         // The "pointerover" event covers the mouseover event and pointer over events via user's fingers
         // and other means. See https://stackoverflow.com/questions/22773548/difference-between-the-mouseover-and-pointerover-in-visualstatemanager
         elm.addEventListener("pointerover", (e) => {
+            // If the voiceOver is chosen to be disabled, do nothing
+            if (!instance.tts) {
+                return;
+            }
+
             // Cancel the previous announcement
             instance.synth.cancel();
-
             // Announce the current text
             let utterThis = new SpeechSynthesisUtterance(e.target.textContent);
             utterThis.pitch = elm.getAttribute("data-pitch");
@@ -196,7 +200,6 @@ inverted_wordles.bindTTS = function (instance) {
         });
     });
 };
-
 
 /** Given the XHR response, render a wordle instance into its configured selector
  * @param {WordleInstance} instance - The wordle instance
@@ -210,10 +213,7 @@ inverted_wordles.handleResponse = function (instance, response) {
             console.log("Updated total answer count to " + totalAnswers);
             instance.answerCounts = answerCounts;
             inverted_wordles.makeLayout(instance);
-            if (instance.synth) {
-                // Speech Synthesis is supported by the browser
-                inverted_wordles.bindTTS(instance);
-            }
+            inverted_wordles.bindTTS(instance);
         } else {
             console.log("No change in answer count");
         }
@@ -237,6 +237,18 @@ inverted_wordles.fetchAnswers = function (instance) {
     });
 };
 
+/** If the browser doesn't support web speech API, disable the checkbox that enables/disables voiceOver
+ * and display the error message.
+ * @param {Object} synth - The speech synthesis object
+ * @param {Object} selectors - The selectors including tts related elements
+ */
+inverted_wordles.checkTTS = function (synth, selectors) {
+    if (!synth) {
+        document.querySelector(selectors.tts).disabled = true;
+        document.querySelector(selectors.ttsController).classList.add("disabled");
+    }
+};
+
 /** Bind the global wordle instance to the "conventional layout" checkbox
  * @param {String} selector - Selector to the checkbox to be bound
  * @param {WordleInstance} instance - The wordle instance
@@ -252,11 +264,25 @@ inverted_wordles.bindConventional = function (selector, instance) {
     });
 };
 
+/** Bind the global wordle instance to the "Enable Pointer VoiceOver" checkbox
+ * @param {String} selector - Selector to the checkbox to be bound
+ * @param {WordleInstance} instance - The wordle instance
+ */
+inverted_wordles.bindTTSInput = function (selector, instance) {
+    var element = document.querySelector(selector);
+    element.addEventListener("change", function () {
+        instance.tts = this.checked;
+    });
+};
+
 inverted_wordles.initWordle = function (options) {
     var instance = inverted_wordles.instance;
+
+    inverted_wordles.checkTTS(instance.synth, options.selectors);
     inverted_wordles.instance.element = document.querySelector(options.selectors.render);
     inverted_wordles.fetchAnswers(instance);
     inverted_wordles.bindConventional(options.selectors.conventional, instance);
+    inverted_wordles.bindTTSInput(options.selectors.tts, instance);
     instance.pollInterval = setInterval(function () {
         inverted_wordles.fetchAnswers(instance);
     }, 5000);
@@ -276,6 +302,8 @@ inverted_wordles.instance = {
     answerCounts: [],
     // Whether the word sizing strategy uses the "inverted" approach (the default, false) or the "conventional" where size scales with count
     conventional: false,
+    // Whether the pointer VoiceOver for wordle texts is enabled
+    tts: false,
     // The intervalID for polling github for updates
     pollInterval: null,
     // The intervalID for cancelling the polling
