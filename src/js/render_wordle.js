@@ -56,7 +56,7 @@ inverted_wordles.countAnswers = function (counts) {
  */
 inverted_wordles.drawLayout = function (layout, words, instance) {
     instance.element.innerHTML = ""; // TODO: move the "g" generation into static code
-    var colours = d3.scaleOrdinal(d3.schemeCategory10);
+    var colours = d3.scaleOrdinal(instance.colours);
     d3.select(instance.element)
         .attr("width", layout.size()[0])
         .attr("height", layout.size()[1])
@@ -70,6 +70,7 @@ inverted_wordles.drawLayout = function (layout, words, instance) {
         .style("fill", function (d) {
             return colours(d.text);
         })
+        .attr("class", "wordle-text")
         .attr("text-anchor", "middle")
         .attr("transform", function (d) {
             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -98,6 +99,7 @@ inverted_wordles.makeLayout = function (instance) {
             .padding(5)
             .font("Impact")
             .fontSize(function (d) { return d.size; })
+            .rotate(function () { return instance.rotate[Math.floor(Math.random() * instance.rotate.length)]; })
             // Claims to be event-driven but is actually synchronous
             .on("end", function (words) {
                 laidWords = words;
@@ -195,5 +197,9 @@ inverted_wordles.instance = {
     // The intervalID for cancelling the polling
     cancelPoll: null,
     // Scaling factor to ensure fit of all words
-    scale: 1.0
+    scale: 1.0,
+    // Colours for filling wordle texts
+    colours: ["#4D806F", "#1B7E83", "#0080A3", "#1365B0", "#5E56A2", "#7870A4", "#6E6E6E", "#505050"],
+    // Rotate directions
+    rotate: [0, -90]
 };

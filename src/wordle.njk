@@ -5,7 +5,6 @@ permalink: "/wordle/"
 
 {% extends 'layouts/base.njk' %}
 
-
 {% block content %}
 <script>
     var wordle_globals = {
@@ -14,13 +13,25 @@ permalink: "/wordle/"
 </script>
 <div class="wordle">
     <h1>{{ question.title }}</h1>
+
     <div class="wordleRender">
-        <svg width="1024" height="768">
+        {# Use "viewBox" and "preserveAspectRatio" to ensure the svg fits into viewports with different aspect ratios for the responsive design. #}
+        <svg width="1024" height="768" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet">
         </svg>
     </div>
+
+    <div class="wordle-controls">
+        <div class="apply-conventional">
+            <label class="checkbox-holder">
+                <input class="fl-mapviz-checkbox" id="conventional" type="checkbox">
+                <span>
+                    {% include "./images/checkbox-selected.svg" %}
+                </span>
+            </label>
+            <label for="conventional">Apply conventional weighting</label>
+        </div>
+    </div>
 </div>
-<label for="conventional">Apply conventional weighting: </label>
-<input type="checkbox" id="conventional"/>
 {% endblock %}
 
 {% block footerScripts %}
