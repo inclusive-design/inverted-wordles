@@ -154,20 +154,23 @@ inverted_wordles.setPitches = function (instance, textElements) {
  */
 inverted_wordles.bindTTS = function (instance, textElements) {
     textElements.forEach(elm => {
-        // The "pointerover" event covers the mouseover event and pointer over events via user's fingers
+        // Speak the wordle text when the text gains a focus or under a pointer.
+        // Note: The "pointerover" event covers the mouseover event and pointer over events via user's fingers
         // and other means. See https://stackoverflow.com/questions/22773548/difference-between-the-mouseover-and-pointerover-in-visualstatemanager
-        elm.addEventListener("pointerover", (e) => {
-            // If the voiceOver is chosen to be disabled, do nothing
-            if (!instance.tts) {
-                return;
-            }
+        ["pointerover", "focus"].forEach(evt => {
+            elm.addEventListener(evt, (e) => {
+                // If the voiceOver is chosen to be disabled, do nothing
+                if (!instance.tts) {
+                    return;
+                }
 
-            // Cancel the previous announcement
-            instance.synth.cancel();
-            // Announce the current text
-            let utterThis = new SpeechSynthesisUtterance(e.target.textContent);
-            utterThis.pitch = elm.getAttribute("data-pitch");
-            instance.synth.speak(utterThis);
+                // Cancel the previous announcement
+                instance.synth.cancel();
+                // Announce the current text
+                let utterThis = new SpeechSynthesisUtterance(e.target.textContent);
+                utterThis.pitch = elm.getAttribute("data-pitch");
+                instance.synth.speak(utterThis);
+            });
         });
     });
 };
@@ -210,8 +213,13 @@ inverted_wordles.makeLayout = function (instance) {
     }
     inverted_wordles.drawLayout(layout, laidWords, instance);
 
-    // Enable text-to-speed for wordle texts
     const textElements = document.querySelectorAll("text.wordle-text");
+    // Make wordle texts tabbable by setting tabindex to "0"
+    textElements.forEach(elm => {
+        elm.setAttribute("tabindex", "0");
+    });
+
+    // Enable text-to-speed for wordle texts
     inverted_wordles.calculateFontSizes(instance, textElements);
     inverted_wordles.setPitches(instance, textElements);
     inverted_wordles.bindTTS(instance, textElements);
