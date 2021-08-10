@@ -87,14 +87,16 @@ inverted_wordles.getFontSizeValue = function (elm) {
     return parseFloat(style);
 };
 
-/** Return the number at the midpoint if length is odd, otherwise the average of the two middle numbers.
+/** Return the number at the midpoint of all unique numbers if length is odd, otherwise the average of
+ * the two middle numbers.
  * See: https://www.w3resource.com/javascript-exercises/fundamental/javascript-fundamental-exercise-88.php
  * @param {Array} numArray - An array of numbers
  * @return {Number} The median value of values in an array
  */
 inverted_wordles.getMedianFontSize = function (numArray) {
-    const mid = Math.floor(numArray.length / 2), nums = [...numArray].sort((a, b) => a - b);
-    return numArray.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    const uniqueNumArray = numArray.filter((value, index, selfArray) => selfArray.indexOf(value) === index);
+    const mid = Math.floor(uniqueNumArray.length / 2), nums = [...uniqueNumArray].sort((a, b) => a - b);
+    return uniqueNumArray.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
 };
 
 /** Finds font sizes of all text nodes and calculate these numbers:
@@ -120,10 +122,9 @@ inverted_wordles.calculateFontSizes = function (instance, textElements) {
  * Note: the pitch value accepted by web speech API is a number in a range of 0 to 2. 1 is the default value.
  * See: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/pitch
  * So, the pitch is calculated based on the default value.
- * 1. Find all font sizes of wordle texts;
- * 2. If the text font size === the median font size, pitch = 1;
- * 3. If the text font size >= the median font size, pitch = 1 + (fontSize - medianSize) / maxSize - medianSize;
- * 2. If the text font size < the median font size, pitch = 1 + (fontSize - medianSize) / medianSize - minSize;
+ * 1. If the text font size === the median font size, pitch = 1;
+ * 2. If the text font size >= the median font size, pitch = 1 + (fontSize - medianSize) / maxSize - medianSize;
+ * 3. If the text font size < the median font size, pitch = 1 + (fontSize - medianSize) / medianSize - minSize;
  * @param {Number} thisFontSize - The font size that is based upon to calculate the pitch value
  * @param {Number} medianFontSize - The median font size of all text elements
  * @param {Number} minFontSize - The minimum font size of all text elements
@@ -140,6 +141,10 @@ inverted_wordles.calculatePitch = function (thisFontSize, medianFontSize, minFon
     return pitch.toFixed(2);
 };
 
+/** For each text element, set its pitch value in the "data-pitch" attribute.
+ * @param {WordleInstance} instance - The Wordle instance that median, min and max font sizes are retrieved from.
+ * @param {Object[]} textElements - An array of DOM elements for wordle texts.
+ */
 inverted_wordles.setPitches = function (instance, textElements) {
     textElements.forEach(elm => {
         // Round the pitch value to two decimals and save as a data attribute for the future reuse.
@@ -149,7 +154,7 @@ inverted_wordles.setPitches = function (instance, textElements) {
 
 /** Use web speech API to read wordle texts. The pitch of the voice represents the font size of the text.
  * The larger the font size, the higer should be the pitch.
- * @param {WordleInstance} instance - The calculated numbers are returned by attaching to the `instance` object
+ * @param {WordleInstance} instance - The Wordle instance that the speechSynthesis is retrieved from.
  * @param {Object[]} textElements - An array of DOM elements for wordle texts.
  */
 inverted_wordles.bindTTS = function (instance, textElements) {
