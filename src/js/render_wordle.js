@@ -108,7 +108,7 @@ inverted_wordles.getSortedUniqueFontSizes = function (instance, textElements) {
  * @return {Number} The calculated pitch value in two decimal points
  */
 inverted_wordles.calculatePitch = function (thisFontSize, sortedUniqueFontSizes) {
-    const pitch = sortedUniqueFontSizes.length === 1 ? 1 : 2 * (sortedUniqueFontSizes.indexOf(thisFontSize) + 1) / sortedUniqueFontSizes.length;
+    const pitch = sortedUniqueFontSizes.length === 1 ? 1 : 2 * sortedUniqueFontSizes.indexOf(thisFontSize) / (sortedUniqueFontSizes.length - 1);
     return pitch.toFixed(2);
 };
 
