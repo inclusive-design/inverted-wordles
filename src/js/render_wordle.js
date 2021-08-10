@@ -78,84 +78,54 @@ inverted_wordles.drawLayout = function (layout, words, instance) {
         .text(function (d) { return d.text; });
 };
 
-/** Return the computed value of the font size of the given DOM element.
+/** Return the computed value of the font size of the given DOM element
  * @param {Object} elm - A DOM element
- * @return {Number} The computed value of the font size of the given element.
+ * @return {Number} The computed value of the font size of the given element
  */
 inverted_wordles.getFontSizeValue = function (elm) {
     const style = window.getComputedStyle(elm, null).getPropertyValue("font-size");
     return parseFloat(style);
 };
 
-/** Return the number at the midpoint of all unique numbers if length is odd, otherwise the average of
- * the two middle numbers.
- * See: https://www.w3resource.com/javascript-exercises/fundamental/javascript-fundamental-exercise-88.php
- * @param {Array} numArray - An array of numbers
- * @return {Number} The median value of values in an array
+/** Find font sizes of all text nodes and sort unique values into an array. The array is returned by attaching
+ * to the wordle instance
+ * @param {WordleInstance} instance - The singleton instance
+ * @param {Object[]} textElements - An array of DOM elements for wordle texts
  */
-inverted_wordles.getMedianFontSize = function (numArray) {
-    const uniqueNumArray = numArray.filter((value, index, selfArray) => selfArray.indexOf(value) === index);
-    const mid = Math.floor(uniqueNumArray.length / 2), nums = [...uniqueNumArray].sort((a, b) => a - b);
-    return uniqueNumArray.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
-};
-
-/** Finds font sizes of all text nodes and calculate these numbers:
- * 1. The media font size;
- * 2. The minimum font size;
- * 3. The maximum font size.
- * Calculated numbers are returned by attaching to the wordle instance.
- * @param {WordleInstance} instance - The singleton instance.
- * @param {Object[]} textElements - An array of DOM elements for wordle texts.
- */
-inverted_wordles.calculateFontSizes = function (instance, textElements) {
+inverted_wordles.getSortedUniqueFontSizes = function (instance, textElements) {
     let fontSizes = [];
     textElements.forEach(elm => {
         fontSizes.push(inverted_wordles.getFontSizeValue(elm));
     });
 
-    instance.minFontSize = Math.min(...fontSizes);
-    instance.maxFontSize = Math.max(...fontSizes);
-    instance.medianFontSize = inverted_wordles.getMedianFontSize(fontSizes);
+    const uniqueFontSizes = fontSizes.filter((value, index, selfArray) => selfArray.indexOf(value) === index);
+    instance.sortedUniqueFontSizes = [...uniqueFontSizes].sort((a, b) => a - b);
 };
 
-/** Calculate the pitch value based on the font size:
- * Note: the pitch value accepted by web speech API is a number in a range of 0 to 2. 1 is the default value.
- * See: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/pitch
- * So, the pitch is calculated based on the default value.
- * 1. If the text font size === the median font size, pitch = 1;
- * 2. If the text font size >= the median font size, pitch = 1 + (fontSize - medianSize) / maxSize - medianSize;
- * 3. If the text font size < the median font size, pitch = 1 + (fontSize - medianSize) / medianSize - minSize;
- * @param {Number} thisFontSize - The font size that is based upon to calculate the pitch value
- * @param {Number} medianFontSize - The median font size of all text elements
- * @param {Number} minFontSize - The minimum font size of all text elements
- * @param {Number} maxFontSize - The maximum font size of all text elements
+/** Calculate the pitch value based on the font size
+ * @param {Number} thisFontSize - The font size The font size that is based upon to calculate the pitch value
+ * @param {Number[]} sortedUniqueFontSizes - Sorted and unique values of all font sizes
  * @return {Number} The calculated pitch value in two decimal points
  */
-inverted_wordles.calculatePitch = function (thisFontSize, medianFontSize, minFontSize, maxFontSize) {
-    let numerator = thisFontSize - medianFontSize;
-    let denominator = thisFontSize >= medianFontSize ? (maxFontSize - medianFontSize) : (medianFontSize - minFontSize);
-    // As the pitch accepted by web speech API is a number in a range of 0 to 2 and 1 is the default value,
-    // adjust the pitch value at the basis of 1.
-    let pitch = 1 + numerator / denominator;
-    // Round the pitch value to two decimal points
+inverted_wordles.calculatePitch = function (thisFontSize, sortedUniqueFontSizes) {
+    const pitch = sortedUniqueFontSizes.length === 1 ? 1 : 2 * (sortedUniqueFontSizes.indexOf(thisFontSize) + 1) / sortedUniqueFontSizes.length;
     return pitch.toFixed(2);
 };
 
-/** For each text element, set its pitch value in the "data-pitch" attribute.
+/** For each text element, set its pitch value in the "data-pitch" attribute
  * @param {WordleInstance} instance - The Wordle instance that median, min and max font sizes are retrieved from.
- * @param {Object[]} textElements - An array of DOM elements for wordle texts.
+ * @param {Object[]} textElements - An array of DOM elements for wordle texts
  */
 inverted_wordles.setPitches = function (instance, textElements) {
     textElements.forEach(elm => {
-        // Round the pitch value to two decimals and save as a data attribute for the future reuse.
-        elm.setAttribute("data-pitch", inverted_wordles.calculatePitch(inverted_wordles.getFontSizeValue(elm), instance.medianFontSize, instance.minFontSize, instance.maxFontSize));
+        elm.setAttribute("data-pitch", inverted_wordles.calculatePitch(inverted_wordles.getFontSizeValue(elm), instance.sortedUniqueFontSizes));
     });
 };
 
-/** Use web speech API to read wordle texts. The pitch of the voice represents the font size of the text.
+/** Use web speech API to read wordle texts. The pitch of the voice represents the font size of the text
  * The larger the font size, the higer should be the pitch.
- * @param {WordleInstance} instance - The Wordle instance that the speechSynthesis is retrieved from.
- * @param {Object[]} textElements - An array of DOM elements for wordle texts.
+ * @param {WordleInstance} instance - The Wordle instance that the speechSynthesis is retrieved from
+ * @param {Object[]} textElements - An array of DOM elements for wordle texts
  */
 inverted_wordles.bindTTS = function (instance, textElements) {
     textElements.forEach(elm => {
@@ -225,7 +195,7 @@ inverted_wordles.makeLayout = function (instance) {
     });
 
     // Enable text-to-speed for wordle texts
-    inverted_wordles.calculateFontSizes(instance, textElements);
+    inverted_wordles.getSortedUniqueFontSizes(instance, textElements);
     inverted_wordles.setPitches(instance, textElements);
     inverted_wordles.bindTTS(instance, textElements);
     return layout;
@@ -267,7 +237,7 @@ inverted_wordles.fetchAnswers = function (instance) {
 };
 
 /** If the browser doesn't support web speech API, disable the checkbox that enables/disables voiceOver
- * and display the error message.
+ * and display the error message
  * @param {Object} synth - The speech synthesis object
  * @param {Object} selectors - The selectors including tts related elements
  */
@@ -345,10 +315,6 @@ inverted_wordles.instance = {
     rotate: [0, -90],
     // Speech Synthesis for reading wordle texts
     synth: window.speechSynthesis,
-    // The median number of all wordle text font sizes
-    medianFontSize: null,
-    // The minimum font size
-    minFontSize: null,
-    // The maximum font size
-    maxFontSize: null
+    // An array of sorted and unique of wordle text font sizes
+    sortedUniqueFontSizes: null
 };
