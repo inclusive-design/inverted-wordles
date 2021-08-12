@@ -108,8 +108,7 @@ inverted_wordles.getSortedUniqueFontSizes = function (instance, textElements) {
  * @return {Number} The calculated pitch value in two decimal points
  */
 inverted_wordles.calculatePitch = function (thisFontSize, sortedUniqueFontSizes) {
-    const pitch = sortedUniqueFontSizes.length === 1 ? 1 : 2 * sortedUniqueFontSizes.indexOf(thisFontSize) / (sortedUniqueFontSizes.length - 1);
-    return Math.round(pitch * 100) / 100;
+    return sortedUniqueFontSizes.length === 1 ? 1 : 2 * sortedUniqueFontSizes.indexOf(thisFontSize) / (sortedUniqueFontSizes.length - 1);
 };
 
 /** Use web speech API to read wordle texts. The pitch of the voice represents the font size of the text
