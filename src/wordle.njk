@@ -21,6 +21,19 @@ permalink: "/wordle/"
     </div>
 
     <div class="wordle-controls">
+        <div class="tts-controller">
+            <div class="tts-checkbox">
+                <label class="checkbox-holder">
+                    <input class="fl-mapviz-checkbox" id="tts" type="checkbox">
+                    <span>
+                        {% include "./images/checkbox-selected.svg" %}
+                    </span>
+                </label>
+                <label for="tts">Speak the wordle text under the pointer {% include "./images/speaker.svg" %}</label>
+            </div>
+            <span class="tts-status">*Unable to activate VoiceOver. Your browser version or config does not support web speech API**</span>
+        </div>
+
         <div class="apply-conventional">
             <label class="checkbox-holder">
                 <input class="fl-mapviz-checkbox" id="conventional" type="checkbox">
@@ -42,7 +55,9 @@ permalink: "/wordle/"
 inverted_wordles.initWordle({
     selectors: {
         render: ".wordleRender svg",
-        conventional: "#conventional"
+        conventional: "#conventional",
+        ttsController: ".tts-controller",
+        tts: "#tts"
     }
 });
 </script>
