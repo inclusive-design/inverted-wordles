@@ -79,7 +79,7 @@ inverted_wordles.drawLayout = function (layout, words, instance) {
 };
 
 /** Return the computed value of the font size of the given DOM element
- * @param {Object} elm - A DOM element
+ * @param {Element} elm - A DOM element
  * @return {Number} The computed value of the font size of the given element
  */
 inverted_wordles.getFontSizeValue = function (elm) {
@@ -90,7 +90,7 @@ inverted_wordles.getFontSizeValue = function (elm) {
 /** Find font sizes of all text nodes and sort unique values into an array. The array is returned by attaching
  * to the wordle instance
  * @param {WordleInstance} instance - The singleton instance
- * @param {Object[]} textElements - An array of DOM elements for wordle texts
+ * @param {Element[]} textElements - An array of DOM elements for wordle texts
  */
 inverted_wordles.getSortedUniqueFontSizes = function (instance, textElements) {
     let fontSizes = [];
@@ -109,23 +109,13 @@ inverted_wordles.getSortedUniqueFontSizes = function (instance, textElements) {
  */
 inverted_wordles.calculatePitch = function (thisFontSize, sortedUniqueFontSizes) {
     const pitch = sortedUniqueFontSizes.length === 1 ? 1 : 2 * sortedUniqueFontSizes.indexOf(thisFontSize) / (sortedUniqueFontSizes.length - 1);
-    return pitch.toFixed(2);
-};
-
-/** For each text element, set its pitch value in the "data-pitch" attribute
- * @param {WordleInstance} instance - The Wordle instance that median, min and max font sizes are retrieved from.
- * @param {Object[]} textElements - An array of DOM elements for wordle texts
- */
-inverted_wordles.setPitches = function (instance, textElements) {
-    textElements.forEach(elm => {
-        elm.setAttribute("data-pitch", inverted_wordles.calculatePitch(inverted_wordles.getFontSizeValue(elm), instance.sortedUniqueFontSizes));
-    });
+    return Math.round(pitch * 100) / 100;
 };
 
 /** Use web speech API to read wordle texts. The pitch of the voice represents the font size of the text
  * The larger the font size, the higer should be the pitch.
  * @param {WordleInstance} instance - The Wordle instance that the speechSynthesis is retrieved from
- * @param {Object[]} textElements - An array of DOM elements for wordle texts
+ * @param {Element[]} textElements - An array of DOM elements for wordle texts
  */
 inverted_wordles.bindTTS = function (instance, textElements) {
     textElements.forEach(elm => {
@@ -143,7 +133,7 @@ inverted_wordles.bindTTS = function (instance, textElements) {
                 instance.synth.cancel();
                 // Announce the current text
                 let utterThis = new SpeechSynthesisUtterance(e.target.textContent);
-                utterThis.pitch = elm.getAttribute("data-pitch");
+                utterThis.pitch = inverted_wordles.calculatePitch(inverted_wordles.getFontSizeValue(e.target), instance.sortedUniqueFontSizes);
                 instance.synth.speak(utterThis);
             });
         });
@@ -196,7 +186,6 @@ inverted_wordles.makeLayout = function (instance) {
 
     // Enable text-to-speed for wordle texts
     inverted_wordles.getSortedUniqueFontSizes(instance, textElements);
-    inverted_wordles.setPitches(instance, textElements);
     inverted_wordles.bindTTS(instance, textElements);
     return layout;
 };
