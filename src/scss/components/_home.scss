@@ -1,3 +1,16 @@
+/* Style svg icons */
+.view-svg-path-style {
+    stroke: var(--stroke-color, black);
+}
+
+.view-answer-svg {
+    --stroke-color: #0080a4;
+}
+
+.view-wordle-svg {
+    --stroke-color: #47813b;
+}
+
 header {
     [data-netlify-identity-button] {
         margin: rem(32);
@@ -18,15 +31,210 @@ header {
 
             &:focus,
             &:hover {
-                border: rem(4) double;
                 background-color: black;
+                border: rem(4) double;
             }
         }
     }
 }
 
-.wordle-home {
-    .list-title {
-        padding-left: 4rem;
+.home {
+    table {
+        width: 100%;
+    }
+
+    tbody {
+        tr:first-child {
+            display: none;
+        }
+    }
+
+    input {
+        font-size: rem(16);
+        height: rem(40);
+        margin: 4px;
+    }
+
+    input[type="text"] {
+        border-radius: rem(4);
+        width: 95%;
+
+        &:disabled {
+            background-color: #f8f8f8;
+            color: #707070;
+        }
+    }
+
+    input[name="entries"] {
+        text-align: center;
+    }
+
+    svg {
+        height: rem(24);
+        width: rem(24);
+    }
+
+    .view-answer,
+    .view-wordle,
+    .delete-button {
+        align-self: center;
+        border-radius: rem(33);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+        padding: rem(8);
+
+        &:focus,
+        &:hover {
+            background-color: #373737;
+            border: rem(6) double;
+            box-shadow: none;
+            color: white;
+
+            svg {
+                fill: white;
+            }
+        }
+    }
+
+    #status {
+        align-self: center;
+        color: red;
+        font-size: rem(24);
+        margin: rem(32);
+    }
+
+    .answer-cell,
+    .wordle-cell,
+    .delete-cell {
+        width: rem(112);
+    }
+
+    .delete-button {
+        background-color: white;
+        border: none;
+
+        &:disabled {
+            background-color: #f8f8f8;
+            color: #707070;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .home {
+        tbody {
+            th {
+                border-bottom: 2px solid #7870a4;
+                font-size: rem(16);
+            }
+
+            tr:first-child {
+                display: contents;
+            }
+
+            td {
+                border-bottom: 0.5px solid #7870a4;
+                height: rem(56);
+                margin: 1rem 0;
+            }
+
+            // Hide all table cell labels that are only visible in mobile view
+            & label {
+                display: none;
+            }
+        }
+
+        .entries-cell {
+            width: rem(80);
+        }
+
+        .answer-cell,
+        .wordle-cell,
+        .last-modified-cell {
+            text-align: center;
+        }
+
+        .view-answer,
+        .view-wordle {
+            width: rem(87);
+        }
+    }
+}
+
+/**
+ * This section is only available and affects the mobile view and doesn't apply to the desktop view at all.
+ * It turns the display of wordle records from a table to a grid.
+ */
+@media screen and (max-width: 1024px) {
+    tbody.mobile-only {
+        tr {
+            border-bottom: 2px solid #7870a4;
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+
+        label {
+            font-weight: 700;
+        }
+
+        input[name="entries"] {
+            text-align: left;
+        }
+
+        .workshop-name-cell,
+        .question-cell,
+        .entries-cell {
+            grid-column-end: 3;
+            grid-column-start: 1;
+        }
+
+        .delete-cell {
+            grid-column-end: 2;
+            grid-column-start: 1;
+            grid-row-end: 5;
+            grid-row-start: 5;
+        }
+
+        .last-modified-cell {
+            align-self: center;
+            grid-column-end: 3;
+            grid-column-start: 2;
+            grid-row-end: 5;
+            grid-row-start: 5;
+            justify-self: right;
+        }
+
+        .workshop-name-cell {
+            margin-top: rem(16);
+        }
+
+        .answer-cell,
+        .wordle-cell {
+            border-bottom: 0.5px solid #7870a4;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+
+            * {
+                margin: rem(8) 0;
+            }
+
+            label {
+                align-self: center;
+                margin-right: rem(1);
+            }
+        }
+
+        .view-answer,
+        .view-wordle,
+        .delete-button {
+            padding: 0 rem(8);
+        }
+
+        .delete-cell,
+        .last-modified-cell {
+            * {
+                margin: rem(8) 0;
+            }
+        }
     }
 }
