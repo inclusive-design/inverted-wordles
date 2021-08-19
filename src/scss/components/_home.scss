@@ -32,7 +32,7 @@ header {
             display: block;
             height: rem(48);
             max-width: rem(164);
-            padding: rem(6) rem(36);
+            padding: rem(8) rem(36);
             text-align: center;
             text-decoration: none;
             white-space: nowrap;
@@ -79,14 +79,25 @@ header {
 }
 
 .home {
-    table {
-        width: 100%;
+    .header {
+        display: none;
+        font-weight: 700;
+        text-align: center;
     }
 
-    tbody {
-        tr:first-child {
-            display: none;
-        }
+    .wordles {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .one-wordle {
+        border-bottom: 2px solid #7870a4;
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
+    label {
+        font-weight: 700;
     }
 
     input {
@@ -114,14 +125,78 @@ header {
         width: rem(24);
     }
 
+    input[name="entries"] {
+        text-align: left;
+    }
+
+    .workshop-name-cell {
+        margin-top: rem(16);
+    }
+
+    .workshop-name-cell,
+    .question-cell,
+    .entries-cell {
+        grid-column-end: 3;
+        grid-column-start: 1;
+    }
+
+    .delete-cell {
+        grid-column-end: 2;
+        grid-column-start: 1;
+        grid-row-end: 5;
+        grid-row-start: 5;
+        height: rem(64);
+    }
+
+    .last-modified-cell {
+        align-self: center;
+        grid-column-end: 3;
+        grid-column-start: 2;
+        grid-row-end: 5;
+        grid-row-start: 5;
+        justify-self: right;
+    }
+
+    .view-answer-cell,
+    .view-wordle-cell {
+        border-bottom: 0.5px solid #7870a4;
+        display: flex;
+        height: rem(64);
+        justify-content: space-around;
+        width: 100%;
+
+        * {
+            margin: rem(8) 0;
+        }
+
+        label {
+            align-self: center;
+            margin-right: rem(1);
+        }
+    }
+
+    .delete-cell,
+    .last-modified-cell {
+        * {
+            margin: rem(8) 0;
+        }
+    }
+
+    .one-status {
+        display: none;
+        grid-column-end: 3;
+        grid-column-start: 1;
+        grid-row-end: 6;
+        grid-row-start: 6;
+    }
+
     .view-answer,
     .view-wordle,
-    .create-button,
     .delete-button {
         align-self: center;
         border-radius: rem(33);
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-        padding: rem(8);
+        padding: 0 rem(8);
 
         &:focus,
         &:hover {
@@ -134,19 +209,6 @@ header {
                 fill: white;
             }
         }
-    }
-
-    #status {
-        align-self: center;
-        color: red;
-        font-size: rem(24);
-        margin: rem(32);
-    }
-
-    .answer-cell,
-    .wordle-cell,
-    .delete-cell {
-        width: rem(112);
     }
 
     .delete-button {
@@ -163,22 +225,33 @@ header {
             --delete-svg-stroke-color: white;
         }
     }
+
+    #status {
+        align-self: center;
+        color: red;
+        font-size: rem(24);
+        margin: rem(32);
+    }
 }
 
 @media screen and (min-width: 1024px) {
     .home {
-        tbody {
-            th {
-                border-bottom: 2px solid #7870a4;
-                font-size: rem(16);
-            }
+        .header,
+        .one-wordle {
+            align-items: center;
+            display: grid;
+            grid-template-columns: 3fr 3fr 1fr 1fr 1fr 2fr 1.5fr;
+            justify-content: center;
+        }
 
-            tr:first-child {
-                display: contents;
-            }
+        .header {
+            border-bottom: 2px solid #7870a4;
+        }
 
-            td {
-                border-bottom: 0.5px solid #7870a4;
+        .one-wordle {
+            border-bottom: 0.5px solid #7870a4;
+
+            span {
                 height: rem(56);
                 margin: 1rem 0;
             }
@@ -189,19 +262,72 @@ header {
             }
         }
 
+        .workshop-name-cell {
+            grid-column-end: 2;
+            grid-column-start: 1;
+            grid-row-end: 2;
+            grid-row-start: 1;
+            margin-top: 0;
+        }
+
+        .question-cell {
+            grid-column-end: 3;
+            grid-column-start: 2;
+            grid-row-end: 2;
+            grid-row-start: 1;
+        }
+
         .entries-cell {
+            grid-column-end: 4;
+            grid-column-start: 3;
+            grid-row-end: 2;
+            grid-row-start: 1;
             width: rem(80);
         }
 
-        .answer-cell,
-        .wordle-cell,
-        .last-modified-cell {
+        .view-answer-cell {
+            border-bottom: none;
+            grid-column-end: 5;
+            grid-column-start: 4;
+            grid-row-end: 2;
+            grid-row-start: 1;
             text-align: center;
         }
 
-        .view-answer,
-        .view-wordle {
-            width: rem(87);
+        .view-wordle-cell {
+            border-bottom: none;
+            grid-column-end: 6;
+            grid-column-start: 5;
+            grid-row-end: 2;
+            grid-row-start: 1;
+            text-align: center;
+        }
+
+        .last-modified-cell {
+            grid-column-end: 7;
+            grid-column-start: 6;
+            grid-row-end: 2;
+            grid-row-start: 1;
+            text-align: center;
+            width: 100%;
+        }
+
+        .delete-cell {
+            grid-column-end: 8;
+            grid-column-start: 7;
+            grid-row-end: 2;
+            grid-row-start: 1;
+        }
+
+        .one-status {
+            grid-column-end: 8;
+            grid-column-start: 1;
+            grid-row-end: 3;
+            grid-row-start: 2;
+        }
+
+        input[name="entries"] {
+            text-align: center;
         }
     }
 }
@@ -211,85 +337,6 @@ header {
     header {
         .create-button {
             width: rem(128);
-        }
-    }
-}
-
-/**
- * This section is only available and affects the mobile view and doesn't apply to the desktop view at all.
- * It turns the display of wordle records from a table to a grid.
- */
-@media screen and (max-width: 1024px) {
-    tbody.mobile-only {
-        tr {
-            border-bottom: 2px solid #7870a4;
-            display: grid;
-            grid-template-columns: 50% 50%;
-        }
-
-        label {
-            font-weight: 700;
-        }
-
-        input[name="entries"] {
-            text-align: left;
-        }
-
-        .workshop-name-cell,
-        .question-cell,
-        .entries-cell {
-            grid-column-end: 3;
-            grid-column-start: 1;
-        }
-
-        .delete-cell {
-            grid-column-end: 2;
-            grid-column-start: 1;
-            grid-row-end: 5;
-            grid-row-start: 5;
-        }
-
-        .last-modified-cell {
-            align-self: center;
-            grid-column-end: 3;
-            grid-column-start: 2;
-            grid-row-end: 5;
-            grid-row-start: 5;
-            justify-self: right;
-        }
-
-        .workshop-name-cell {
-            margin-top: rem(16);
-        }
-
-        .answer-cell,
-        .wordle-cell {
-            border-bottom: 0.5px solid #7870a4;
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-
-            * {
-                margin: rem(8) 0;
-            }
-
-            label {
-                align-self: center;
-                margin-right: rem(1);
-            }
-        }
-
-        .view-answer,
-        .view-wordle,
-        .delete-button {
-            padding: 0 rem(8);
-        }
-
-        .delete-cell,
-        .last-modified-cell {
-            * {
-                margin: rem(8) 0;
-            }
         }
     }
 }

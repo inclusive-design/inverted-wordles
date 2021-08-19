@@ -16,20 +16,20 @@ inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
         const uniqueId = Date.now();
 
         wordlesHtml += `
-        <tr>
-            <td class="workshop-name-cell">
+        <div class="one-wordle">
+            <div class="workshop-name-cell">
                 <label for="workshop-name-id-${ uniqueId }">Workshop Name</label>
                 <input type="text" id="workshop-name-id-${ uniqueId }" name="workshop-name" value="${ workshopName }">
-            </td>
-            <td class="question-cell">
+            </div>
+            <div class="question-cell">
                 <label for="question-id-${ uniqueId }">Question</label>
                 <input type="text" id="question-id-${ uniqueId }" name="question" value="${ question }">
-            </td>
-            <td class="entries-cell">
+            </div>
+            <div class="entries-cell">
                 <label for="entries-id-${ uniqueId }">Word Entries</label>
                 <input type="text" id="entries-id-${ uniqueId }" name="entries" value="${ entries }">
-            </td>
-            <td class="answer-cell">
+            </div>
+            <div class="view-answer-cell">
                 <label for="view-answer-id-${ uniqueId }">Answers</label>
                 <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="https://${ branchName + netlifyUrlSuffix }answer/">
                     <svg role="presentation" class="view-answer-svg">
@@ -37,8 +37,8 @@ inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
                     </svg>
                     View
                 </a>
-            </td>
-            <td class="wordle-cell">
+            </div>
+            <div class="view-wordle-cell">
                 <label for="view-wordle-id-${ uniqueId }">Wordle</label>
                 <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="https://${ branchName + netlifyUrlSuffix }wordle/">
                     <svg role="presentation" class="view-wordle-svg">
@@ -46,21 +46,22 @@ inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
                     </svg>
                     View
                 </a>
-            </td>
-            <td class="last-modified-cell">
+            </div>
+            <div class="last-modified-cell">
                 <label for="view-wordle-id-${ uniqueId }">Last Modified</label>
                 <span id="view-wordle-id-${ uniqueId }">${ lastModifiedTimestamp }</span>
-            </td>
-            <td class="delete-cell">
+            </div>
+            <div class="delete-cell">
                 <button class="delete-button">
                     <svg role="presentation" class="view-answer-svg">
                         <use xlink:href="#delete"></use>
                     </svg>
                     Delete
                 </button>
-            </td>
+            </div>
+            <div class="one-status">failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed </div>
             <input type="hidden" name="branchName" value="${ branchName }">
-        </tr>\n\n`;
+        </div>\n\n`;
     }
     document.querySelector(wordlesAreaSelector).innerHTML = wordlesHtml;
 };
@@ -89,7 +90,6 @@ inverted_wordles.setLoginState = function (isLoggedIn, deleteButtonClass, create
 };
 
 inverted_wordles.bindNetlifyEvents = function (options) {
-    // Bind to events
     netlifyIdentity.on("login", () => {
         // enable input fields and buttons
         inverted_wordles.setLoginState(true, options.selectors.deleteButtonClass, options.selectors.createButtonClass);
