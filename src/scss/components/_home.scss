@@ -1,19 +1,27 @@
 /* Style svg icons */
-.view-svg-path-style {
-    stroke: var(--stroke-color, black);
+.create-svg-class {
+    stroke: var(--create-svg-stroke-color, #565656);
+}
+
+.delete-svg-class {
+    stroke: var(--delete-svg-stroke-color, #757575);
+}
+
+.view-svg-class {
+    stroke: var(--view-svg-stroke-color, black);
 }
 
 .view-answer-svg {
-    --stroke-color: #0080a4;
+    --view-svg-stroke-color: #0080a4;
 }
 
 .view-wordle-svg {
-    --stroke-color: #47813b;
+    --view-svg-stroke-color: #47813b;
 }
 
 header {
     [data-netlify-identity-button] {
-        margin: rem(32);
+        margin: rem(16);
 
         a {
             background-color: #7870a4;
@@ -27,6 +35,7 @@ header {
             padding: rem(6) rem(36);
             text-align: center;
             text-decoration: none;
+            white-space: nowrap;
             width: 100%;
 
             &:focus,
@@ -35,6 +44,37 @@ header {
                 border: rem(4) double;
             }
         }
+    }
+}
+
+.admin-controls {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-button {
+    align-self: center;
+    background-color: white;
+    border: none;
+    border-radius: rem(33);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    height: rem(48);
+    padding: rem(8);
+    width: rem(176);
+
+    &:focus,
+    &:hover {
+        --create-svg-stroke-color: white;
+
+        background-color: #373737;
+        border: rem(6) double;
+        box-shadow: none;
+        color: white;
+    }
+
+    .create-question-svg {
+        height: rem(16);
+        width: rem(16);
     }
 }
 
@@ -76,6 +116,7 @@ header {
 
     .view-answer,
     .view-wordle,
+    .create-button,
     .delete-button {
         align-self: center;
         border-radius: rem(33);
@@ -115,6 +156,11 @@ header {
         &:disabled {
             background-color: #f8f8f8;
             color: #707070;
+        }
+
+        &:focus:enabled,
+        &:hover:enabled {
+            --delete-svg-stroke-color: white;
         }
     }
 }
@@ -156,6 +202,15 @@ header {
         .view-answer,
         .view-wordle {
             width: rem(87);
+        }
+    }
+}
+
+// For small size screens such as iphone 5
+@media screen and (max-width: 330px) {
+    header {
+        .create-button {
+            width: rem(128);
         }
     }
 }

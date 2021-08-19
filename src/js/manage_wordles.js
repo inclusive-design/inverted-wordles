@@ -1,8 +1,10 @@
 "use strict";
 
+/* global netlifyIdentity */
+
+var inverted_wordles = {};
 const netlifyUrlSuffix = "--inverted-wordles.netlify.app/";
 const initialDisabledInputNames = ["workshop-name", "question", "entries"];
-var inverted_wordles = {};
 
 inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
     let wordlesHtml = document.querySelector(wordlesAreaSelector).innerHTML;
@@ -63,27 +65,39 @@ inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
     document.querySelector(wordlesAreaSelector).innerHTML = wordlesHtml;
 };
 
-inverted_wordles.setInitState = function () {
+inverted_wordles.setLoginState = function (isLoggedIn, deleteButtonClass, createButtonClass) {
     // disable all input elements
     const inputElements = document.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
         if (initialDisabledInputNames.includes(inputElements[i].getAttribute("name"))) {
-            inputElements[i].setAttribute("disabled", "disabled");
+            if (isLoggedIn) {
+                inputElements[i].removeAttribute("disabled");
+            } else {
+                inputElements[i].setAttribute("disabled", "disabled");
+            }
         }
     }
 
     // disable delete buttons
-    const deleteButtons = document.querySelectorAll(".delete-button");
+    const deleteButtons = document.querySelectorAll(deleteButtonClass);
     for (let i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].disabled = true;
+        deleteButtons[i].disabled = isLoggedIn ? false : true;
     }
+
+    // hide create new question button
+    document.querySelector(createButtonClass).style.visibility = isLoggedIn ? "visible" : "hidden";
 };
 
-// Populate the data on the answer question page
-inverted_wordles.initPage = function (response, options) {
-    response.json().then(wordles => {
-        inverted_wordles.listWordles(wordles, options.selectors.wordlesArea);
-        inverted_wordles.setInitState();
+inverted_wordles.bindNetlifyEvents = function (options) {
+    // Bind to events
+    netlifyIdentity.on("login", () => {
+        // enable input fields and buttons
+        inverted_wordles.setLoginState(true, options.selectors.deleteButtonClass, options.selectors.createButtonClass);
+    });
+
+    netlifyIdentity.on("logout", () => {
+        // disable input fields and buttons
+        inverted_wordles.setLoginState(false, options.selectors.deleteButtonClass, options.selectors.createButtonClass);
     });
 };
 
@@ -102,7 +116,15 @@ inverted_wordles.reportError = function (error, statusSelector) {
     statusElm.innerHTML = "Error at populating the page data: " + error;
 };
 
-inverted_wordles.populateWordles = function (options) {
+// Populate the data on the answer question page
+inverted_wordles.initPage = function (response, options) {
+    inverted_wordles.bindNetlifyEvents(options);
+    response.json().then(wordles => {
+        inverted_wordles.listWordles(wordles, options.selectors.wordlesArea);
+    });
+};
+
+inverted_wordles.initWordles = function (options) {
     fetch("/api/fetch_wordles").then(
         response => inverted_wordles.initPage(response, options),
         error => inverted_wordles.reportError(error, options.selectors.status)
