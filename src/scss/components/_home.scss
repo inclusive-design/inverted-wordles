@@ -116,10 +116,6 @@ header {
         }
     }
 
-    input[name="entries"] {
-        text-align: center;
-    }
-
     svg {
         height: rem(24);
         width: rem(24);
@@ -184,6 +180,9 @@ header {
 
     .one-status {
         display: none;
+        font-size: rem(7);
+        font-style: italic;
+        font-weight: 700;
         grid-column-end: 3;
         grid-column-start: 1;
         grid-row-end: 6;
@@ -320,6 +319,7 @@ header {
         }
 
         .one-status {
+            font-size: rem(12);
             grid-column-end: 8;
             grid-column-start: 1;
             grid-row-end: 3;

@@ -57,11 +57,14 @@ permalink: /
 <script src="/js/manage_wordles.js"></script>
 <script>
 inverted_wordles.initWordles({
+    inputFieldNames: ["workshop-name", "question", "entries"],
+    branchNameField: "branchName",
+    oneStatusClassName: "one-status",
     selectors: {
         wordlesArea: ".wordles",
-        status: "#status",
         deleteButtonClass: ".delete-button",
-        createButtonClass: ".create-button"
+        createButtonClass: ".create-button",
+        status: "#status",
     }
 });
 </script>

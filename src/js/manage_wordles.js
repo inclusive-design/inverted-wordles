@@ -4,7 +4,6 @@
 
 var inverted_wordles = {};
 const netlifyUrlSuffix = "--inverted-wordles.netlify.app/";
-const initialDisabledInputNames = ["workshop-name", "question", "entries"];
 
 inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
     let wordlesHtml = document.querySelector(wordlesAreaSelector).innerHTML;
@@ -59,18 +58,18 @@ inverted_wordles.listWordles = function (wordles, wordlesAreaSelector) {
                     Delete
                 </button>
             </div>
-            <div class="one-status">failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed failed </div>
+            <div class="one-status"></div>
             <input type="hidden" name="branchName" value="${ branchName }">
         </div>\n\n`;
     }
     document.querySelector(wordlesAreaSelector).innerHTML = wordlesHtml;
 };
 
-inverted_wordles.setLoginState = function (isLoggedIn, deleteButtonClass, createButtonClass) {
+inverted_wordles.setLoginState = function (isLoggedIn, deleteButtonClass, createButtonClass, inputFieldNames) {
     // disable all input elements
     const inputElements = document.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
-        if (initialDisabledInputNames.includes(inputElements[i].getAttribute("name"))) {
+        if (inputFieldNames.includes(inputElements[i].getAttribute("name"))) {
             if (isLoggedIn) {
                 inputElements[i].removeAttribute("disabled");
             } else {
@@ -90,15 +89,58 @@ inverted_wordles.setLoginState = function (isLoggedIn, deleteButtonClass, create
 };
 
 inverted_wordles.bindNetlifyEvents = function (options) {
-    netlifyIdentity.on("login", () => {
-        // enable input fields and buttons
-        inverted_wordles.setLoginState(true, options.selectors.deleteButtonClass, options.selectors.createButtonClass);
-    });
+    netlifyIdentity.on("login", () => inverted_wordles.setLoginState(true, options.selectors.deleteButtonClass, options.selectors.createButtonClass, options.inputFieldNames));
+    netlifyIdentity.on("logout", () => inverted_wordles.setLoginState(false, options.selectors.deleteButtonClass, options.selectors.createButtonClass, options.inputFieldNames));
+};
 
-    netlifyIdentity.on("logout", () => {
-        // disable input fields and buttons
-        inverted_wordles.setLoginState(false, options.selectors.deleteButtonClass, options.selectors.createButtonClass);
-    });
+// Bind onChange events for all input fields that users will change values
+inverted_wordles.bindInputFieldEvents = function (options) {
+    const inputElements = document.getElementsByTagName("input");
+    for (let i = 0; i < inputElements.length; i++) {
+        const currentInput = inputElements[i];
+        if (options.inputFieldNames.includes(currentInput.getAttribute("name"))) {
+            currentInput.addEventListener("change", evt => {
+                let dataTogo = {}, branchName, oneStatusElm;
+                // find the branch name value and the status element for the current wordle
+                currentInput.parentElement.parentElement.childNodes.forEach(elm => {
+                    if (elm.name === options.branchNameField) {
+                        branchName = elm.value;
+                    }
+                    if (elm.className && elm.className.includes(options.oneStatusClassName)) {
+                        oneStatusElm = elm;
+                    }
+                });
+                dataTogo[evt.target.name] = evt.target.value;
+                dataTogo.branchName = branchName;
+
+                fetch("/api/save_question", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dataTogo)
+                }).then(
+                    response => {
+                        // Javascript fetch function does not reject when the status code is between 400 to 600.
+                        // This range of status code needs to be handled specifically in the success block.
+                        // See https://github.com/whatwg/fetch/issues/18
+                        if (response.status >= 400 && response.status < 600) {
+                            response.json().then(res => {
+                                inverted_wordles.reportStatus("*New edits FAILED. Error: " + res.message + "*", oneStatusElm, true);
+                            });
+                        } else {
+                            inverted_wordles.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, false);
+                        }
+                    },
+                    error => {
+                        error.json().then(err => {
+                            inverted_wordles.reportStatus("*New edits FAILED. Error: " + err.error + "*", oneStatusElm, true);
+                        });
+                    }
+                );
+            });
+        }
+    }
 };
 
 // Escape html special characters
@@ -111,9 +153,12 @@ inverted_wordles.escapeHtml = function (content) {
         .replace(/'/g, "&#039;");
 };
 
-inverted_wordles.reportError = function (error, statusSelector) {
-    const statusElm = document.querySelector(statusSelector);
-    statusElm.innerHTML = "Error at populating the page data: " + error;
+inverted_wordles.reportStatus = function (message, statusElm, isError) {
+    statusElm.style.display = "block";
+    statusElm.classList.remove("red");
+    statusElm.classList.remove("green");
+    statusElm.classList.add(isError ? "red" : "green");
+    statusElm.innerHTML = message;
 };
 
 // Populate the data on the answer question page
@@ -121,12 +166,13 @@ inverted_wordles.initPage = function (response, options) {
     inverted_wordles.bindNetlifyEvents(options);
     response.json().then(wordles => {
         inverted_wordles.listWordles(wordles, options.selectors.wordlesArea);
+        inverted_wordles.bindInputFieldEvents(options);
     });
 };
 
 inverted_wordles.initWordles = function (options) {
     fetch("/api/fetch_wordles").then(
         response => inverted_wordles.initPage(response, options),
-        error => inverted_wordles.reportError(error, options.selectors.status)
+        error => inverted_wordles.reportStatus("Error at listing all wordles: " + error, document.querySelector(options.selectors.status), true)
     );
 };
