@@ -15,7 +15,7 @@ inverted_wordles.appendNewWordleRow = function (branchName, lastModifiedTimestam
         question: "",
         entries: 0,
         lastModifiedTimestamp: lastModifiedTimestamp,
-        statusMsg: "*Please wait few minutes until the Question link is generated and webpage is created. This may take a few minutes*",
+        statusMsg: "*Please wait until the question link is generated and webpage is created. This may take 30 seconds*",
         extraStatusClass: "purple",
         extraRowClass: "grey-background",
         disableInputs: true,
