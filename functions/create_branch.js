@@ -5,6 +5,7 @@ const {
 } = require("@octokit/core");
 
 const gitOpsApi = require("git-ops-api");
+const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
 exports.handler = async function (event) {
     console.log("Received create_branch request at " + new Date() + " with path " + event.path);
@@ -36,11 +37,33 @@ exports.handler = async function (event) {
     		targetBranchName: branchName
     	});
 
+        // Initialise the question file
+        const lastModifiedTimestamp = new Date().toISOString();
+        const questionFilePath = "src/_data/question.json";
+        const questionFileInfo = await fetchJSONFile(octokit, branchName, questionFilePath);
+        await gitOpsApi.updateSingleFile(octokit, {
+            repoOwner: process.env.WORDLES_REPO_OWNER,
+            repoName: process.env.WORDLES_REPO_NAME,
+            branchName: branchName,
+            filePath: questionFilePath,
+            fileContent: JSON.stringify({
+                workshopName: "",
+                question: "",
+                entries: 0,
+                entryMaxLength: 80,
+                createdTimestamp: lastModifiedTimestamp,
+                lastModifiedTimestamp,
+                branch: branchName
+            }),
+            commitMessage: "chore: [skip ci] update question.json when creating a new wordle",
+            sha: questionFileInfo.sha
+        });
+
         return {
             statusCode: 200,
             body: JSON.stringify({
                 branchName: branchName,
-                lastModifiedTimestamp: new Date().toISOString()
+                lastModifiedTimestamp
             })
         };
     } catch (e) {

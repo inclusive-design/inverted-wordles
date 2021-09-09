@@ -13,7 +13,7 @@ inverted_wordles.appendNewWordleRow = function (branchName, lastModifiedTimestam
         branchName: branchName,
         workshopName: "",
         question: "",
-        entries: "",
+        entries: 0,
         lastModifiedTimestamp: lastModifiedTimestamp,
         statusMsg: "*Please wait few minutes until the Question link is generated and webpage is created. This may take a few minutes*",
         extraStatusClass: "purple",
@@ -37,7 +37,7 @@ inverted_wordles.updateNewWordleRow = function (branchName, lastModifiedTimestam
         branchName: branchName,
         workshopName: "",
         question: "",
-        entries: "",
+        entries: 0,
         lastModifiedTimestamp: lastModifiedTimestamp
     });
 
@@ -90,7 +90,6 @@ window.createWordle = function (closeButton) {
                     }).then(response => {
                         if (response.status === 200) {
                             response.json().then(res => {
-                                console.log("deploy exists: ", res.exists);
                                 if (res.exists) {
                                     clearInterval(checkDeployInterval);
                                     // Update the new wordle row to a regular row when the deploy is up and running
