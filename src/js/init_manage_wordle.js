@@ -7,6 +7,7 @@ inverted_wordles.initPage = function (response) {
     inverted_wordles.bindNetlifyEvents(globalOptions);
     response.json().then(wordles => {
         inverted_wordles.listWordles(wordles, globalOptions.selectors.wordlesArea);
+        inverted_wordles.bindCreateEvent();
         inverted_wordles.bindInputFieldEvents();
         inverted_wordles.bindDeleteEvents();
     });

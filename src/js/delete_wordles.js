@@ -27,7 +27,7 @@ window.deleteWordle = function (closeButton) {
     closeDialog(closeButton);
     // On the wordle list, find the row with the same branch name
     const branchNameElm = document.querySelector(globalOptions.selectors.wordlesArea).querySelector("input[value=\"" + branchName + "\"]");
-    // Remove the row with current branch name
+    // Find the row with current branch name
     const rowElm = branchNameElm.parentElement;
     // Find the status element for reporting errors when occuring
     const oneStatusElm = rowElm.querySelector(globalOptions.selectors.oneStatus);

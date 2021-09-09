@@ -23,6 +23,14 @@
     --view-svg-stroke-color: #47813b;
 }
 
+.grey-background {
+    background-color: #e5e5e5;
+}
+
+.margin-auto {
+    margin: auto !important;
+}
+
 header {
     [data-netlify-identity-button] {
         margin: rem(16);
@@ -174,6 +182,7 @@ button {
     }
 
     .delete-cell {
+        display: flex;
         grid-column-end: 2;
         grid-column-start: 1;
         grid-row-end: 5;
@@ -195,7 +204,7 @@ button {
         border-bottom: 0.5px solid #7870a4;
         display: flex;
         height: rem(64);
-        justify-content: space-around;
+        justify-content: flex-start;
         width: 100%;
 
         * {
@@ -204,8 +213,16 @@ button {
 
         label {
             align-self: center;
-            margin-right: rem(1);
+            padding-right: rem(16);
         }
+    }
+
+    .view-answer-cell {
+        border-right: 0.5px solid #a29ec4;
+    }
+
+    .view-wordle-cell {
+        padding-left: rem(16);
     }
 
     .delete-cell,
@@ -216,7 +233,6 @@ button {
     }
 
     .one-status {
-        display: none;
         font-size: rem(7);
         font-style: italic;
         font-weight: 700;
@@ -232,7 +248,7 @@ button {
         align-self: center;
         border-radius: rem(33);
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-        padding: 0 rem(8);
+        padding: 0 rem(16);
 
         &:focus,
         &:hover {
@@ -276,7 +292,7 @@ button {
         .one-wordle {
             align-items: center;
             display: grid;
-            grid-template-columns: 3fr 3fr 1fr 1fr 1fr 2fr 1.5fr;
+            grid-template-columns: 3fr 3fr 1fr 1.5fr 1.5fr 2fr 1.5fr;
             justify-content: center;
         }
 
@@ -322,7 +338,7 @@ button {
         }
 
         .view-answer-cell {
-            border-bottom: none;
+            border: none;
             grid-column-end: 5;
             grid-column-start: 4;
             grid-row-end: 2;
@@ -336,6 +352,7 @@ button {
             grid-column-start: 5;
             grid-row-end: 2;
             grid-row-start: 1;
+            padding-left: 0;
             text-align: center;
         }
 
@@ -365,6 +382,13 @@ button {
 
         input[name="entries"] {
             text-align: center;
+        }
+
+        .view-answer,
+        .view-wordle,
+        .delete-button {
+            margin: auto;
+            padding: 0 rem(8);
         }
     }
 }
