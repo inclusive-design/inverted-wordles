@@ -1,4 +1,4 @@
-/* global uuidv4 */
+/* global globalOptions, uuidv4 */
 
 "use strict";
 
@@ -115,4 +115,12 @@ inverted_wordles.getWordleRow = function (wordleOptions) {
     </div>\n\n`;
 
     return htmlTogo;
+};
+
+inverted_wordles.findWordleRowByBranchName = function (branchName) {
+    const wordlesListElm = document.querySelector(globalOptions.selectors.wordlesArea);
+    // On the wordle list, find the row with the same branch name
+    const branchNameElm = wordlesListElm.querySelector("input[value=\"" + branchName + "\"]");
+    // Remove the old wordle row
+    return branchNameElm.parentElement;
 };

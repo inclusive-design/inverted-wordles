@@ -3,8 +3,8 @@
 /* global globalOptions, inverted_wordles */
 
 // Bind onChange events for all input fields that users will change values
-inverted_wordles.bindInputFieldEvents = function () {
-    const inputElements = document.getElementsByTagName("input");
+inverted_wordles.bindInputFieldEvents = function (containerElm) {
+    const inputElements = containerElm.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
         const currentInput = inputElements[i];
         // Only bind for user controlled input fields

@@ -8,8 +8,8 @@ inverted_wordles.initPage = function (response) {
     response.json().then(wordles => {
         inverted_wordles.listWordles(wordles, globalOptions.selectors.wordlesArea);
         inverted_wordles.bindCreateEvent();
-        inverted_wordles.bindInputFieldEvents();
-        inverted_wordles.bindDeleteEvents();
+        inverted_wordles.bindInputFieldEvents(document);
+        inverted_wordles.bindDeleteEvents(document);
     });
 };
 

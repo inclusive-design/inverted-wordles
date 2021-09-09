@@ -3,8 +3,8 @@
 /* global globalOptions, inverted_wordles, openDialog, closeDialog */
 
 // Bind events for delete buttons
-inverted_wordles.bindDeleteEvents = function () {
-    const delButtons = document.querySelectorAll(globalOptions.selectors.deleteButton);
+inverted_wordles.bindDeleteEvents = function (containerElm) {
+    const delButtons = containerElm.querySelectorAll(globalOptions.selectors.deleteButton);
     for (let i = 0; i < delButtons.length; i++) {
         const currentButton = delButtons[i];
         // Open the delete confirmation dialog
@@ -25,10 +25,8 @@ window.deleteWordle = function (closeButton) {
     const branchName = closeButton.parentElement.querySelector("input[name='" + globalOptions.branchNameField + "']").value;
     // close the confirmation dialog
     closeDialog(closeButton);
-    // On the wordle list, find the row with the same branch name
-    const branchNameElm = document.querySelector(globalOptions.selectors.wordlesArea).querySelector("input[value=\"" + branchName + "\"]");
-    // Find the row with current branch name
-    const rowElm = branchNameElm.parentElement;
+    // Find the row with the current branch name
+    const rowElm = inverted_wordles.findWordleRowByBranchName(branchName);
     // Find the status element for reporting errors when occuring
     const oneStatusElm = rowElm.querySelector(globalOptions.selectors.oneStatus);
 

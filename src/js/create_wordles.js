@@ -26,12 +26,8 @@ inverted_wordles.appendNewWordleRow = function (branchName, lastModifiedTimestam
     document.querySelector(globalOptions.selectors.wordlesArea).innerHTML += newWordleRow;
 };
 
-inverted_wordles.updateNewWordleRow = function (branchName, lastModifiedTimestamp) {
-    const wordlesListElm = document.querySelector(globalOptions.selectors.wordlesArea);
-    // On the wordle list, find the row with the same branch name
-    const branchNameElm = wordlesListElm.querySelector("input[value=\"" + branchName + "\"]");
-    // Remove the old wordle row
-    branchNameElm.parentElement.remove();
+inverted_wordles.updateNewWordleRow = function (oldWordleRow, branchName, lastModifiedTimestamp) {
+    oldWordleRow.remove();
     // Find the status element for reporting errors when occuring
     const newWordleRow = inverted_wordles.getWordleRow({
         branchName: branchName,
@@ -93,7 +89,14 @@ window.createWordle = function (closeButton) {
                                 if (res.exists) {
                                     clearInterval(checkDeployInterval);
                                     // Update the new wordle row to a regular row when the deploy is up and running
-                                    inverted_wordles.updateNewWordleRow(branchName, lastModifiedTimestamp);
+                                    inverted_wordles.updateNewWordleRow(inverted_wordles.findWordleRowByBranchName(branchName), branchName, lastModifiedTimestamp);
+
+                                    // Bind events for input elements and buttons on the new wordle row
+                                    const wordleRow = inverted_wordles.findWordleRowByBranchName(branchName);
+                                    inverted_wordles.bindInputFieldEvents(wordleRow);
+                                    inverted_wordles.bindDeleteEvents(wordleRow);
+
+                                    // Enable the "new question" button
                                     document.querySelector(globalOptions.selectors.createButton).disabled = false;
                                 }
                             });
