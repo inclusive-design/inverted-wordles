@@ -4,7 +4,6 @@ const http = require("http");
 const url = require("url");
 
 exports.handler = async function (event) {
-    console.log("event: ", event.path);
     console.log("Received check_deploy request at " + new Date() + " with path " + event.path);
     var branch = /check_deploy\/(.*)/.exec(event.path)[1];
 
@@ -29,7 +28,6 @@ exports.handler = async function (event) {
                 port: 80,
                 path: url.parse(wordleUrl).pathname
             }, function (response) {
-                console.log("check_deploy received response: ", response.statusCode);
                 if (response.statusCode < 400) {
                     resolve(true);
                 } else {
@@ -38,7 +36,6 @@ exports.handler = async function (event) {
             });
 
             req.on("error", err => {
-                console.log("check_deploy error: ", err);
                 reject(err);
             });
             req.end();
@@ -48,7 +45,7 @@ exports.handler = async function (event) {
     try {
         const wordleUrl = "https://" + branch + "--inverted-wordles.netlify.app/";
         const isUrlExists = await checkUrlExists(wordleUrl);
-        console.log("isUrlExists: ", isUrlExists);
+        console.log("Done: the wordle url existent status", isUrlExists);
         return {
             statusCode: 200,
             body: JSON.stringify({

@@ -105,7 +105,6 @@ window.createWordle = function (closeButton) {
 
                     timesCheck++;
                     if (timesCheck === 60) {
-                        console.log("time is up, quit checkDeployInterval");
                         clearInterval(checkDeployInterval);
                     }
                 }, 2000);

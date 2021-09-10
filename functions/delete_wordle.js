@@ -31,6 +31,7 @@ exports.handler = async function (event) {
             repoName: process.env.WORDLES_REPO_NAME,
             branchName: branch
         });
+        console.log("Done: the wordle branch is deleted.");
         return {
             statusCode: 200,
             body: "Deleted successfully!"

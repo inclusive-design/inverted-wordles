@@ -29,7 +29,6 @@ exports.handler = async function (event) {
     });
 
     try {
-        console.log("Create a new branch: ", branchName);
         await gitOpsApi.createBranch(octokit, {
     		repoOwner: process.env.WORDLES_REPO_OWNER,
     		repoName: process.env.WORDLES_REPO_NAME,
@@ -58,6 +57,7 @@ exports.handler = async function (event) {
             commitMessage: "chore: [skip ci] update question.json when creating a new wordle",
             sha: questionFileInfo.sha
         });
+        console.log("Done: the branch is created and the question file is initialized");
 
         return {
             statusCode: 200,
