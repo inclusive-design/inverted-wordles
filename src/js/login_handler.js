@@ -2,8 +2,12 @@
 
 /* global netlifyIdentity, globalOptions, inverted_wordles */
 
+document.addEventListener("DOMContentLoaded", () => {
+    globalOptions.user = netlifyIdentity.currentUser();
+});
+
 inverted_wordles.setLoginState = function (isLoggedIn) {
-    // disable all input elements
+    // Enable or disable all input elements
     const inputElements = document.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
         if (globalOptions.inputFieldNames.includes(inputElements[i].getAttribute("name"))) {
@@ -15,14 +19,14 @@ inverted_wordles.setLoginState = function (isLoggedIn) {
         }
     }
 
-    // disable delete buttons
+    // Enable or disable delete buttons
     const deleteButtons = document.querySelectorAll(globalOptions.selectors.deleteButton);
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].disabled = isLoggedIn ? false : true;
     }
 
-    // hide create new question button
-    document.querySelector(globalOptions.selectors.createButton).style.visibility = isLoggedIn ? "visible" : "hidden";
+    // Show or hide create new question button
+    document.querySelector(globalOptions.selectors.createButton).style.display = isLoggedIn ? "block" : "none";
 };
 
 inverted_wordles.bindNetlifyEvents = function () {
