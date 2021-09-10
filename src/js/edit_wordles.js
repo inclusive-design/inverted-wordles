@@ -30,7 +30,7 @@ inverted_wordles.bindInputFieldEvents = function (containerElm) {
                         // See https://github.com/whatwg/fetch/issues/18
                         if (response.status >= 400 && response.status < 600) {
                             response.json().then(res => {
-                                inverted_wordles.reportStatus("*New edits FAILED. Error: " + res.error + "*", oneStatusElm, true);
+                                inverted_wordles.reportStatus("*FAILED: New edits FAILED. Error: " + res.error + "*", oneStatusElm, true);
                             });
                         } else {
                             response.json().then(res => {
@@ -38,7 +38,7 @@ inverted_wordles.bindInputFieldEvents = function (containerElm) {
                                 const lastModifiedElm = currentInput.parentElement.parentElement.querySelector("[id^=\"" + globalOptions.lastModifiedIdPrefix + "\"]");
                                 lastModifiedElm.textContent = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
                                 // Report the success status
-                                inverted_wordles.reportStatus("*FAILED: New edits SUCCESSFUL*", oneStatusElm, false);
+                                inverted_wordles.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, false);
                             });
                         }
                     },
