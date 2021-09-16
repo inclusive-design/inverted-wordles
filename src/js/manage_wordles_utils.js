@@ -208,7 +208,7 @@ inverted_wordles.bindPolling = function (wordlesAreaSelector, createButtonSelect
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(res => {
-                    if (res[wordleValues.branchName].exists) {
+                    if (res[wordleValues.branchName]) {
                         clearInterval(checkDeployInterval);
                         // Update the new wordle row to a regular row when the deploy is up and running
                         inverted_wordles.updateWordleRow(wordlesAreaSelector, {
