@@ -43,7 +43,7 @@ exports.handler = async function (event) {
         await gitOpsApi.updateSingleFile(octokit, {
             repoOwner: process.env.WORDLES_REPO_OWNER,
             repoName: process.env.WORDLES_REPO_NAME,
-            branchName: branchName,
+            branchName,
             filePath: questionFilePath,
             fileContent: JSON.stringify({
                 workshopName: "",

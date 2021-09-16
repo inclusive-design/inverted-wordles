@@ -6,7 +6,7 @@
 inverted_wordles.initPage = function (response) {
     inverted_wordles.bindNetlifyEvents(globalOptions);
     response.json().then(wordles => {
-        inverted_wordles.listWordles(wordles, globalOptions.selectors.wordlesArea);
+        inverted_wordles.listWordles(wordles, globalOptions.selectors.wordlesArea, globalOptions.selectors.status);
         // globalOptions.user is set in login_handler.js
         inverted_wordles.setLoginState(globalOptions.user ? true : false);
         inverted_wordles.bindCreateEvent();

@@ -32,7 +32,7 @@ permalink: /
     </div>
     <span id="status" role="status"></span>
 
-    {# The model dialog for creating new wordles #}
+    {# The modal dialog for creating new wordles #}
     <div class="dialog-backdrop no-scroll">
         <div id="create-dialog" role="alertdialog" aria-modal="true" aria-labelledby="create_dialog_label" aria-describedby="create_dialog_desc" class="hidden">
             <h2 id="create_dialog_label" class="dialog_label">Confirm to Create New Question</h2>
@@ -60,7 +60,7 @@ permalink: /
         </div>
     </div>
 
-    {# The model dialog for deleting wordles #}
+    {# The modal dialog for deleting wordles #}
     <div class="dialog-backdrop no-scroll">
         <div id="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete_dialog_label" aria-describedby="delete_dialog_desc" class="hidden">
             <h2 id="delete_dialog_label" class="dialog_label">Confirm to Delete</h2>
@@ -145,16 +145,16 @@ const globalOptions = {
 <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 {# For generating UUID #}
 <script type="text/javascript" src="/lib/uuidv4.min.js"></script>
-{# For model dialogs #}
+{# For modal dialogs #}
 <script src="/lib/utils.js"></script>
 <script src="/lib/dialog.js"></script>
 {# For managing wordles #}
 <script src="/js/manage_wordles_utils.js"></script>
 <script src="/js/login_handler.js"></script>
-<script src="/js/list_wordles.js"></script>
 <script src="/js/edit_wordles.js"></script>
 <script src="/js/delete_wordles.js"></script>
-<script src="/js/create_wordles.js"></script>
+<script src="/js/create_wordle.js"></script>
+<script src="/js/list_wordles.js"></script>
 <script src="/js/init_manage_wordle.js"></script>
 
 <script>

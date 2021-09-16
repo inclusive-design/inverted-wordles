@@ -26,7 +26,7 @@ window.deleteWordle = function (closeButton) {
     // close the confirmation dialog
     closeDialog(closeButton);
     // Find the row with the current branch name
-    const rowElm = inverted_wordles.findWordleRowByBranchName(branchName);
+    const rowElm = inverted_wordles.findWordleRowByBranchName(globalOptions.selectors.wordlesArea, branchName);
     // Find the status element for reporting errors when occuring
     const oneStatusElm = rowElm.querySelector(globalOptions.selectors.oneStatus);
 

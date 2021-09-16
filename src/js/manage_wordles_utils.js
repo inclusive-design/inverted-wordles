@@ -1,4 +1,4 @@
-/* global globalOptions, uuidv4 */
+/* global uuidv4 */
 
 "use strict";
 
@@ -43,7 +43,7 @@ inverted_wordles.reportStatus = function (message, statusElm, isError) {
  * @param {wordleOptions} wordleOptions - An instance of octokit with authentication being set.
  * @return {String} A html string mapping to a wordle record on the landing page.
  */
-inverted_wordles.getWordleRow = function (wordleOptions) {
+inverted_wordles.renderWordleRow = function (wordleOptions) {
     const disableInputs = wordleOptions.disableInputs || false;
     const isCreateNew = wordleOptions.isCreateNew || false;
     const uniqueId = uuidv4();
@@ -117,10 +117,123 @@ inverted_wordles.getWordleRow = function (wordleOptions) {
     return htmlTogo;
 };
 
-inverted_wordles.findWordleRowByBranchName = function (branchName) {
-    const wordlesListElm = document.querySelector(globalOptions.selectors.wordlesArea);
+inverted_wordles.findWordleRowByBranchName = function (wordlesAreaSelector, branchName) {
+    const wordlesListElm = document.querySelector(wordlesAreaSelector);
     // On the wordle list, find the row with the same branch name
     const branchNameElm = wordlesListElm.querySelector("input[value=\"" + branchName + "\"]");
     // Remove the old wordle row
     return branchNameElm.parentElement;
+};
+
+/**
+ * An object that contains file information.
+ * @typedef {Object} WordleValues
+ * @param {String} branchName - The branch name.
+ * @param {String} workshopName - The workshop name.
+ * @param {String} question - The question.
+ * @param {Number} entries - The entries.
+ * @param {String} lastModifiedTimestamp - Last modified timestamp.
+ */
+
+/**
+ * Update the wordle row rendered for a specific branch.
+ * @param {String} wordlesAreaSelector - The wordles area selector.
+ * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
+ */
+inverted_wordles.updateWordleRow = function (wordlesAreaSelector, wordleValues) {
+    // Remove the existing wordle row for the given branch
+    inverted_wordles.findWordleRowByBranchName(wordlesAreaSelector, wordleValues.branchName).remove();
+
+    // Get the html for the new row
+    const newWordleRow = inverted_wordles.renderWordleRow({
+        branchName: wordleValues.branchName,
+        workshopName: wordleValues.workshopName,
+        question: wordleValues.question,
+        entries: wordleValues.entries,
+        lastModifiedTimestamp: wordleValues.lastModifiedTimestamp
+    });
+
+    // append the new row to the wordle list
+    document.querySelector(wordlesAreaSelector).innerHTML += newWordleRow;
+};
+
+/**
+ * Append the wordle row that is in the process of deploy to the wordle list.
+ * @param {String} wordlesAreaSelector - The wordles area selector.
+ * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
+ */
+inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordleValues) {
+    const newWordleRow = inverted_wordles.renderWordleRow({
+        branchName: wordleValues.branchName,
+        workshopName: wordleValues.workshopName,
+        question: wordleValues.question,
+        entries: wordleValues.entries,
+        lastModifiedTimestamp: wordleValues.lastModifiedTimestamp,
+        statusMsg: "*Please wait until the question link is generated and webpage is created. This may take 30 seconds*",
+        extraStatusClass: "purple",
+        extraRowClass: "grey-background",
+        disableInputs: true,
+        isCreateNew: true
+    });
+
+    // append the new row to the wordle list
+    document.querySelector(wordlesAreaSelector).innerHTML += newWordleRow;
+};
+
+/**
+ * Bind the polling event to check if a branch deploy completes.
+ * @param {String} wordlesAreaSelector - The wordles area selector.
+ * @param {String} createButtonSelector - The create button selector.
+ * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
+ */
+inverted_wordles.bindPolling = function (wordlesAreaSelector, createButtonSelector, wordleValues) {
+    // Disable "new question" button
+    document.querySelector(createButtonSelector).disabled = true;
+
+    // Check if the new branch has been deployed. The check runs every 2 seconds in 2 minutes.
+    // The check stops in one of these two conditions:
+    // 1. The site is not up running after 2 minutes;
+    // 2. The deploy is up running.
+    // When the new wordle web pages are deployed, update the wordle list with a proper row.
+    let timesCheck = 0;
+    let checkDeployInterval = setInterval(function () {
+        fetch("/api/check_deploy/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                branches: [wordleValues.branchName]
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                response.json().then(res => {
+                    if (res[wordleValues.branchName].exists) {
+                        clearInterval(checkDeployInterval);
+                        // Update the new wordle row to a regular row when the deploy is up and running
+                        inverted_wordles.updateWordleRow(wordlesAreaSelector, {
+                            branchName: wordleValues.branchName,
+                            workshopName: wordleValues.workshopName,
+                            question: wordleValues.question,
+                            entries: wordleValues.entries,
+                            lastModifiedTimestamp: wordleValues.lastModifiedTimestamp
+                        });
+
+                        // Bind events for input elements and buttons on the new wordle row
+                        const wordleRow = inverted_wordles.findWordleRowByBranchName(wordlesAreaSelector, wordleValues.branchName);
+                        inverted_wordles.bindInputFieldEvents(wordleRow);
+                        inverted_wordles.bindDeleteEvents(wordleRow);
+
+                        // Enable the "new question" button
+                        document.querySelector(createButtonSelector).disabled = false;
+                    }
+                });
+            }
+        });
+
+        timesCheck++;
+        if (timesCheck === 60) {
+            clearInterval(checkDeployInterval);
+        }
+    }, 2000);
 };
