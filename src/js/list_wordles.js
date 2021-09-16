@@ -63,10 +63,10 @@ inverted_wordles.listWordles = function (wordles, wordlesAreaSelector, createBut
                     // Bind the polling event to update the wordle row when the deploy is ready
                     inverted_wordles.bindPolling(wordlesAreaSelector, createButtonSelector, {
                         branchName,
-                        workshopName: res[branchName].workshopName,
-                        question: res[branchName].question,
-                        entries: res[branchName].entries,
-                        lastModifiedTimestamp: res[branchName].lastModifiedTimestamp
+                        workshopName: questionFile.workshopName,
+                        question: questionFile.question,
+                        entries: questionFile.entries,
+                        lastModifiedTimestamp: questionFile.lastModifiedTimestamp
                     });
                 }
             });
