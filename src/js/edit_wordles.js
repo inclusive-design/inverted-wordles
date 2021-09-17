@@ -8,7 +8,7 @@ inverted_wordles.bindInputFieldEvents = function (containerElm) {
     for (let i = 0; i < inputElements.length; i++) {
         const currentInput = inputElements[i];
         // Only bind for user controlled input fields
-        if (globalOptions.inputFieldNames.includes(currentInput.getAttribute("name"))) {
+        if (globalOptions.inputFieldNames.includes(currentInput.getAttribute("name")) && !currentInput.disabled) {
             currentInput.addEventListener("change", evt => {
                 const parentContainer = currentInput.parentElement.parentElement;
                 const oneStatusElm = parentContainer.querySelector(globalOptions.selectors.oneStatus);

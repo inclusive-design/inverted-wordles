@@ -42,7 +42,8 @@ window.createWordle = function (closeButton) {
                     workshopName: "",
                     question: "",
                     entries: 0,
-                    lastModifiedTimestamp
+                    lastModifiedTimestamp,
+                    deployStatus: globalOptions.deployStatus.inProgress
                 });
 
                 // Bind the polling event to update the wordle row when the deploy is ready

@@ -7,22 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 inverted_wordles.setLoginState = function (isLoggedIn) {
-    // Enable or disable all input elements
-    const inputElements = document.getElementsByTagName("input");
-    for (let i = 0; i < inputElements.length; i++) {
-        if (globalOptions.inputFieldNames.includes(inputElements[i].getAttribute("name"))) {
-            if (isLoggedIn) {
-                inputElements[i].removeAttribute("disabled");
-            } else {
-                inputElements[i].setAttribute("disabled", "disabled");
+    const deployStatusElements = document.querySelector("input[name='" + globalOptions.deployStatusField + "']");
+    for (let i = 0; i < deployStatusElements.length; i++) {
+        const currentDeployStatus = deployStatusElements[i].value;
+        const enabled = isLoggedIn && currentDeployStatus === globalOptions.deployStatus.ready;
+
+        // For wordles that have been deployed, enable their input fields and delete button. Otherwise, disable them.
+        const parentContainer = deployStatusElements[i].parentElement;
+        const inputElements = parentContainer.getElementsByTagName("input");
+        for (let i = 0; i < inputElements.length; i++) {
+            if (globalOptions.inputFieldNames.includes(inputElements[i].getAttribute("name"))) {
+                if (enabled) {
+                    inputElements[i].removeAttribute("disabled");
+                } else {
+                    inputElements[i].setAttribute("disabled", "disabled");
+                }
             }
         }
-    }
 
-    // Enable or disable delete buttons
-    const deleteButtons = document.querySelectorAll(globalOptions.selectors.deleteButton);
-    for (let i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].disabled = isLoggedIn ? false : true;
+        parentContainer.querySelector(globalOptions.selectors.deleteButton).disabled = enabled ? false : true;
     }
 
     // Show or hide create new question button

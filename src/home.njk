@@ -121,10 +121,15 @@ permalink: /
 <script>
 const globalOptions = {
     inputFieldNames: ["workshop-name", "question", "entries"],
+    deployStatus: {
+        ready: "ready",
+        inProgress: "inProgress"
+    },
     wordleRowIdPrefix: "one-wordle-id",
     deleteButtonIdPrefix: "delete-id",
     lastModifiedIdPrefix: "last-modified-id",
     branchNameField: "branchName",
+    deployStatusField: "deployStatus",
     createDialogId: "create-dialog",
     createCancelId: "create-cancel",
     deleteDialogId: "delete-dialog",
@@ -154,10 +159,9 @@ const globalOptions = {
 <script src="/js/edit_wordles.js"></script>
 <script src="/js/delete_wordles.js"></script>
 <script src="/js/create_wordle.js"></script>
-<script src="/js/list_wordles.js"></script>
 <script src="/js/init_manage_wordle.js"></script>
 
 <script>
-inverted_wordles.initWordles();
+inverted_wordles.initManagePage();
 </script>
 {% endblock %}

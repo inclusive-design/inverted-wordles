@@ -112,6 +112,7 @@ inverted_wordles.renderWordleRow = function (wordleOptions) {
         </div>
         <div class="one-status ${ wordleOptions.extraStatusClass ? wordleOptions.extraStatusClass : "" } ${ wordleOptions.statusMsg ? "" : "hidden" }" role="status">${ wordleOptions.statusMsg ? wordleOptions.statusMsg : "" }</div>
         <input type="hidden" name="branchName" value="${ wordleOptions.branchName }">
+        <input type="hidden" name="deployStatus" value="${ wordleOptions.deployStatus }">
     </div>\n\n`;
 
     return htmlTogo;
@@ -150,7 +151,8 @@ inverted_wordles.updateWordleRow = function (wordlesAreaSelector, wordleValues) 
         workshopName: wordleValues.workshopName,
         question: wordleValues.question,
         entries: wordleValues.entries,
-        lastModifiedTimestamp: wordleValues.lastModifiedTimestamp
+        lastModifiedTimestamp: wordleValues.lastModifiedTimestamp,
+        deployStatus: wordleValues.deployStatus
     });
 
     // append the new row to the wordle list
@@ -169,6 +171,7 @@ inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordle
         question: wordleValues.question,
         entries: wordleValues.entries,
         lastModifiedTimestamp: wordleValues.lastModifiedTimestamp,
+        deployStatus: wordleValues.deployStatus,
         statusMsg: "*Please wait until the question link is generated and webpage is created. This may take 30 seconds*",
         extraStatusClass: "purple",
         extraRowClass: "grey-background",

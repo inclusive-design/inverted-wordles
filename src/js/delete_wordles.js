@@ -7,16 +7,18 @@ inverted_wordles.bindDeleteEvents = function (containerElm) {
     const delButtons = containerElm.querySelectorAll(globalOptions.selectors.deleteButton);
     for (let i = 0; i < delButtons.length; i++) {
         const currentButton = delButtons[i];
-        // Open the delete confirmation dialog
-        currentButton.addEventListener("click", evt => {
-            openDialog(globalOptions.deleteDialogId, evt.target.id, globalOptions.deleteCancelId);
-            const deleteDialog = document.getElementById(globalOptions.deleteDialogId);
-            // set the aria-controls attribute to the id of the wordle row that will be deleted
-            const uniqueIdSuffix = evt.target.id.substring(globalOptions.length);
-            deleteDialog.querySelector(globalOptions.selectors.deleteConfirm).setAttribute("aria-controls", globalOptions.wordleRowIdPrefix + uniqueIdSuffix);
-            // set the branch name to the delete confirmation dialog for the future retrival when the deletion is confirmed
-            deleteDialog.querySelector("input[name='" + globalOptions.branchNameField + "']").value = currentButton.parentElement.parentElement.querySelector("input[name='" + globalOptions.branchNameField + "']").value;
-        });
+        if (!currentButton.disabled) {
+            // Open the delete confirmation dialog
+            currentButton.addEventListener("click", evt => {
+                openDialog(globalOptions.deleteDialogId, evt.target.id, globalOptions.deleteCancelId);
+                const deleteDialog = document.getElementById(globalOptions.deleteDialogId);
+                // set the aria-controls attribute to the id of the wordle row that will be deleted
+                const uniqueIdSuffix = evt.target.id.substring(globalOptions.length);
+                deleteDialog.querySelector(globalOptions.selectors.deleteConfirm).setAttribute("aria-controls", globalOptions.wordleRowIdPrefix + uniqueIdSuffix);
+                // set the branch name to the delete confirmation dialog for the future retrival when the deletion is confirmed
+                deleteDialog.querySelector("input[name='" + globalOptions.branchNameField + "']").value = currentButton.parentElement.parentElement.querySelector("input[name='" + globalOptions.branchNameField + "']").value;
+            });
+        }
     };
 };
 
