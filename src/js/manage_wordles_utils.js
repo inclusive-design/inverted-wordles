@@ -156,7 +156,7 @@ inverted_wordles.updateWordleRow = function (wordlesAreaSelector, wordleValues) 
     });
 
     // append the new row to the wordle list
-    document.querySelector(wordlesAreaSelector).innerHTML += newWordleRow;
+    document.querySelector(wordlesAreaSelector).insertAdjacentHTML("beforeend", newWordleRow);
 };
 
 /**
