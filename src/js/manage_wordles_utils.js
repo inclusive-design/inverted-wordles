@@ -180,7 +180,10 @@ inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordle
     });
 
     // append the new row to the wordle list
-    document.querySelector(wordlesAreaSelector).innerHTML += newWordleRow;
+    // Using insertAdjacentHTML() instead of innerHTML prevents the browser from re-evaluating the entire wordlesArea.
+    // It helps to keep value changes and retain event listeners on other row elements.
+    // See: https://stackoverflow.com/questions/38945032/append-htmltext-to-element-without-affecting-siblings
+    document.querySelector(wordlesAreaSelector).insertAdjacentHTML("beforeend", newWordleRow);
 };
 
 /**
