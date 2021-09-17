@@ -5,8 +5,12 @@
 var inverted_wordles = {};
 const netlifyUrlSuffix = "--inverted-wordles.netlify.app/";
 
-// Escape html special characters
-// Reference: https://stackoverflow.com/questions/6234773/can-i-escape-html-special-chars-in-javascript#answer-6234804
+/**
+ * Escape html special characters.
+ * See: https://stackoverflow.com/questions/6234773/can-i-escape-html-special-chars-in-javascript#answer-6234804
+ * @param {String} content - A html content to be escaped.
+ * @return {String} Escaped content.
+ */
 inverted_wordles.escapeHtml = function (content) {
     return content.replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -15,16 +19,22 @@ inverted_wordles.escapeHtml = function (content) {
         .replace(/'/g, "&#039;");
 };
 
+/**
+ * Show a message in a status element.
+ * @param {String} message - A message to show.
+ * @param {DOMElement} statusElm - The status DOM element.
+ * @param {Boolean} isError - Indicate if the message is a regular message or an error.
+ */
 inverted_wordles.reportStatus = function (message, statusElm, isError) {
     statusElm.style.display = "block";
-    statusElm.classList.remove("red");
-    statusElm.classList.remove("green");
-    statusElm.classList.add(isError ? "red" : "green");
+    statusElm.classList.remove("error");
+    statusElm.classList.remove("success");
+    statusElm.classList.add(isError ? "error" : "success");
     statusElm.innerHTML = message;
 };
 
 /**
- * An object that contains required values to render a wordle record.
+ * An object that contains required values to render a wordle row.
  * @typedef {Object} wordleOptions
  * @param {String} branchName - The branch name.
  * @param {String} workshopName - The workshop name.
@@ -40,7 +50,7 @@ inverted_wordles.reportStatus = function (message, statusElm, isError) {
 
 /**
  * Return html of a wordle record on the landing page.
- * @param {wordleOptions} wordleOptions - An instance of octokit with authentication being set.
+ * @param {wordleOptions} wordleOptions - Values required to render a wordle row.
  * @return {String} A html string mapping to a wordle record on the landing page.
  */
 inverted_wordles.renderWordleRow = function (wordleOptions) {
@@ -118,11 +128,17 @@ inverted_wordles.renderWordleRow = function (wordleOptions) {
     return htmlTogo;
 };
 
+/**
+ * Find the wordle row on the wordle list based on the given branch name.
+ * @param {String} wordlesAreaSelector - The wordles area selector.
+ * @param {String} branchName - The branch name.
+ * @return {DOMElement} The DOM element of a wordle row.
+ */
 inverted_wordles.findWordleRowByBranchName = function (wordlesAreaSelector, branchName) {
     const wordlesListElm = document.querySelector(wordlesAreaSelector);
     // On the wordle list, find the row with the same branch name
     const branchNameElm = wordlesListElm.querySelector("input[value=\"" + branchName + "\"]");
-    // Remove the old wordle row
+    // Return the wordle row element
     return branchNameElm.parentElement;
 };
 
@@ -173,7 +189,7 @@ inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordle
         lastModifiedTimestamp: wordleValues.lastModifiedTimestamp,
         deployStatus: wordleValues.deployStatus,
         statusMsg: "*Please wait until the question link is generated and webpage is created. This may take 30 seconds*",
-        extraStatusClass: "purple",
+        extraStatusClass: "info",
         extraRowClass: "grey-background",
         disableInputs: true,
         isCreateNew: true
