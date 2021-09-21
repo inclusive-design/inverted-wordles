@@ -5,6 +5,7 @@ const {
 } = require("@octokit/core");
 
 const gitOpsApi = require("git-ops-api");
+const serverUtils = require("../functions-common/server_utils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
 exports.handler = async function (event) {
@@ -14,14 +15,8 @@ exports.handler = async function (event) {
     // Reject the request when:
     // 1. Not a POST request;
     // 2. Doesn’t provide required values;
-    if (event.httpMethod !== "POST" || !branchName ||
-        !process.env.ACCESS_TOKEN || !process.env.WORDLES_REPO_OWNER || !process.env.WORDLES_REPO_NAME) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: "Invalid HTTP request method or missing field values or missing environment variables."
-            })
-        };
+    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([branchName])) {
+        return serverUtils.invalidRequestResponse;
     }
 
     const octokit = new Octokit({

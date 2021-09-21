@@ -6,6 +6,7 @@ const {
 const uuid = require("uuid");
 
 const gitOpsApi = require("git-ops-api");
+const serverUtils = require("../functions-common/server_utils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
 /**
@@ -65,12 +66,8 @@ exports.handler = async function (event) {
     // Reject the request when:
     // 1. Not a POST request;
     // 2. Doesn’t provide required values
-    if (event.httpMethod !== "POST" || !incomingData.branch || !incomingData.answers ||
-        !process.env.ACCESS_TOKEN || !process.env.WORDLES_REPO_OWNER || !process.env.WORDLES_REPO_NAME) {
-        return {
-            statusCode: 400,
-            body: "Invalid HTTP request method or missing field values or missing environment variables."
-        };
+    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([incomingData.branch, incomingData.answers])) {
+        return serverUtils.invalidRequestResponse;
     }
 
     const octokit = new Octokit({

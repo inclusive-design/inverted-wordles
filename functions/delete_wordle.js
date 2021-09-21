@@ -1,6 +1,7 @@
 "use strict";
 
 const gitOpsApi = require("git-ops-api");
+const serverUtils = require("../functions-common/server_utils.js");
 const {
     Octokit
 } = require("@octokit/core");
@@ -12,15 +13,10 @@ exports.handler = async function (event) {
     // Reject the request when:
     // 1. Not a DELETE request;
     // 2. Doesn’t provide required values
-    if (event.httpMethod !== "DELETE" || !branch ||
-        !process.env.ACCESS_TOKEN || !process.env.WORDLES_REPO_OWNER || !process.env.WORDLES_REPO_NAME) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: "Invalid HTTP request method or missing field values or missing environment variables."
-            })
-        };
+    if (event.httpMethod !== "DELETE" || !serverUtils.isParamsExist([branch])) {
+        return serverUtils.invalidRequestResponse;
     }
+
     const octokit = new Octokit({
         auth: process.env.ACCESS_TOKEN
     });

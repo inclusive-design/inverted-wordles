@@ -15,7 +15,7 @@ inverted_wordles.bindInputFieldEvents = function (containerElm) {
                 // Set the data to be saved
                 let dataTogo = {};
                 dataTogo[evt.target.name] = evt.target.value;
-                dataTogo.branchName = parentContainer.querySelector("[name=\"" + globalOptions.branchNameField + "\"]").value;
+                dataTogo.branch = parentContainer.querySelector("[name=\"" + globalOptions.branchNameField + "\"]").value;
 
                 fetch("/api/save_question", {
                     method: "POST",

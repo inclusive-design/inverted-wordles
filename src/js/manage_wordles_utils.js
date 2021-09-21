@@ -143,6 +143,17 @@ inverted_wordles.findWordleRowByBranchName = function (wordlesAreaSelector, bran
 };
 
 /**
+ * Compute the to-name that shares the same suffix with the from-name.
+ * @param {String} nameFrom - The from-name composing of the from-prefix and the suffix.
+ * @param {String} prefixFrom - The prefix of the from-name.
+ * @param {String} prefixTo - The prefix of the to-name.
+ * @return {String} The to-name that shares the same suffix with the from-name.
+ */
+inverted_wordles.getNameWithSharedSuffix = function (nameFrom, prefixFrom, prefixTo) {
+    return prefixTo + nameFrom.substring(prefixFrom.length);
+};
+
+/**
  * An object that contains file information.
  * @typedef {Object} WordleValues
  * @param {String} branchName - The branch name.

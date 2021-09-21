@@ -1,17 +1,14 @@
 "use strict";
 
-/* global globalOptions, inverted_wordles, openDialog, closeDialog, uuidv4 */
+/* global globalOptions, inverted_wordles, aria, uuidv4 */
 
 // Bind events for create buttons
 inverted_wordles.bindCreateEvent = function () {
     const createButton = document.querySelector(globalOptions.selectors.createButton);
-    createButton.addEventListener("click", evt => openDialog(globalOptions.createDialogId, evt.target.id, globalOptions.createCancelId));
+    createButton.addEventListener("click", evt => aria.openDialog(globalOptions.createDialogId, evt.target.id, globalOptions.createCancelId));
 };
 
-window.createWordle = function (closeButton) {
-    // close the confirmation dialog
-    closeDialog(closeButton);
-
+inverted_wordles.createWordle = function () {
     const generalStatusElm = document.querySelector(globalOptions.selectors.status);
     const branchName = uuidv4();
 

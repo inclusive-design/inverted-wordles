@@ -1,6 +1,7 @@
 "use strict";
 
 const axios = require("axios");
+const serverUtils = require("../functions-common/server_utils.js");
 
 /**
  * Support the endpoint /api/check_deploy
@@ -8,19 +9,13 @@ const axios = require("axios");
 
 exports.handler = async function (event) {
     console.log("Received check_deploy request at " + new Date() + " with path " + event.path);
-    const incomingData = JSON.parse(event.body);
+    const incomingData = JSON.parse(event.body || {});
 
     // Reject the request when:
     // 1. Not a POST request;
     // 2. Doesn’t provide required values
-    if (event.httpMethod !== "POST" || !incomingData.branches ||
-        !process.env.ACCESS_TOKEN || !process.env.WORDLES_REPO_OWNER || !process.env.WORDLES_REPO_NAME) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: "Invalid HTTP request method or missing field values or missing environment variables."
-            })
-        };
+    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([incomingData.branches])) {
+        return serverUtils.invalidRequestResponse;
     }
 
     /**

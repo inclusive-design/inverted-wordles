@@ -5,21 +5,19 @@ const {
 } = require("@octokit/core");
 
 const gitOpsApi = require("git-ops-api");
+const serverUtils = require("../functions-common/server_utils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
 exports.handler = async function (event) {
     console.log("Received fetch_wordles request at " + new Date());
 
-    // Reject the request when the request is not a GET request;
-    if (event.httpMethod !== "GET" ||
-        !process.env.ACCESS_TOKEN || !process.env.WORDLES_REPO_OWNER || !process.env.WORDLES_REPO_NAME) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: "Invalid HTTP request method or missing environment variables."
-            })
-        };
+    // Reject when:
+    // 1. The request when the request is not a GET request;
+    // 2. Required environment variables are not defined.
+    if (event.httpMethod !== "GET" || !serverUtils.isParamsExist()) {
+        return serverUtils.invalidRequestResponse;
     }
+
     const octokit = new Octokit({
         auth: process.env.ACCESS_TOKEN
     });

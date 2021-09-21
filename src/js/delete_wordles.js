@@ -1,6 +1,6 @@
 "use strict";
 
-/* global globalOptions, inverted_wordles, openDialog, closeDialog */
+/* global globalOptions, inverted_wordles, aria */
 
 // Bind events for delete buttons
 inverted_wordles.bindDeleteEvents = function (containerElm) {
@@ -10,11 +10,11 @@ inverted_wordles.bindDeleteEvents = function (containerElm) {
         if (!currentButton.disabled) {
             // Open the delete confirmation dialog
             currentButton.addEventListener("click", evt => {
-                openDialog(globalOptions.deleteDialogId, evt.target.id, globalOptions.deleteCancelId);
+                aria.openDialog(globalOptions.deleteDialogId, evt.target.id, globalOptions.deleteCancelId);
                 const deleteDialog = document.getElementById(globalOptions.deleteDialogId);
                 // set the aria-controls attribute to the id of the wordle row that will be deleted
-                const uniqueIdSuffix = evt.target.id.substring(globalOptions.length);
-                deleteDialog.querySelector(globalOptions.selectors.deleteConfirm).setAttribute("aria-controls", globalOptions.wordleRowIdPrefix + uniqueIdSuffix);
+                const wordleRowId = inverted_wordles.getNameWithSharedSuffix(evt.target.id, globalOptions.deleteButtonIdPrefix, globalOptions.wordleRowIdPrefix);
+                deleteDialog.querySelector(globalOptions.selectors.deleteConfirm).setAttribute("aria-controls", wordleRowId);
                 // set the branch name to the delete confirmation dialog for the future retrival when the deletion is confirmed
                 deleteDialog.querySelector("input[name='" + globalOptions.branchNameField + "']").value = currentButton.parentElement.parentElement.querySelector("input[name='" + globalOptions.branchNameField + "']").value;
             });
@@ -22,11 +22,11 @@ inverted_wordles.bindDeleteEvents = function (containerElm) {
     };
 };
 
-window.deleteWordle = function (closeButton) {
+inverted_wordles.deleteClicked = function (closeButton) {
     // find out the branch to be deleted
     const branchName = closeButton.parentElement.querySelector("input[name='" + globalOptions.branchNameField + "']").value;
     // close the confirmation dialog
-    closeDialog(closeButton);
+    aria.closeDialog(closeButton);
     // Find the row with the current branch name
     const rowElm = inverted_wordles.findWordleRowByBranchName(globalOptions.selectors.wordlesArea, branchName);
     // Find the status element for reporting errors when occuring
