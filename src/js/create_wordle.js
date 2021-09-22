@@ -1,15 +1,15 @@
 "use strict";
 
-/* global globalOptions, inverted_wordles, aria, uuidv4 */
+/* global inverted_wordles, aria, uuidv4 */
 
 // Bind events for create buttons
-inverted_wordles.bindCreateEvent = function () {
-    const createButton = document.querySelector(globalOptions.selectors.createButton);
-    createButton.addEventListener("click", evt => aria.openDialog(globalOptions.createDialogId, evt.target.id, globalOptions.createCancelId));
+inverted_wordles.bindCreateEvent = function (options) {
+    const createButton = document.querySelector(options.selectors.createButton);
+    createButton.addEventListener("click", evt => aria.openDialog(options.createDialogId, evt.target.id, options.createCancelId));
 };
 
-inverted_wordles.createWordle = function () {
-    const generalStatusElm = document.querySelector(globalOptions.selectors.status);
+inverted_wordles.createWordle = function (options) {
+    const generalStatusElm = document.querySelector(options.selectors.status);
     const branchName = uuidv4();
 
     // create the branch
@@ -34,23 +34,23 @@ inverted_wordles.createWordle = function () {
                 const lastModifiedTimestamp = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
 
                 // Append the new wordle row to the wordle list
-                inverted_wordles.appendInDeployWordleRow(globalOptions.selectors.wordlesArea, {
+                inverted_wordles.appendInDeployWordleRow(options.selectors.wordlesArea, {
                     branchName,
                     workshopName: "",
                     question: "",
                     entries: 0,
                     lastModifiedTimestamp,
-                    deployStatus: globalOptions.deployStatus.inProgress
+                    deployStatus: options.deployStatus.inProgress
                 });
 
                 // Bind the polling event to update the wordle row when the deploy is ready
-                inverted_wordles.bindPolling(globalOptions.selectors.wordlesArea, globalOptions.selectors.createButton, {
+                inverted_wordles.bindPolling({
                     branchName,
                     workshopName: "",
                     question: "",
                     entries: 0,
                     lastModifiedTimestamp
-                });
+                }, options);
             });
         }
     }, error => {

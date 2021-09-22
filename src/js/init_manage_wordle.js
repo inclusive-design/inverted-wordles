@@ -1,10 +1,9 @@
 "use strict";
 
-/* global globalOptions, inverted_wordles */
+/* global inverted_wordles */
 
 inverted_wordles.renderWordles = function (wordles, deployStatus, options) {
     const wordlesAreaSelector = options.selectors.wordlesArea;
-    const createButtonSelector = options.selectors.createButton;
 
     let wordlesHtml = document.querySelector(wordlesAreaSelector).innerHTML;
     let branchesInDeploy = {};
@@ -46,13 +45,13 @@ inverted_wordles.renderWordles = function (wordles, deployStatus, options) {
         });
 
         // Bind the polling event to update the wordle row when the deploy is ready
-        inverted_wordles.bindPolling(wordlesAreaSelector, createButtonSelector, {
+        inverted_wordles.bindPolling({
             branchName,
             workshopName: questionFile.workshopName,
             question: questionFile.question,
             entries: questionFile.entries,
             lastModifiedTimestamp: questionFile.lastModifiedTimestamp
-        });
+        }, options);
     }
 };
 
@@ -78,11 +77,11 @@ inverted_wordles.initWordles = function (wordles, options) {
         } else {
             response.json().then(res => {
                 inverted_wordles.renderWordles(wordles, res, options);
-                // globalOptions.user is set in login_handler.js
-                inverted_wordles.setLoginState(globalOptions.user ? true : false);
-                inverted_wordles.bindCreateEvent();
-                inverted_wordles.bindInputFieldEvents(document);
-                inverted_wordles.bindDeleteEvents(document);
+                // inverted_wordles.instance.user is set in login_handler.js
+                inverted_wordles.setLoginState(inverted_wordles.instance.user ? true : false, options);
+                inverted_wordles.bindCreateEvent(options);
+                inverted_wordles.bindInputFieldEvents(document, options);
+                inverted_wordles.bindDeleteEvents(document, options);
             });
         }
     }, error => {
@@ -92,14 +91,14 @@ inverted_wordles.initWordles = function (wordles, options) {
     });
 };
 
-inverted_wordles.initManagePage = function () {
+inverted_wordles.initManagePage = function (options) {
     fetch("/api/fetch_wordles").then(
         response => {
-            inverted_wordles.bindNetlifyEvents(globalOptions);
+            inverted_wordles.bindNetlifyEvents(options);
             response.json().then(wordles => {
-                inverted_wordles.initWordles(wordles, globalOptions);
+                inverted_wordles.initWordles(wordles, options);
             });
         },
-        error => inverted_wordles.reportStatus("Error at fetching wordles: " + error, document.querySelector(globalOptions.selectors.status), true)
+        error => inverted_wordles.reportStatus("Error at fetching wordles: " + error, document.querySelector(options.selectors.status), true)
     );
 };

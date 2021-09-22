@@ -1,8 +1,7 @@
-/* global uuidv4 */
+/* global inverted_wordles, uuidv4 */
 
 "use strict";
 
-var inverted_wordles = {};
 const netlifyUrlSuffix = "--inverted-wordles.netlify.app/";
 
 /**
@@ -215,13 +214,12 @@ inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordle
 
 /**
  * Bind the polling event to check if a branch deploy completes.
- * @param {String} wordlesAreaSelector - The wordles area selector.
- * @param {String} createButtonSelector - The create button selector.
  * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
+ * @param {Object} options - The options for the manage wordles page.
  */
-inverted_wordles.bindPolling = function (wordlesAreaSelector, createButtonSelector, wordleValues) {
+inverted_wordles.bindPolling = function (wordleValues, options) {
     // Disable "new question" button
-    document.querySelector(createButtonSelector).disabled = true;
+    document.querySelector(options.selectors.createButton).disabled = true;
 
     // Check if the new branch has been deployed. The check runs every 2 seconds in 2 minutes.
     // The check stops in one of these two conditions:
@@ -244,7 +242,7 @@ inverted_wordles.bindPolling = function (wordlesAreaSelector, createButtonSelect
                     if (res[wordleValues.branchName]) {
                         clearInterval(checkDeployInterval);
                         // Update the new wordle row to a regular row when the deploy is up and running
-                        inverted_wordles.updateWordleRow(wordlesAreaSelector, {
+                        inverted_wordles.updateWordleRow(options.selectors.wordlesArea, {
                             branchName: wordleValues.branchName,
                             workshopName: wordleValues.workshopName,
                             question: wordleValues.question,
@@ -253,12 +251,12 @@ inverted_wordles.bindPolling = function (wordlesAreaSelector, createButtonSelect
                         });
 
                         // Bind events for input elements and buttons on the new wordle row
-                        const wordleRow = inverted_wordles.findWordleRowByBranchName(wordlesAreaSelector, wordleValues.branchName);
-                        inverted_wordles.bindInputFieldEvents(wordleRow);
-                        inverted_wordles.bindDeleteEvents(wordleRow);
+                        const wordleRow = inverted_wordles.findWordleRowByBranchName(options.selectors.wordlesArea, wordleValues.branchName);
+                        inverted_wordles.bindInputFieldEvents(wordleRow, options);
+                        inverted_wordles.bindDeleteEvents(wordleRow, options);
 
                         // Enable the "new question" button
-                        document.querySelector(createButtonSelector).disabled = false;
+                        document.querySelector(options.selectors.createButton).disabled = false;
                     }
                 });
             }

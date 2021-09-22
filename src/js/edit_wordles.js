@@ -1,21 +1,21 @@
 "use strict";
 
-/* global globalOptions, inverted_wordles */
+/* global inverted_wordles */
 
 // Bind onChange events for all input fields that users will change values
-inverted_wordles.bindInputFieldEvents = function (containerElm) {
+inverted_wordles.bindInputFieldEvents = function (containerElm, options) {
     const inputElements = containerElm.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
         const currentInput = inputElements[i];
         // Only bind for user controlled input fields
-        if (globalOptions.inputFieldNames.includes(currentInput.getAttribute("name")) && !currentInput.disabled) {
+        if (options.inputFieldNames.includes(currentInput.getAttribute("name")) && !currentInput.disabled) {
             currentInput.addEventListener("change", evt => {
                 const parentContainer = currentInput.parentElement.parentElement;
-                const oneStatusElm = parentContainer.querySelector(globalOptions.selectors.oneStatus);
+                const oneStatusElm = parentContainer.querySelector(options.selectors.oneStatus);
                 // Set the data to be saved
                 let dataTogo = {};
                 dataTogo[evt.target.name] = evt.target.value;
-                dataTogo.branch = parentContainer.querySelector("[name=\"" + globalOptions.branchNameField + "\"]").value;
+                dataTogo.branch = parentContainer.querySelector("[name=\"" + options.branchNameField + "\"]").value;
 
                 fetch("/api/save_question", {
                     method: "POST",
@@ -35,7 +35,7 @@ inverted_wordles.bindInputFieldEvents = function (containerElm) {
                         } else {
                             response.json().then(res => {
                                 // Find the last modified element and set the new timestamp
-                                const lastModifiedElm = currentInput.parentElement.parentElement.querySelector("[id^=\"" + globalOptions.lastModifiedIdPrefix + "\"]");
+                                const lastModifiedElm = currentInput.parentElement.parentElement.querySelector("[id^=\"" + options.lastModifiedIdPrefix + "\"]");
                                 lastModifiedElm.textContent = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
                                 // Report the success status
                                 inverted_wordles.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, false);
