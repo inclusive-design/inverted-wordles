@@ -18,7 +18,7 @@ exports.handler = async function (event) {
     // 2. Doesn’t provide required values;
     // 3. Provided parameter names are not allowed;
     const paramsAllValid = Object.keys(parameters).every(paramKey => allowedParameters.includes(paramKey));
-    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([branch]) || !paramsAllValid) {
+    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([parameters.branch]) || !paramsAllValid) {
         return serverUtils.invalidRequestResponse;
     }
 
