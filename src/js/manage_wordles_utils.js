@@ -215,7 +215,7 @@ inverted_wordles.manage.appendInDeployWordleRow = function (wordlesAreaSelector,
 /**
  * Bind the polling event to check if a branch deploy completes.
  * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
- * @param {Object} options - The options for the manage wordles page.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.bindPolling = function (wordleValues, options) {
     // Disable "new question" button

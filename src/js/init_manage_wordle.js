@@ -2,6 +2,29 @@
 
 /* global inverted_wordles */
 
+/**
+ * An object that contains a list of wordles.
+* @typedef {Object} Wordle
+ * A single wordle.
+ * @property {Object} content - The content of src/_data/question.json.
+ * @property {Boolean} exists - Indicate whether src/_data/question.json exists.
+ * @property {String} sha - The sha for src/_data/question.json.
+ */
+
+/**
+ * An object that contains a list of wordles.
+ * @typedef {Object} Wordles
+ * A complete list of wordles.
+ * @property {Wordle} branchName - The branch name of a wordle. Used as a key for each wordle.
+ */
+
+/**
+ * Render a list of wordles based on their deploy states. Wordles that have been deployed are displayed
+ * at the top of the list following by wordles that are in the process of deploy.
+ * @param {Wordles} wordles - A list of wordles keyed by branch names.
+ * @param {Object} deployStatus - The deploy status of all wordles. Example: {"branchName": {Boolean}, ...}
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.renderWordles = function (wordles, deployStatus, options) {
     const wordlesAreaSelector = options.selectors.wordlesArea;
 
@@ -55,6 +78,11 @@ inverted_wordles.manage.renderWordles = function (wordles, deployStatus, options
     }
 };
 
+/**
+ * Check deploy states of all wordles and render them into the wordle area.
+ * @param {Wordles} wordles - A list of wordles keyed by branch names.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.initWordles = function (wordles, options) {
     const generalStatusElm = document.querySelector(options.selectors.status);
 
@@ -91,6 +119,10 @@ inverted_wordles.manage.initWordles = function (wordles, options) {
     });
 };
 
+/**
+ * Initialize the manage wordles page by fetching and rendering all wordles.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.initManagePage = function (options) {
     fetch("/api/fetch_wordles").then(
         response => {

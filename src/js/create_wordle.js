@@ -2,12 +2,19 @@
 
 /* global inverted_wordles, aria, uuidv4 */
 
-// Bind events for create buttons
+/**
+ * Bind event listeners for the "create question" button.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.bindCreateEvent = function (options) {
     const createButton = document.querySelector(options.selectors.createButton);
     createButton.addEventListener("click", evt => aria.openDialog(options.createDialogId, evt.target.id, options.createCancelId));
 };
 
+/**
+ * Create a wordle.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.createWordle = function (options) {
     const generalStatusElm = document.querySelector(options.selectors.status);
     const branchName = uuidv4();

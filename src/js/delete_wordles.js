@@ -2,7 +2,11 @@
 
 /* global inverted_wordles, aria */
 
-// Bind events for delete buttons
+/**
+ * Bind event listeners for "Delete a wordle" buttons.
+ * @param {DOMElement} containerElm - The DOM element of the holding container to find delete buttons.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.bindDeleteEvents = function (containerElm, options) {
     const delButtons = containerElm.querySelectorAll(options.selectors.deleteButton);
     for (let i = 0; i < delButtons.length; i++) {
@@ -22,6 +26,11 @@ inverted_wordles.manage.bindDeleteEvents = function (containerElm, options) {
     };
 };
 
+/**
+ * Delete a wordle.
+ * @param {DOMElement} closeButton - The DOM element of the close button.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.deleteClicked = function (closeButton, options) {
     // find out the branch to be deleted
     const branchName = closeButton.parentElement.querySelector("input[name='" + options.branchNameField + "']").value;

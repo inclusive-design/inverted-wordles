@@ -2,7 +2,11 @@
 
 /* global inverted_wordles */
 
-// Bind onChange events for all input fields that users will change values
+/**
+ * Bind onChange events for all input fields that users will change values.
+ * @param {DOMElement} containerElm - The DOM element of the holding container to find input fields.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ */
 inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) {
     const inputElements = containerElm.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
