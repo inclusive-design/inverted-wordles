@@ -10,7 +10,7 @@ const netlifyUrlSuffix = "--inverted-wordles.netlify.app/";
  * @param {String} content - A html content to be escaped.
  * @return {String} Escaped content.
  */
-inverted_wordles.escapeHtml = function (content) {
+inverted_wordles.manage.escapeHtml = function (content) {
     return content.replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -24,7 +24,7 @@ inverted_wordles.escapeHtml = function (content) {
  * @param {DOMElement} statusElm - The status DOM element.
  * @param {Boolean} isError - Indicate if the message is a regular message or an error.
  */
-inverted_wordles.reportStatus = function (message, statusElm, isError) {
+inverted_wordles.manage.reportStatus = function (message, statusElm, isError) {
     statusElm.style.display = "block";
     statusElm.classList.remove("error");
     statusElm.classList.remove("success");
@@ -52,7 +52,7 @@ inverted_wordles.reportStatus = function (message, statusElm, isError) {
  * @param {wordleOptions} wordleOptions - Values required to render a wordle row.
  * @return {String} A html string mapping to a wordle record on the landing page.
  */
-inverted_wordles.renderWordleRow = function (wordleOptions) {
+inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
     const disableInputs = wordleOptions.disableInputs || false;
     const isCreateNew = wordleOptions.isCreateNew || false;
     const uniqueId = uuidv4();
@@ -133,7 +133,7 @@ inverted_wordles.renderWordleRow = function (wordleOptions) {
  * @param {String} branchName - The branch name.
  * @return {DOMElement} The DOM element of a wordle row.
  */
-inverted_wordles.findWordleRowByBranchName = function (wordlesAreaSelector, branchName) {
+inverted_wordles.manage.findWordleRowByBranchName = function (wordlesAreaSelector, branchName) {
     const wordlesListElm = document.querySelector(wordlesAreaSelector);
     // On the wordle list, find the row with the same branch name
     const branchNameElm = wordlesListElm.querySelector("input[value=\"" + branchName + "\"]");
@@ -148,7 +148,7 @@ inverted_wordles.findWordleRowByBranchName = function (wordlesAreaSelector, bran
  * @param {String} prefixTo - The prefix of the to-name.
  * @return {String} The to-name that shares the same suffix with the from-name.
  */
-inverted_wordles.getNameWithSharedSuffix = function (nameFrom, prefixFrom, prefixTo) {
+inverted_wordles.manage.getNameWithSharedSuffix = function (nameFrom, prefixFrom, prefixTo) {
     return prefixTo + nameFrom.substring(prefixFrom.length);
 };
 
@@ -167,12 +167,12 @@ inverted_wordles.getNameWithSharedSuffix = function (nameFrom, prefixFrom, prefi
  * @param {String} wordlesAreaSelector - The wordles area selector.
  * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
  */
-inverted_wordles.updateWordleRow = function (wordlesAreaSelector, wordleValues) {
+inverted_wordles.manage.updateWordleRow = function (wordlesAreaSelector, wordleValues) {
     // Remove the existing wordle row for the given branch
-    inverted_wordles.findWordleRowByBranchName(wordlesAreaSelector, wordleValues.branchName).remove();
+    inverted_wordles.manage.findWordleRowByBranchName(wordlesAreaSelector, wordleValues.branchName).remove();
 
     // Get the html for the new row
-    const newWordleRow = inverted_wordles.renderWordleRow({
+    const newWordleRow = inverted_wordles.manage.renderWordleRow({
         branchName: wordleValues.branchName,
         workshopName: wordleValues.workshopName,
         question: wordleValues.question,
@@ -190,8 +190,8 @@ inverted_wordles.updateWordleRow = function (wordlesAreaSelector, wordleValues) 
  * @param {String} wordlesAreaSelector - The wordles area selector.
  * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
  */
-inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordleValues) {
-    const newWordleRow = inverted_wordles.renderWordleRow({
+inverted_wordles.manage.appendInDeployWordleRow = function (wordlesAreaSelector, wordleValues) {
+    const newWordleRow = inverted_wordles.manage.renderWordleRow({
         branchName: wordleValues.branchName,
         workshopName: wordleValues.workshopName,
         question: wordleValues.question,
@@ -217,7 +217,7 @@ inverted_wordles.appendInDeployWordleRow = function (wordlesAreaSelector, wordle
  * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
  * @param {Object} options - The options for the manage wordles page.
  */
-inverted_wordles.bindPolling = function (wordleValues, options) {
+inverted_wordles.manage.bindPolling = function (wordleValues, options) {
     // Disable "new question" button
     document.querySelector(options.selectors.createButton).disabled = true;
 
@@ -242,7 +242,7 @@ inverted_wordles.bindPolling = function (wordleValues, options) {
                     if (res[wordleValues.branchName]) {
                         clearInterval(checkDeployInterval);
                         // Update the new wordle row to a regular row when the deploy is up and running
-                        inverted_wordles.updateWordleRow(options.selectors.wordlesArea, {
+                        inverted_wordles.manage.updateWordleRow(options.selectors.wordlesArea, {
                             branchName: wordleValues.branchName,
                             workshopName: wordleValues.workshopName,
                             question: wordleValues.question,
@@ -251,9 +251,9 @@ inverted_wordles.bindPolling = function (wordleValues, options) {
                         });
 
                         // Bind events for input elements and buttons on the new wordle row
-                        const wordleRow = inverted_wordles.findWordleRowByBranchName(options.selectors.wordlesArea, wordleValues.branchName);
-                        inverted_wordles.bindInputFieldEvents(wordleRow, options);
-                        inverted_wordles.bindDeleteEvents(wordleRow, options);
+                        const wordleRow = inverted_wordles.manage.findWordleRowByBranchName(options.selectors.wordlesArea, wordleValues.branchName);
+                        inverted_wordles.manage.bindInputFieldEvents(wordleRow, options);
+                        inverted_wordles.manage.bindDeleteEvents(wordleRow, options);
 
                         // Enable the "new question" button
                         document.querySelector(options.selectors.createButton).disabled = false;

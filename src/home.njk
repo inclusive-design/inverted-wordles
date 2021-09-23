@@ -44,7 +44,7 @@ permalink: /
             {# The value of the branch name is dynamically set when opening the dialog #}
             {# aria-controls value is dynamically set to the id of the wordle row that will be created #}
             <div class="dialog_form_actions">
-                <button type="button" id="create-confirm" aria-controls="" onclick="aria.closeDialog(this);inverted_wordles.createWordle(inverted_wordles.globalOptions);">
+                <button type="button" id="create-confirm" aria-controls="" onclick="aria.closeDialog(this);inverted_wordles.manage.createWordle(inverted_wordles.manage.globalOptions);">
                     <svg role="presentation">
                         <use xlink:href="#tick"></use>
                     </svg>
@@ -73,7 +73,7 @@ permalink: /
             {# aria-controls value is dynamically set to the id of the wordle row that will be deleted #}
             <div class="dialog_form_actions">
                 <input type="hidden" name="branchName" value="">
-                <button type="button" id="delete-confirm" aria-controls="" onclick="inverted_wordles.deleteClicked(this, inverted_wordles.globalOptions)">
+                <button type="button" id="delete-confirm" aria-controls="" onclick="inverted_wordles.manage.deleteClicked(this, inverted_wordles.manage.globalOptions)">
                     <svg role="presentation">
                         <use xlink:href="#tick"></use>
                     </svg>
@@ -121,7 +121,8 @@ permalink: /
 <script>
 var inverted_wordles = {};
 
-inverted_wordles.globalOptions = {
+inverted_wordles.manage = {};
+inverted_wordles.manage.globalOptions = {
     inputFieldNames: ["workshop-name", "question", "entries"],
     deployStatus: {
         ready: "ready",
@@ -164,6 +165,6 @@ inverted_wordles.globalOptions = {
 <script src="/js/init_manage_wordle.js"></script>
 
 <script>
-inverted_wordles.initManagePage(inverted_wordles.globalOptions);
+inverted_wordles.manage.initManagePage(inverted_wordles.manage.globalOptions);
 </script>
 {% endblock %}

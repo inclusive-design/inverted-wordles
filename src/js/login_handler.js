@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     inverted_wordles.instance.user = netlifyIdentity.currentUser();
 });
 
-inverted_wordles.setLoginState = function (isLoggedIn, options) {
-    const deployStatusElements = document.querySelector("input[name='" + options.deployStatusField + "']");
+inverted_wordles.manage.setLoginState = function (isLoggedIn, options) {
+    const deployStatusElements = document.querySelectorAll("input[name='" + options.deployStatusField + "']");
     for (let i = 0; i < deployStatusElements.length; i++) {
         const currentDeployStatus = deployStatusElements[i].value;
         const enabled = isLoggedIn && currentDeployStatus === options.deployStatus.ready;
@@ -33,7 +33,7 @@ inverted_wordles.setLoginState = function (isLoggedIn, options) {
     document.querySelector(options.selectors.createButton).style.display = isLoggedIn ? "block" : "none";
 };
 
-inverted_wordles.bindNetlifyEvents = function (options) {
-    netlifyIdentity.on("login", () => inverted_wordles.setLoginState(true, options));
-    netlifyIdentity.on("logout", () => inverted_wordles.setLoginState(false, options));
+inverted_wordles.manage.bindNetlifyEvents = function (options) {
+    netlifyIdentity.on("login", () => inverted_wordles.manage.setLoginState(true, options));
+    netlifyIdentity.on("logout", () => inverted_wordles.manage.setLoginState(false, options));
 };

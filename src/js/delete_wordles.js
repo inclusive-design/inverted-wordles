@@ -3,7 +3,7 @@
 /* global inverted_wordles, aria */
 
 // Bind events for delete buttons
-inverted_wordles.bindDeleteEvents = function (containerElm, options) {
+inverted_wordles.manage.bindDeleteEvents = function (containerElm, options) {
     const delButtons = containerElm.querySelectorAll(options.selectors.deleteButton);
     for (let i = 0; i < delButtons.length; i++) {
         const currentButton = delButtons[i];
@@ -13,7 +13,7 @@ inverted_wordles.bindDeleteEvents = function (containerElm, options) {
                 aria.openDialog(options.deleteDialogId, evt.target.id, options.deleteCancelId);
                 const deleteDialog = document.getElementById(options.deleteDialogId);
                 // set the aria-controls attribute to the id of the wordle row that will be deleted
-                const wordleRowId = inverted_wordles.getNameWithSharedSuffix(evt.target.id, options.deleteButtonIdPrefix, options.wordleRowIdPrefix);
+                const wordleRowId = inverted_wordles.manage.getNameWithSharedSuffix(evt.target.id, options.deleteButtonIdPrefix, options.wordleRowIdPrefix);
                 deleteDialog.querySelector(options.selectors.deleteConfirm).setAttribute("aria-controls", wordleRowId);
                 // set the branch name to the delete confirmation dialog for the future retrival when the deletion is confirmed
                 deleteDialog.querySelector("input[name='" + options.branchNameField + "']").value = currentButton.parentElement.parentElement.querySelector("input[name='" + options.branchNameField + "']").value;
@@ -22,13 +22,13 @@ inverted_wordles.bindDeleteEvents = function (containerElm, options) {
     };
 };
 
-inverted_wordles.deleteClicked = function (closeButton, options) {
+inverted_wordles.manage.deleteClicked = function (closeButton, options) {
     // find out the branch to be deleted
     const branchName = closeButton.parentElement.querySelector("input[name='" + options.branchNameField + "']").value;
     // close the confirmation dialog
     aria.closeDialog(closeButton);
     // Find the row with the current branch name
-    const rowElm = inverted_wordles.findWordleRowByBranchName(options.selectors.wordlesArea, branchName);
+    const rowElm = inverted_wordles.manage.findWordleRowByBranchName(options.selectors.wordlesArea, branchName);
     // Find the status element for reporting errors when occuring
     const oneStatusElm = rowElm.querySelector(options.selectors.oneStatus);
 
@@ -41,7 +41,7 @@ inverted_wordles.deleteClicked = function (closeButton, options) {
         // See https://github.com/whatwg/fetch/issues/18
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + res.error + "*", oneStatusElm, true);
+                inverted_wordles.manage.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + res.error + "*", oneStatusElm, true);
             });
         } else {
             // Remove the wordle from the wordle list
@@ -49,7 +49,7 @@ inverted_wordles.deleteClicked = function (closeButton, options) {
         }
     }, error => {
         error.json().then(err => {
-            inverted_wordles.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + err.error + "*", oneStatusElm, true);
+            inverted_wordles.manage.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + err.error + "*", oneStatusElm, true);
         });
     });
 };

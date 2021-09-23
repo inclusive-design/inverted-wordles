@@ -3,12 +3,12 @@
 /* global inverted_wordles, aria, uuidv4 */
 
 // Bind events for create buttons
-inverted_wordles.bindCreateEvent = function (options) {
+inverted_wordles.manage.bindCreateEvent = function (options) {
     const createButton = document.querySelector(options.selectors.createButton);
     createButton.addEventListener("click", evt => aria.openDialog(options.createDialogId, evt.target.id, options.createCancelId));
 };
 
-inverted_wordles.createWordle = function (options) {
+inverted_wordles.manage.createWordle = function (options) {
     const generalStatusElm = document.querySelector(options.selectors.status);
     const branchName = uuidv4();
 
@@ -27,14 +27,14 @@ inverted_wordles.createWordle = function (options) {
         // See https://github.com/whatwg/fetch/issues/18
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.reportStatus("Error at creating a new wordle: " + res.error, generalStatusElm, true);
+                inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + res.error, generalStatusElm, true);
             });
         } else {
             response.json().then(res => {
                 const lastModifiedTimestamp = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
 
                 // Append the new wordle row to the wordle list
-                inverted_wordles.appendInDeployWordleRow(options.selectors.wordlesArea, {
+                inverted_wordles.manage.appendInDeployWordleRow(options.selectors.wordlesArea, {
                     branchName,
                     workshopName: "",
                     question: "",
@@ -44,7 +44,7 @@ inverted_wordles.createWordle = function (options) {
                 });
 
                 // Bind the polling event to update the wordle row when the deploy is ready
-                inverted_wordles.bindPolling({
+                inverted_wordles.manage.bindPolling({
                     branchName,
                     workshopName: "",
                     question: "",
@@ -55,7 +55,7 @@ inverted_wordles.createWordle = function (options) {
         }
     }, error => {
         error.json().then(err => {
-            inverted_wordles.reportStatus("Error at creating a new wordle: " + err.error, generalStatusElm, true);
+            inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + err.error, generalStatusElm, true);
         });
     });
 };

@@ -3,7 +3,7 @@
 /* global inverted_wordles */
 
 // Bind onChange events for all input fields that users will change values
-inverted_wordles.bindInputFieldEvents = function (containerElm, options) {
+inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) {
     const inputElements = containerElm.getElementsByTagName("input");
     for (let i = 0; i < inputElements.length; i++) {
         const currentInput = inputElements[i];
@@ -30,7 +30,7 @@ inverted_wordles.bindInputFieldEvents = function (containerElm, options) {
                         // See https://github.com/whatwg/fetch/issues/18
                         if (response.status >= 400 && response.status < 600) {
                             response.json().then(res => {
-                                inverted_wordles.reportStatus("*FAILED: New edits FAILED. Error: " + res.error + "*", oneStatusElm, true);
+                                inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + res.error + "*", oneStatusElm, true);
                             });
                         } else {
                             response.json().then(res => {
@@ -38,13 +38,13 @@ inverted_wordles.bindInputFieldEvents = function (containerElm, options) {
                                 const lastModifiedElm = currentInput.parentElement.parentElement.querySelector("[id^=\"" + options.lastModifiedIdPrefix + "\"]");
                                 lastModifiedElm.textContent = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
                                 // Report the success status
-                                inverted_wordles.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, false);
+                                inverted_wordles.manage.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, false);
                             });
                         }
                     },
                     error => {
                         error.json().then(err => {
-                            inverted_wordles.reportStatus("*FAILED: New edits FAILED. Error: " + err.error + "*", oneStatusElm, true);
+                            inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + err.error + "*", oneStatusElm, true);
                         });
                     }
                 );
