@@ -4,7 +4,7 @@
 
 /**
  * An object that contains a list of wordles.
-* @typedef {Object} Wordle
+ * @typedef {Object} Wordle
  * A single wordle.
  * @property {Object} content - The content of src/_data/question.json.
  * @property {Boolean} exists - Indicate whether src/_data/question.json exists.
