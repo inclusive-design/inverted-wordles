@@ -22,13 +22,13 @@ inverted_wordles.manage.escapeHtml = function (content) {
  * Show a message in a status element.
  * @param {String} message - A message to show.
  * @param {DOMElement} statusElm - The status DOM element.
- * @param {Boolean} isError - Indicate if the message is a regular message or an error.
+ * @param {Boolean} messageType - Accept three types: error, success, info.
  */
-inverted_wordles.manage.reportStatus = function (message, statusElm, isError) {
+inverted_wordles.manage.reportStatus = function (message, statusElm, messageType) {
     statusElm.style.display = "block";
     statusElm.classList.remove("error");
     statusElm.classList.remove("success");
-    statusElm.classList.add(isError ? "error" : "success");
+    statusElm.classList.add(messageType);
     statusElm.innerHTML = message;
 };
 

@@ -53,6 +53,21 @@ a branch has been successfully deployed. Otherwise, the state is `false`.
 }
 ```
 
+### Check Netlify Site (GET /api/check_netlify_site)
+
+* **description**: Check if the GitHub repository defined via process.env.WORDLES_REPO_OWNER and
+process.env.WORDLES_REPO_NAME is a Netlify site.
+* **method:** `GET`
+* **route:** `/api/check_deploy`
+* **return:** A JSON document containing a boolean value indicating if the current GitHub repository is a Netlify
+site. If it is, the value is `true`. Otherwise, the state is `false`.
+
+```json
+{
+    "isNetlifySite": true
+}
+```
+
 ### Fetch Wordles (GET /api/fetch_wordles)
 
 * **description**: Fetch all wordles. The main branch is excluded from the list.
@@ -215,6 +230,9 @@ information for accessing the Github repository are defined in these environment
 * ACCESS_TOKEN: The personal access token of the account for authenticating the access to the Github repository. This
 access token must have `repo` access. Refer to [the Github documentation](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 about how to create a personal access token.
+* NETLIFT_TOKEN: The personal access token of the Netlify account for authenticating the access to the Netlify API.
+Refer to [the Netlify documentation](https://docs.netlify.com/api/get-started/#authentication) about how to create
+a personal access token.
 
 An example for finding out `WORDLES_REPO_OWNER` and `WORDLES_REPO_NAME` values: if the URL of a Github repository is
 `https://github.com/inclusive-design/inverted-wordles`, the value of `WORDLES_REPO_OWNER` is `inclusive-design` and the
@@ -228,7 +246,8 @@ and deploying Netlify functions locally. Once the tool is set up, run:
 ```bash
 export WORDLES_REPO_OWNER=YOUR-WORDLES_REPO_OWNER
 export WORDLES_REPO_NAME=YOUR-WORDLES_REPO_NAME
-export ACCESS_TOKEN=YOUR-PERSONAL-ACCESS-TOKEN
+export ACCESS_TOKEN=YOUR-GITHUB-ACCOUNT-PERSONAL-ACCESS-TOKEN
+export NRTLIFY_TOKEN=YOUR-NETLIFY-ACCOUNT-PERSONAL-ACCESS-TOKEN
 netlify dev
 ```
 
@@ -250,7 +269,8 @@ environment variables can be added directly to it as follows:
 ```env
 WORDLES_REPO_OWNER=YOUR-WORDLES_REPO_OWNER
 WORDLES_REPO_NAME=YOUR-WORDLES_REPO_NAME
-ACCESS_TOKEN=YOUR-PERSONAL-ACCESS-TOKEN
+ACCESS_TOKEN=YOUR-GITHUB-ACCOUNT-PERSONAL-ACCESS-TOKEN
+NRTLIFY_TOKEN=YOUR-NETLIFY-ACCOUNT-PERSONAL-ACCESS-TOKEN
 ```
 
 (Note: `.env` is in the project's `.gitignore` file to prevent sensitive information from being accidentally
