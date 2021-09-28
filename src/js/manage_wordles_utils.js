@@ -217,7 +217,7 @@ inverted_wordles.manage.appendInDeployWordleRow = function (wordlesAreaSelector,
  * @param {WordleValues} wordleValues - Values to be rendered for this Wordle.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
-inverted_wordles.manage.bindPolling = function (wordleValues, options) {
+inverted_wordles.manage.bindDeploymentPolling = function (wordleValues, options) {
     // Disable "new question" button
     document.querySelector(options.selectors.createButton).disabled = true;
 

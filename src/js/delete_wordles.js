@@ -3,7 +3,11 @@
 /* global inverted_wordles, aria */
 
 /**
- * Bind event listeners for "Delete a wordle" buttons.
+ * Bind event listeners for "Delete a wordle" buttons in the given container. It is the caller's
+ * responsibility to ensure this function is called only once on each newly generated block of markup.
+ * Currently, this function is called in two cases:
+ * 1. At the page load when all wordles are rendered;
+ * 2. When a new wordle is created and added to the wordle list.
  * @param {DOMElement} containerElm - The DOM element of the holding container to find delete buttons.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */

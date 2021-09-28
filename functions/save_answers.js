@@ -71,7 +71,7 @@ exports.handler = async function (event) {
     }
 
     const octokit = new Octokit({
-        auth: process.env.ACCESS_TOKEN
+        auth: process.env.GITHUB_TOKEN
     });
     const newAnswer = {
         answers: incomingData.answers,

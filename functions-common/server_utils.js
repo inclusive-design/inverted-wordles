@@ -17,5 +17,5 @@ exports.invalidRequestResponse = invalidRequestResponse;
  */
 exports.isParamsExist = values => {
     const isAllValuesExist = values ? values.every(value => !!value) : true;
-    return isAllValuesExist && process.env.ACCESS_TOKEN && process.env.WORDLES_REPO_OWNER && process.env.WORDLES_REPO_NAME;
+    return isAllValuesExist && process.env.GITHUB_TOKEN && process.env.WORDLES_REPO_OWNER && process.env.WORDLES_REPO_NAME;
 };
