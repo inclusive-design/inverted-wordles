@@ -6,8 +6,9 @@ const netlifySiteApi = "https://api.netlify.com/api/v1/sites";
 
 /**
  * Support the endpoint /api/check_netlify_site
- * Check if the GitHub repository defined via process.env.WORDLES_REPO_OWNER & process.env.WORDLES_REPO_NAME
- * is a Netlify site.
+ * It makes use of [the Netlify /sites API](https://api.netlify.com/api/v1/sites), and search through its entire
+ * response to find out whether the expected repo, defined via environment variables WORDLES_REPO_OWNER and
+ * WORDLES_REPO_NAME, is found in the build_settings field. See https://docs.netlify.com/api/get-started/#get-sites
  */
 
 exports.handler = async function (event) {
@@ -28,7 +29,7 @@ exports.handler = async function (event) {
             }
         });
 
-        const isNetlifySite = netlifyResponse.data.some(oneSite => oneSite.build_settings.repo_url === expectedRepoUrl) ? true : false;
+        const isNetlifySite = netlifyResponse.data.some(oneSite => oneSite.build_settings.repo_url === expectedRepoUrl);
 
         console.log("Done: if the current site is a Netlify site: " + isNetlifySite);
         return {
