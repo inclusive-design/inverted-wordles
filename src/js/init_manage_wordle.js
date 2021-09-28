@@ -68,7 +68,7 @@ inverted_wordles.manage.renderWordles = function (wordles, deployStatus, options
         });
 
         // Bind the polling event to update the wordle row when the deploy is ready
-        inverted_wordles.manage.bindPolling({
+        inverted_wordles.manage.bindDeploymentPolling({
             branchName,
             workshopName: questionFile.workshopName,
             question: questionFile.question,
