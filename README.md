@@ -31,6 +31,19 @@ npm ci
 
 ## Development
 
+To test the project in a self-contained way, follow steps below to deploy a personal cloned `inverted-wordles`
+GitHub repository with Netlify.
+
+* Sign up with [Netlify](https://netlify.com/)
+* Follow [the Netlify documentation](https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git) to connect
+a GitHub repository with a Netlify site
+* Go to Netlify "Site settings" -> "Build & deploy" section
+    * In "Branches" -> set "Branch deploys" to "All" (Deploy all the branches pushed to the repository)
+    * In "Environment" -> add environment variables. See "Environment Variables" section below to find out
+    what variables need to be defined
+* Go to Netlify Identity, enable identity service then invite yourself and others who will use your inverted-wordles
+site.
+
 ### Development without Netlify endpoints
 
 When working on webpages that don't need the support of Netlify endpoints, run:
