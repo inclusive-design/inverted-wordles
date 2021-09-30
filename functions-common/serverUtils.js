@@ -27,5 +27,5 @@ exports.invalidRequestResponse = {
  */
 exports.isParamsExist = values => {
     const isAllValuesExist = values ? values.every(value => !!value) : true;
-    return isAllValuesExist && process.env.GITHUB_TOKEN && repoOwner && repoName;
+    return isAllValuesExist && process.env.GITHUB_TOKEN && process.env.NETLIFY_TOKEN && repoOwner && repoName;
 };
