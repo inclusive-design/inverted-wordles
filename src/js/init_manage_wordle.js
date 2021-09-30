@@ -127,8 +127,9 @@ inverted_wordles.manage.initManagePage = function (options) {
     fetch("/api/fetch_wordles").then(
         response => {
             inverted_wordles.manage.bindNetlifyEvents(options);
-            response.json().then(wordles => {
-                inverted_wordles.manage.initWordles(wordles, options);
+            response.json().then(wordlesInfo => {
+                inverted_wordles.instance.netlifyUrlSuffix = "--" + wordlesInfo.netlifySiteName + ".netlify.app/";
+                inverted_wordles.manage.initWordles(wordlesInfo.wordles, options);
             });
         },
         error => inverted_wordles.manage.reportStatus("Error at fetching wordles: " + error, document.querySelector(options.selectors.status), true)
