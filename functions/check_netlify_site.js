@@ -1,8 +1,7 @@
 "use strict";
 
-const axios = require("axios");
-const serverUtils = require("../functions-common/server_utils.js");
-const netlifySiteApi = "https://api.netlify.com/api/v1/sites";
+const serverUtils = require("../functions-common/serverUtils.js");
+const fetchNetlifySiteInfo = require("../functions-common/fetchNetlifySiteInfo.js").fetchNetlifySiteInfo;
 
 /**
  * Support the endpoint /api/check_netlify_site
@@ -17,25 +16,17 @@ exports.handler = async function (event) {
     // Reject the request when:
     // 1. Not a GET request;
     // 2. Doesn’t provide required values
-    if (event.httpMethod !== "GET" || !process.env.WORDLES_REPO_OWNER || !process.env.WORDLES_REPO_NAME || !process.env.NETLIFY_TOKEN) {
+    if (event.httpMethod !== "GET" || !serverUtils.isParamsExist()) {
         return serverUtils.invalidRequestResponse;
     }
 
     try {
-        const expectedRepoUrl = "https://github.com/" + process.env.WORDLES_REPO_OWNER + "/" + process.env.WORDLES_REPO_NAME;
-        const netlifyResponse = await axios.get(netlifySiteApi, {
-            headers: {
-                "Authorization": "Bearer " + process.env.NETLIFY_TOKEN
-            }
-        });
-
-        const isNetlifySite = netlifyResponse.data.some(oneSite => oneSite.build_settings.repo_url === expectedRepoUrl);
-
-        console.log("Done: if the current site is a Netlify site: " + isNetlifySite);
+        const netlifyInfo = await fetchNetlifySiteInfo();
+        console.log("Done: if the current site is a Netlify site: " + !!netlifyInfo.id);
         return {
             statusCode: 200,
             body: JSON.stringify({
-                isNetlifySite
+                isNetlifySite: !!netlifyInfo.id
             })
         };
     } catch (e) {

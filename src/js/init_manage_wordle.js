@@ -80,11 +80,12 @@ inverted_wordles.manage.renderWordles = function (wordles, deployStatus, options
 
 /**
  * Check if the GitHub repository defined via process.env.WORDLES_REPO_OWNER & process.env.WORDLES_REPO_NAME is a
- * Netlify site. If not, display a message.
- * @param {DOMElement} generalStatusElm - The DOM element for displaying the message when the github repo is not a
+ * Netlify site. If not, display a message and disable the "New Question" button.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  * netlify site.
  */
-inverted_wordles.manage.checkNetlifySite = function (generalStatusElm) {
+inverted_wordles.manage.checkNetlifySite = function (options) {
+    const generalStatusElm = document.querySelector(options.selectors.status);
     fetch("/api/check_netlify_site", {
         method: "GET"
     }).then(response => {
@@ -95,7 +96,9 @@ inverted_wordles.manage.checkNetlifySite = function (generalStatusElm) {
         } else {
             response.json().then(res => {
                 if (!res.isNetlifySite) {
-                    inverted_wordles.manage.reportStatus("Note: Current Github repository is not a Netlify site. New questions cannot be deployed to live webpages.", generalStatusElm, "info");
+                    // Disable the "new question" button
+                    document.querySelector(options.selectors.createButton).disabled = true;
+                    inverted_wordles.manage.reportStatus("Note: Current Github repository is not a Netlify site. New questions cannot be created.", generalStatusElm, "info");
                 }
             });
         }
@@ -136,7 +139,7 @@ inverted_wordles.manage.initWordles = function (wordles, options) {
                 inverted_wordles.manage.bindDeleteEvents(document, options);
 
                 // Check if the current GitHub repo is a netlify site. If not, inform users.
-                inverted_wordles.manage.checkNetlifySite(generalStatusElm);
+                inverted_wordles.manage.checkNetlifySite(options);
             });
         }
     }, error => {
