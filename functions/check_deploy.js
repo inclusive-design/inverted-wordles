@@ -20,15 +20,15 @@ exports.handler = async function (event) {
 
     try {
         const netlifySiteInfo = await fetchNetlifySiteInfo();
-        const deploys = await axios.get(serverUtils.netlifyApi + "/sites/" + netlifySiteInfo.id + "/deploys", {
+        const deploys = netlifySiteInfo.id ? await axios.get(serverUtils.netlifyApi + "/sites/" + netlifySiteInfo.id + "/deploys", {
             headers: {
                 "Authorization": "Bearer " + process.env.NETLIFY_TOKEN
             }
-        });
+        }) : undefined;
 
         let resultsTogo = {};
         for (const branch of incomingData.branches) {
-            const matchedDeploy = deploys.data.find(oneDeploy => oneDeploy.branch === branch);
+            const matchedDeploy = deploys ? deploys.data.find(oneDeploy => oneDeploy.branch === branch) : undefined;
             resultsTogo[branch] = !matchedDeploy ? false : matchedDeploy.state === "ready" ? true : false;
         }
         console.log("Done: " + JSON.stringify(resultsTogo));
