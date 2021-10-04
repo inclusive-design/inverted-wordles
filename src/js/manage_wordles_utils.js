@@ -20,7 +20,7 @@ inverted_wordles.manage.escapeHtml = function (content) {
  * Show a message in a status element.
  * @param {String} message - A message to show.
  * @param {DOMElement} statusElm - The status DOM element.
- * @param {Boolean} messageType - Accept three types: error, success, info.
+ * @param {String} messageType - Accept three types: error, success, info.
  */
 inverted_wordles.manage.reportStatus = function (message, statusElm, messageType) {
     statusElm.style.display = "block";

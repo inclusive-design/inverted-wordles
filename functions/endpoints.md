@@ -24,8 +24,7 @@ a branch has been successfully deployed. Otherwise, the state is `false`.
 
 ## Check Netlify Site (GET /api/check_netlify_site)
 
-* **description**: Check if the GitHub repository defined via process.env.WORDLES_REPO_OWNER and
-process.env.WORDLES_REPO_NAME is a Netlify site.
+* **description**: Check if the GitHub repository defined via process.env.REPOSITORY_URL is a Netlify site.
 * **method:** `GET`
 * **route:** `/api/check_deploy`
 * **return:** A JSON document containing a boolean value indicating if the current GitHub repository is a Netlify

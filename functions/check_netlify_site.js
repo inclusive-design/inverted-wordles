@@ -6,8 +6,8 @@ const fetchNetlifySiteInfo = require("../functions-common/fetchNetlifySiteInfo.j
 /**
  * Support the endpoint /api/check_netlify_site
  * It makes use of [the Netlify /sites API](https://api.netlify.com/api/v1/sites), and search through its entire
- * response to find out whether the expected repo, defined via environment variables WORDLES_REPO_OWNER and
- * WORDLES_REPO_NAME, is found in the build_settings field. See https://docs.netlify.com/api/get-started/#get-sites
+ * response to find out whether the expected repo, defined via the environment variable REPOSITORY_URL, is found
+ * in the build_settings field. See https://docs.netlify.com/api/get-started/#get-sites
  */
 
 exports.handler = async function (event) {

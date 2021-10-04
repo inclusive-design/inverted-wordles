@@ -79,7 +79,7 @@ inverted_wordles.manage.renderWordles = function (wordles, deployStatus, options
 };
 
 /**
- * Check if the GitHub repository defined via process.env.WORDLES_REPO_OWNER & process.env.WORDLES_REPO_NAME is a
+ * Check if the GitHub repository defined via process.env.REPOSITORY_URL is a
  * Netlify site. If not, display a message and disable the "New Question" button.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  * netlify site.
