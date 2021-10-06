@@ -34,7 +34,7 @@ inverted_wordles.manage.createWordle = function (options) {
         // See https://github.com/whatwg/fetch/issues/18
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + res.error, generalStatusElm, true);
+                inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + res.error, generalStatusElm, "error");
             });
         } else {
             response.json().then(res => {
@@ -62,7 +62,7 @@ inverted_wordles.manage.createWordle = function (options) {
         }
     }, error => {
         error.json().then(err => {
-            inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + err.error, generalStatusElm, true);
+            inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + err.error, generalStatusElm, "error");
         });
     });
 };

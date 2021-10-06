@@ -79,6 +79,33 @@ inverted_wordles.manage.renderWordles = function (wordles, deployStatus, options
 };
 
 /**
+ * Check if the GitHub repository defined via process.env.REPOSITORY_URL is a
+ * Netlify site. If not, display a message and disable the "New Question" button.
+ * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
+ * netlify site.
+ */
+inverted_wordles.manage.checkNetlifySite = function (options) {
+    const generalStatusElm = document.querySelector(options.selectors.status);
+    fetch("/api/check_netlify_site", {
+        method: "GET"
+    }).then(response => {
+        if (response.status >= 400 && response.status < 600) {
+            response.json().then(res => {
+                inverted_wordles.manage.reportStatus("Error at checking the Netlify site: " + res.error, generalStatusElm, "error");
+            });
+        } else {
+            response.json().then(res => {
+                if (!res.isNetlifySite) {
+                    // Disable the "new question" button
+                    document.querySelector(options.selectors.createButton).disabled = true;
+                    inverted_wordles.manage.reportStatus("Note: Current Github repository is not a Netlify site. New questions cannot be created.", generalStatusElm, "info");
+                }
+            });
+        }
+    });
+};
+
+/**
  * Check deploy states of all wordles and render them into the wordle area.
  * @param {Wordles} wordles - A list of wordles keyed by branch names.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
@@ -100,7 +127,7 @@ inverted_wordles.manage.initWordles = function (wordles, options) {
         // See https://github.com/whatwg/fetch/issues/18
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.manage.reportStatus("Error at checking wordle deploy status: " + res.error, generalStatusElm, true);
+                inverted_wordles.manage.reportStatus("Error at checking wordle deploy status: " + res.error, generalStatusElm, "error");
             });
         } else {
             response.json().then(res => {
@@ -110,11 +137,14 @@ inverted_wordles.manage.initWordles = function (wordles, options) {
                 inverted_wordles.manage.bindCreateEvent(options);
                 inverted_wordles.manage.bindInputFieldEvents(document, options);
                 inverted_wordles.manage.bindDeleteEvents(document, options);
+
+                // Check if the current GitHub repo is a netlify site. If not, inform users.
+                inverted_wordles.manage.checkNetlifySite(options);
             });
         }
     }, error => {
         error.json().then(err => {
-            inverted_wordles.manage.reportStatus("Error at checking wordle deploy status: " + err.error, generalStatusElm, true);
+            inverted_wordles.manage.reportStatus("Error at checking wordle deploy status: " + err.error, generalStatusElm, "error");
         });
     });
 };
@@ -126,12 +156,19 @@ inverted_wordles.manage.initWordles = function (wordles, options) {
 inverted_wordles.manage.initManagePage = function (options) {
     fetch("/api/fetch_wordles").then(
         response => {
-            inverted_wordles.manage.bindNetlifyEvents(options);
-            response.json().then(wordlesInfo => {
-                inverted_wordles.instance.netlifyUrlSuffix = "--" + wordlesInfo.netlifySiteName + ".netlify.app/";
-                inverted_wordles.manage.initWordles(wordlesInfo.wordles, options);
-            });
+            if (response.status >= 400 && response.status < 600) {
+                const generalStatusElm = document.querySelector(options.selectors.status);
+                response.json().then(res => {
+                    inverted_wordles.manage.reportStatus("Error at checking wordle deploy status: " + res.error.message, generalStatusElm, "error");
+                });
+            } else {
+                inverted_wordles.manage.bindNetlifyEvents(options);
+                response.json().then(wordlesInfo => {
+                    inverted_wordles.instance.netlifyUrlSuffix = "--" + wordlesInfo.netlifySiteName + ".netlify.app/";
+                    inverted_wordles.manage.initWordles(wordlesInfo.wordles, options);
+                });
+            }
         },
-        error => inverted_wordles.manage.reportStatus("Error at fetching wordles: " + error, document.querySelector(options.selectors.status), true)
+        error => inverted_wordles.manage.reportStatus("Error at fetching wordles: " + error, document.querySelector(options.selectors.status), "error")
     );
 };

@@ -22,6 +22,20 @@ a branch has been successfully deployed. Otherwise, the state is `false`.
 }
 ```
 
+## Check Netlify Site (GET /api/check_netlify_site)
+
+* **description**: Check if the GitHub repository defined via process.env.REPOSITORY_URL is a Netlify site.
+* **method:** `GET`
+* **route:** `/api/check_deploy`
+* **return:** A JSON document containing a boolean value indicating if the current GitHub repository is a Netlify
+site. If it is, the value is `true`. Otherwise, the state is `false`.
+
+```json
+{
+    "isNetlifySite": true
+}
+```
+
 ## Fetch Wordles (GET /api/fetch_wordles)
 
 * **description**: Fetch the netlify site name and all wordles. The main branch is excluded from the wordle list.

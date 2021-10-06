@@ -54,7 +54,7 @@ inverted_wordles.manage.deleteClicked = function (closeButton, options) {
         // See https://github.com/whatwg/fetch/issues/18
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.manage.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + res.error + "*", oneStatusElm, true);
+                inverted_wordles.manage.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + res.error + "*", oneStatusElm, "error");
             });
         } else {
             // Remove the wordle from the wordle list
@@ -62,7 +62,7 @@ inverted_wordles.manage.deleteClicked = function (closeButton, options) {
         }
     }, error => {
         error.json().then(err => {
-            inverted_wordles.manage.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + err.error + "*", oneStatusElm, true);
+            inverted_wordles.manage.reportStatus("*FAILED: Sorry the question failed to delete. Error: " + err.error + "*", oneStatusElm, "error");
         });
     });
 };
