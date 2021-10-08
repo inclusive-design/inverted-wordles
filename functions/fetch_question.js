@@ -9,12 +9,12 @@ const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONF
 
 exports.handler = async function (event) {
     console.log("Received fetch_question request at " + new Date() + " with path " + event.path);
-    var branch = /fetch_question\/(.*)/.exec(event.path)[1];
+    const wordleId = /fetch_question\/(.*)/.exec(event.path)[1];
 
     // Reject the request when:
     // 1. Not a GET request;
     // 2. Doesn’t provide required values
-    if (event.httpMethod !== "GET" || !serverUtils.isParamsExist([branch])) {
+    if (event.httpMethod !== "GET" || !serverUtils.isParamsExist([wordleId])) {
         return serverUtils.invalidRequestResponse;
     }
 
@@ -23,7 +23,7 @@ exports.handler = async function (event) {
     });
 
     try {
-        const questionFileInfo = await fetchJSONFile(octokit, branch, "src/_data/question.json");
+        const questionFileInfo = await fetchJSONFile(octokit, serverUtils.branchName, "src/_data/" + wordleId + "-question.json");
         console.log("Got questionFileInfo ", JSON.stringify(questionFileInfo));
         return {
             statusCode: 200,

@@ -7,8 +7,9 @@ permalink: "/wordle/"
 
 {% block content %}
 <script>
+    var searchParams = new URLSearchParams(window.location.search);
     var wordle_globals = {
-        branch: "{{question.branch}}"
+        wordleId: searchParams.get("id")
     };
 </script>
 <div class="wordle">

@@ -41,7 +41,6 @@ permalink: /
                     This will create a new webpage. It will take a couple of minutes until links are available. Are you sure you want to proceed?
                 </p>
             </div>
-            {# The value of the branch name is dynamically set when opening the dialog #}
             {# aria-controls value is dynamically set to the id of the wordle row that will be created #}
             <div class="dialog_form_actions">
                 <button type="button" id="create-confirm" aria-controls="" onclick="aria.closeDialog(this);inverted_wordles.manage.createWordle(inverted_wordles.manage.globalOptions);">
@@ -69,10 +68,10 @@ permalink: /
                     This will delete the question link permanently and you will not be able to view the answers or the wordle. Are you sure you want to delete?
                 </p>
             </div>
-            {# The value of the branch name is dynamically set when opening the dialog #}
+            {# The value of the wordle id is dynamically set when opening the dialog #}
             {# aria-controls value is dynamically set to the id of the wordle row that will be deleted #}
             <div class="dialog_form_actions">
-                <input type="hidden" name="branchName" value="">
+                <input type="hidden" name="wordleId" value="">
                 <button type="button" id="delete-confirm" aria-controls="" onclick="inverted_wordles.manage.deleteClicked(this, inverted_wordles.manage.globalOptions)">
                     <svg role="presentation">
                         <use xlink:href="#tick"></use>
@@ -131,7 +130,7 @@ inverted_wordles.manage.globalOptions = {
     wordleRowIdPrefix: "one-wordle-id",
     deleteButtonIdPrefix: "delete-id",
     lastModifiedIdPrefix: "last-modified-id",
-    branchNameField: "branchName",
+    wordleIdField: "wordleId",
     deployStatusField: "deployStatus",
     createDialogId: "create-dialog",
     createCancelId: "create-cancel",

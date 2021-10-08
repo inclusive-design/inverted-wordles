@@ -8,12 +8,12 @@ const {
 
 exports.handler = async function (event) {
     console.log("Received delete_wordle request at " + new Date() + " with path " + event.path);
-    var branch = /delete_wordle\/(.*)/.exec(event.path)[1];
+    var wordleId = /delete_wordle\/(.*)/.exec(event.path)[1];
 
     // Reject the request when:
     // 1. Not a DELETE request;
     // 2. Doesn’t provide required values
-    if (event.httpMethod !== "DELETE" || !serverUtils.isParamsExist([branch])) {
+    if (event.httpMethod !== "DELETE" || !serverUtils.isParamsExist([wordleId])) {
         return serverUtils.invalidRequestResponse;
     }
 
@@ -22,12 +22,20 @@ exports.handler = async function (event) {
     });
 
     try {
-        await gitOpsApi.deleteBranch(octokit, {
+        await gitOpsApi.commitMultipleFiles(octokit, {
             repoOwner: serverUtils.repoOwner,
             repoName: serverUtils.repoName,
-            branchName: branch
+            branchName: serverUtils.branchName,
+            files: [{
+                path: "src/_data/" + wordleId + "-question.json",
+                operation: "delete"
+            }, {
+                path: "src/_data/" + wordleId + "-answers.json",
+                operation: "delete"
+            }],
+            commitMessage: "chore: [skip ci] delete wordle files with id " + wordleId
         });
-        console.log("Done: the wordle branch is deleted.");
+        console.log("Done: the wordle with ID " + wordleId + " has been deleted.");
         return {
             statusCode: 200,
             body: "Deleted successfully!"

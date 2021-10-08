@@ -216,7 +216,7 @@ inverted_wordles.handleResponse = function (instance, response) {
  * @param {WordleInstance} instance - The wordle instance to be initialised
  */
 inverted_wordles.fetchAnswers = function (instance) {
-    var url = "/api/fetch_answer/" + wordle_globals.branch;
+    var url = "/api/fetch_answer/" + wordle_globals.wordleId;
     fetch(url).then(function (response) {
         inverted_wordles.handleResponse(instance, response);
     }, function (error) {

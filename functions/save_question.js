@@ -7,18 +7,19 @@ const {
 const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
-const allowedParameters = ["branch", "workshop-name", "question", "entries"];
+const allowedParameters = ["wordleId", "workshop-name", "question", "entries"];
 
 exports.handler = async function (event) {
     console.log("Received save_question request at " + new Date() + " with path " + event.path);
     const parameters = JSON.parse(event.body);
+    const wordleId = parameters.wordleId;
 
     // Reject the request when:
     // 1. Not a POST request;
     // 2. Doesn’t provide required values;
     // 3. Provided parameter names are not allowed;
     const paramsAllValid = Object.keys(parameters).every(paramKey => allowedParameters.includes(paramKey));
-    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([parameters.branch]) || !paramsAllValid) {
+    if (event.httpMethod !== "POST" || !serverUtils.isParamsExist([wordleId]) || !paramsAllValid) {
         return serverUtils.invalidRequestResponse;
     }
 
@@ -36,10 +37,10 @@ exports.handler = async function (event) {
     const octokit = new Octokit({
         auth: process.env.GITHUB_TOKEN
     });
-    const branch = parameters.branch;
+    const branch = serverUtils.branchName;
 
     try {
-        const questionFilePath = "src/_data/question.json";
+        const questionFilePath = "src/_data/" + wordleId + "-question.json";
         // Fetch the current question.json file content
         const questionFileInfo = await fetchJSONFile(octokit, branch, questionFilePath);
         console.log("Got questionFileInfo ", JSON.stringify(questionFileInfo));
@@ -64,7 +65,7 @@ exports.handler = async function (event) {
             branchName: branch,
             filePath: questionFilePath,
             fileContent: JSON.stringify(newQuestionFileInfo),
-            commitMessage: "chore: [skip ci] update question.json via the manage wordles page",
+            commitMessage: "chore: [skip ci] update " + questionFilePath + " via the manage wordles page",
             sha: questionFileInfo.sha
         });
 

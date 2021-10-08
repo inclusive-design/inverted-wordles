@@ -1,5 +1,6 @@
-"use strict";
+/* global wordle_globals */
 
+"use strict";
 
 var submitAnswer = function (dataTogo) {
     // Submit the data to the server
@@ -28,7 +29,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     let dataTogo = {
         answers: [],
         requestId: Math.random().toString(36).substring(7),
-        branch: document.querySelectorAll("input[name='branch']")[0].value
+        wordleId: wordle_globals.wordleId
     };
 
     // Find all answer values

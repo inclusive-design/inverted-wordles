@@ -1,32 +1,10 @@
 # Supported Netlify Endpoints
 
-## Check Deploy State (POST /api/check_deploy)
-
-* **description**: Check deploy states of one or more wordles.
-* **method:** `POST`
-* **route:** `/api/check_deploy` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `branches`: An array of GitHub branch names.
-```
-{
-    "branches": ["branch1", "branch2", ...]
-}
-```
-* **return:** A JSON document containing the deploy state for every single branch. The deploy state is `true` when
-a branch has been successfully deployed. Otherwise, the state is `false`.
-
-```json
-{
-    "branch1": true,
-    "branch2": false,
-    ...
-}
-```
-
 ## Check Netlify Site (GET /api/check_netlify_site)
 
 * **description**: Check if the GitHub repository defined via process.env.REPOSITORY_URL is a Netlify site.
 * **method:** `GET`
-* **route:** `/api/check_deploy`
+* **route:** `/api/check_netlify_site`
 * **return:** A JSON document containing a boolean value indicating if the current GitHub repository is a Netlify
 site. If it is, the value is `true`. Otherwise, the state is `false`.
 
@@ -38,7 +16,7 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 
 ## Fetch Wordles (GET /api/fetch_wordles)
 
-* **description**: Fetch the netlify site name and all wordles. The main branch is excluded from the wordle list.
+* **description**: Fetch the netlify site name and all wordles.
 * **method:** `GET`
 * **route:** `/api/fetch_wordles`
 * **return:** A JSON document containing all wordles.
@@ -47,15 +25,14 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 {
     "netlifySiteName": "inverted-wordles",
     "wordles": {
-        "a11y-workshop": {
+        "77d4f4bc-5b98-4e1f-9348-d684a6431877": {
             "content": {
                 "workshopName": "Accessibility Workshop",
                 "question": "What are three most important problems to be addressed by inclusive design?",
                 "entries": 3,
                 "entryMaxLength": 80,
                 "createdTimestamp": "2021-05-05T18:03:02.752Z",
-                "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z",
-                "branch": "a11y-workshop"
+                "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z"
             },
             "exists": true,
             "sha": "c150e89017167f06cbd0e809ed66fb070696e626"
@@ -65,12 +42,12 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 }
 ```
 
-## Fetch a Wordle Question (GET /api/fetch_question/:branchName)
+## Fetch a Wordle Question (GET /api/fetch_question/:wordleId)
 
 * **description**: Fetch a wordle question.
 * **method:** `GET`
-* **route:** `/api/fetch_question/:branchName` where:
-    * `branchName`: A branch name.
+* **route:** `/api/fetch_question/:wordleId` where:
+    * `wordleId`: A wordle ID.
 * **return:** A JSON document containing the question information of a wordle.
 
 ```json
@@ -80,17 +57,16 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
     "entries": 3,
     "entryMaxLength": 80,
     "createdTimestamp": "2021-05-05T18:03:02.752Z",
-    "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z",
-    "branch": "a11y-workshop"
+    "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z"
 }
 ```
 
-## Fetch Answers for a Wordle (GET /api/fetch_answer/:branchName)
+## Fetch Answers for a Wordle (GET /api/fetch_answer/:wordleId)
 
 * **description**: Fetch answers for a wordle.
 * **method:** `GET`
-* **route:** `/api/fetch_answer/:branchName` where:
-    * `branchName`: A branch name.
+* **route:** `/api/fetch_answer/:wordleId` where:
+    * `wordleId`: A wordle ID.
 * **return:** A JSON document containing answers.
 
 ```json
@@ -104,10 +80,10 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 
 ## Save a Wordle Question (POST /api/save_question)
 
-* **description**: Save the question information for a wordle.
+* **description**: Save the updated question information for a wordle.
 * **method:** `POST`
 * **route:** `/api/save_question` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `branch`: The branch name for a wordle.
+    * `wordleId`: The wordle ID.
     * `workshop-name`: Optional. The workshop name.
     * `question`: Optional. The wordle question.
     * `entries`: Optional. Number of answers allowed when answering this question.
@@ -120,8 +96,7 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
     "entries": 3,
     "entryMaxLength": 80,
     "createdTimestamp": "2021-05-05T18:03:02.752Z",
-    "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z",
-    "branch": "a11y-workshop"
+    "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z"
 }
 ```
 
@@ -131,46 +106,46 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 update the answers file with new answers.
 * **method:** `POST`
 * **route:** `/api/save_answers` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `branch`: The branch name for a wordle.
+    * `wordleId`: The wordle ID.
     * `requestId`: a string of a request id.
     * `answers`: an array containing answers
 * **return:** A JSON document containing answers.
 
 ```json
 {
-    "branch": "a11y-workshop",
+    "wordleId": "77d4f4bc-5b98-4e1f-9348-d684a6431877",
     "answers": ["answer1", "answer2", ...],
     "requestId": "w68g2o"
 }
 ```
 
-## Create a New Wordle (POST /api/create_branch)
+## Create a New Wordle (POST /api/create_question)
 
-* **description**: Check a new branch in the wordle GitHub repository.
+* **description**: Create a new wordle question.
 * **method:** `POST`
-* **route:** `/api/create_branch` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `branchName`: A branch name.
+* **route:** `/api/create_question` with these parameters in the `POST` body using the `application/json` Content-Type.
+    * `wordleId`: A wordle ID.
 ```
 {
-    "branchName": "a-new-branch"
+    "wordleId": "77d4f4bc-5b98-4e1f-9348-d684a6431877"
 }
 ```
-* **return:** A JSON document containing the branch name that has been created, along with a timestamp of when it's
+* **return:** A JSON document containing the wordle ID that has been created, along with a timestamp of when it's
 created.
 
 ```json
 {
-    "branchName": "a-new-branch",
+    "wordleId": "77d4f4bc-5b98-4e1f-9348-d684a6431877",
     "lastModifiedTimestamp": "2021-09-23T17:50:57.143Z"
 }
 ```
 
-## Delete a Wordle (DELETE /api/delete_wordle/:branchName)
+## Delete a Wordle (DELETE /api/delete_wordle/:wordleId)
 
-* **description**: Delete a branch.
+* **description**: Delete a wordle.
 * **method:** `DELETE`
-* **route:** `/api/delete_wordle/:branchName` where:
-    * `branchName`: A branch name.
+* **route:** `/api/delete_wordle/:wordleId` where:
+    * `wordleId`: A wordle ID.
 * **return:** A success message when a deletion completes successfully.
 
 ```json

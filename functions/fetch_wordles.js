@@ -24,18 +24,25 @@ exports.handler = async function (event) {
     });
 
     try {
-        // Get all wordles
-        const branches = await gitOpsApi.getAllBranches(octokit, {
+        // Get all files from "src/_data" directory
+        const files = await gitOpsApi.getDirInfo(octokit, {
             repoOwner: serverUtils.repoOwner,
-            repoName: serverUtils.repoName
+            repoName: serverUtils.repoName,
+            path: "src/_data",
+            ref: serverUtils.branchName
         });
 
         let wordles = {};
-        for (const branch of branches) {
-            if (branch.name === "main") {
+
+        // Find all question file names whose names match uuid v4 format
+        // For UUID validation, see https://stackoverflow.com/questions/7905929/how-to-test-valid-uuid-guid#answer-38191104
+        const regex = /^([0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})-question\.json$/i;
+        for (const file of files) {
+            let found = file.name.match(regex);
+            if (!found) {
                 continue;
             }
-            wordles[branch.name] = await fetchJSONFile(octokit, branch.name, "src/_data/question.json");
+            wordles[found[1]] = await fetchJSONFile(octokit, serverUtils.branchName, file.path);
         }
 
         // Get netlify site information

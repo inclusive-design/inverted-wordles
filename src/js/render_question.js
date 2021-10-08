@@ -32,7 +32,7 @@ inverted_wordles.reportError = function (error, statusSelector) {
 };
 
 inverted_wordles.populateForm = function (options) {
-    fetch("/api/fetch_question/" + wordle_globals.branch).then(
+    fetch("/api/fetch_question/" + wordle_globals.wordleId).then(
         response => inverted_wordles.setFormData(response, options),
         error => inverted_wordles.reportError(error, options.selectors.status)
     );

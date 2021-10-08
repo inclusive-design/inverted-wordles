@@ -20,11 +20,11 @@ inverted_wordles.manage.bindDeleteEvents = function (containerElm, options) {
             currentButton.addEventListener("click", evt => {
                 aria.openDialog(options.deleteDialogId, evt.target.id, options.deleteCancelId);
                 const deleteDialog = document.getElementById(options.deleteDialogId);
-                // set the aria-controls attribute to the id of the wordle row that will be deleted
+                // Set the aria-controls attribute to the id of the wordle row that will be deleted
                 const wordleRowId = inverted_wordles.manage.getNameWithSharedSuffix(evt.target.id, options.deleteButtonIdPrefix, options.wordleRowIdPrefix);
                 deleteDialog.querySelector(options.selectors.deleteConfirm).setAttribute("aria-controls", wordleRowId);
-                // set the branch name to the delete confirmation dialog for the future retrival when the deletion is confirmed
-                deleteDialog.querySelector("input[name='" + options.branchNameField + "']").value = currentButton.parentElement.parentElement.querySelector("input[name='" + options.branchNameField + "']").value;
+                // Keep the wordle id to the delete confirmation dialog for the future retrival when the deletion is confirmed
+                deleteDialog.querySelector("input[name='" + options.wordleIdField + "']").value = currentButton.parentElement.parentElement.querySelector("input[name='" + options.wordleIdField + "']").value;
             });
         }
     };
@@ -36,17 +36,17 @@ inverted_wordles.manage.bindDeleteEvents = function (containerElm, options) {
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.deleteClicked = function (closeButton, options) {
-    // find out the branch to be deleted
-    const branchName = closeButton.parentElement.querySelector("input[name='" + options.branchNameField + "']").value;
+    // find out the id of the wordle to be deleted
+    const wordleId = closeButton.parentElement.querySelector("input[name='" + options.wordleIdField + "']").value;
     // close the confirmation dialog
     aria.closeDialog(closeButton);
-    // Find the row with the current branch name
-    const rowElm = inverted_wordles.manage.findWordleRowByBranchName(options.selectors.wordlesArea, branchName);
+    // Find the row with the current wordle id
+    const rowElm = inverted_wordles.manage.findWordleRowByWordleId(wordleId, options);
     // Find the status element for reporting errors when occuring
     const oneStatusElm = rowElm.querySelector(options.selectors.oneStatus);
 
-    // delete the branch
-    fetch("/api/delete_wordle/" + branchName, {
+    // delete the wordle
+    fetch("/api/delete_wordle/" + wordleId, {
         method: "DELETE"
     }).then(response => {
         // Javascript fetch function does not reject when the status code is between 400 to 600.
