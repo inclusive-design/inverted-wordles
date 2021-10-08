@@ -75,7 +75,7 @@ inverted_wordles.manage.checkNetlifySite = function (options) {
 };
 
 /**
- * Check deploy states of all wordles and render them into the wordle area.
+ * Build the wordle list.
  * @param {Wordles} wordles - A list of wordles keyed by wordle ids.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
@@ -101,7 +101,7 @@ inverted_wordles.manage.initManagePage = function (options) {
             if (response.status >= 400 && response.status < 600) {
                 const generalStatusElm = document.querySelector(options.selectors.status);
                 response.json().then(res => {
-                    inverted_wordles.manage.reportStatus("Error at checking wordle deploy status: " + res.error.message, generalStatusElm, "error");
+                    inverted_wordles.manage.reportStatus("Error at fetching wordles: " + res.error.message, generalStatusElm, "error");
                 });
             } else {
                 inverted_wordles.manage.bindNetlifyEvents(options);
