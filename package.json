@@ -16,7 +16,7 @@
         "@11ty/eleventy-navigation": "0.3.2",
         "@11ty/eleventy-plugin-rss": "1.1.2",
         "@octokit/core": "3.5.1",
-        "axios": "0.22.0",
+        "axios": "0.23.0",
         "d3": "7.1.1",
         "d3-cloud": "1.2.5",
         "git-ops-api": "cindyli/git-ops-api#more-api-functions",
@@ -28,7 +28,7 @@
     "devDependencies": {
         "dotenv": "10.0.0",
         "eleventy-plugin-error-overlay": "0.1.2",
-        "eslint": "7.32.0",
+        "eslint": "8.0.0",
         "eslint-config-fluid": "2.0.0",
         "fluid-lint-all": "1.1.5",
         "html-minifier": "4.0.0",

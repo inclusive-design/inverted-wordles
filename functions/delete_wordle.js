@@ -2,6 +2,7 @@
 
 const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
+const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 const {
     Octokit
 } = require("@octokit/core");
@@ -22,20 +23,28 @@ exports.handler = async function (event) {
     });
 
     try {
-        await gitOpsApi.commitMultipleFiles(octokit, {
-            repoOwner: serverUtils.repoOwner,
-            repoName: serverUtils.repoName,
-            branchName: serverUtils.branchName,
-            files: [{
-                path: "src/_data/" + wordleId + "-question.json",
-                operation: "delete"
-            }, {
-                path: "src/_data/" + wordleId + "-answers.json",
-                operation: "delete"
-            }],
-            commitMessage: "chore: [skip ci] delete wordle files with id " + wordleId
-        });
-        console.log("Done: the wordle with ID " + wordleId + " has been deleted.");
+        const wordleFiles = ["src/_data/" + wordleId + "-question.json", "src/_data/" + wordleId + "-answers.json"];
+        let filesToDelete = [];
+        for (let i = 0; i < wordleFiles.length; i++) {
+            const fileExists = await fetchJSONFile(octokit, serverUtils.branchName, wordleFiles[i]);
+            if (fileExists.exists) {
+                filesToDelete.push({
+                    path: wordleFiles[i],
+                    operation: "delete"
+                });
+            }
+        }
+
+        if (filesToDelete.length > 0) {
+            await gitOpsApi.commitMultipleFiles(octokit, {
+                repoOwner: serverUtils.repoOwner,
+                repoName: serverUtils.repoName,
+                branchName: serverUtils.branchName,
+                files: filesToDelete,
+                commitMessage: "chore: [skip ci] delete wordle files with id " + wordleId
+            });
+            console.log("Done: the wordle with ID " + wordleId + " has been deleted.");
+        }
         return {
             statusCode: 200,
             body: "Deleted successfully!"

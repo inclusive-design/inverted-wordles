@@ -38,7 +38,7 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                         // See https://github.com/whatwg/fetch/issues/18
                         if (response.status >= 400 && response.status < 600) {
                             response.json().then(res => {
-                                inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + res.error + "*", oneStatusElm, "error");
+                                inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + res.error.message + "*", oneStatusElm, "error");
                             });
                         } else {
                             response.json().then(res => {

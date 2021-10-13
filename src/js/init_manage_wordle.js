@@ -60,7 +60,7 @@ inverted_wordles.manage.checkNetlifySite = function (options) {
     }).then(response => {
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.manage.reportStatus("Error at checking the Netlify site: " + res.error, generalStatusElm, "error");
+                inverted_wordles.manage.reportStatus("Error at checking the Netlify site: " + res.error.message, generalStatusElm, "error");
             });
         } else {
             response.json().then(res => {
