@@ -7,11 +7,10 @@ exports.netlifyApi = "https://api.netlify.com/api/v1";
 const matches = /https:\/\/github.com\/(.*)\/(.*)/.exec(process.env.REPOSITORY_URL);
 const repoOwner = matches[1];
 const repoName = matches[2];
-const branchName = process.env.REPOSITORY_BRANCH ? process.env.REPOSITORY_BRANCH : "main";
 
 exports.repoOwner = repoOwner;
 exports.repoName = repoName;
-exports.branchName = branchName;
+exports.branchName = process.env.BRANCH;
 
 // Define a common error message for invalid incoming requests
 exports.invalidRequestResponse = {

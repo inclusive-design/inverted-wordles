@@ -64,8 +64,7 @@ information for accessing the Github repository are defined in these environment
 * REPOSITORY_URL: Optional. The GitHub repository URL that wordles are operated on. For example:
 `https://github.com/inclusive-design/inverted-wordles`. This variable needs to be manually defined when running
 the project locally via `netlify dev`. With real Netlify deployed sites, it is automatically available as a Netlify
-build time environment variable. See [the Netlify build environment variables documentation](github.com/cindyli/inverted-wordles).
-* REPOSITORY_BRANCH: Optional. The GitHub repository branch that wordles are fetched from. The default value is "main".
+build time environment variable. See [the Netlify build environment variables - Git metadata](https://docs.netlify.com/configure-builds/environment-variables/#git-metadata).
 * GITHUB_TOKEN: The personal access token of the account for authenticating the access to the Github repository. This
 access token must have `repo` access. Refer to [the Github documentation](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 about how to create a personal access token.
@@ -80,7 +79,6 @@ and deploying Netlify functions locally. Once the tool is set up, run:
 
 ```bash
 export REPOSITORY_URL=YOUR-REPOSITORY-URL
-export REPOSITORY_BRANCH=YOUR-REPOSITORY-BRANCH
 export GITHUB_TOKEN=YOUR-PERSONAL-ACCESS-TOKEN
 export NETLIFY_TOKEN=YOUR-NETLIFY-ACCOUNT-PERSONAL-ACCESS-TOKEN
 netlify dev
@@ -103,7 +101,6 @@ environment variables can be added directly to it as follows:
 
 ```env
 REPOSITORY_URL=YOUR-REPOSITORY-URL
-REPOSITORY_BRANCH=YOUR-REPOSITORY-BRANCH
 GITHUB_TOKEN=YOUR-PERSONAL-ACCESS-TOKEN
 NETLIFY_TOKEN=YOUR-NETLIFY-ACCOUNT-PERSONAL-ACCESS-TOKEN
 ```
