@@ -25,7 +25,7 @@ inverted_wordles.manage.createWordle = function (options) {
         workshopName: "",
         question: "",
         entries: 0,
-        lastModifiedTimestamp: lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/")
+        lastModifiedTimestamp: inverted_wordles.manage.formatDate(lastModifiedTimestamp)
     });
 
     // append the new row to the wordle list
@@ -62,7 +62,7 @@ inverted_wordles.manage.createWordle = function (options) {
             });
         } else {
             response.json().then(res => {
-                const lastModifiedTimestamp = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
+                const lastModifiedTimestamp = inverted_wordles.manage.formatDate(res.lastModifiedTimestamp);
 
                 // Append the new wordle row to the wordle list
                 const newWordleRow = inverted_wordles.manage.renderWordleRow({

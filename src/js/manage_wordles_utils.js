@@ -17,6 +17,15 @@ inverted_wordles.manage.escapeHtml = function (content) {
 };
 
 /**
+ * Format a timestamp from ""2021-10-15T14:22:06.528Z"" to ""2021-10-15".
+ * @param {String} fromDate - A date in the from format.
+ * @return {String} Formatted date.
+ */
+inverted_wordles.manage.formatDate = function (fromDate) {
+    return fromDate ? fromDate.substring(0, 10).replace(/-/g, "/") : "";
+};
+
+/**
  * Show a message in a status element.
  * @param {String} message - A message to show.
  * @param {DOMElement} statusElm - The status DOM element.
@@ -52,11 +61,11 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
     <div id="one-wordle-id-${ uniqueId }" class="one-wordle">
         <div class="workshop-name-cell">
             <label for="workshop-name-id-${ uniqueId }">Workshop Name</label>
-            <input type="text" id="workshop-name-id-${ uniqueId }" name="workshop-name" value="${ wordleOptions.workshopName }">
+            <input type="text" id="workshop-name-id-${ uniqueId }" name="workshop-name" value="${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }">
         </div>
         <div class="question-cell">
             <label for="question-id-${ uniqueId }">Question</label>
-            <input type="text" id="question-id-${ uniqueId }" name="question" value="${ wordleOptions.question }">
+            <input type="text" id="question-id-${ uniqueId }" name="question" value="${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }">
         </div>
         <div class="entries-cell">
             <label for="entries-id-${ uniqueId }">Word Entries</label>
@@ -82,7 +91,7 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
         </div>
         <div class="last-modified-cell">
             <label for="last-modified-id-${ uniqueId }">Last Modified</label>
-            <span id="last-modified-id-${ uniqueId }">${ wordleOptions.lastModifiedTimestamp }</span>
+            <span id="last-modified-id-${ uniqueId }">${ inverted_wordles.manage.formatDate(wordleOptions.lastModifiedTimestamp) }</span>
         </div>
         <div class="delete-cell">
             <button id="delete-id-${ uniqueId }" class="delete-button">

@@ -30,17 +30,12 @@ inverted_wordles.manage.renderWordles = function (wordles, options) {
 
     // Loop through all wordles to render
     for (const [wordleId, questionFile] of Object.entries(wordles)) {
-        const escapedQuestionData = {};
-        escapedQuestionData.workshopName = questionFile.exists && questionFile.content.workshopName ? inverted_wordles.manage.escapeHtml(questionFile.content.workshopName) : "";
-        escapedQuestionData.question = questionFile.exists && questionFile.content.question ? inverted_wordles.manage.escapeHtml(questionFile.content.question) : "";
-        escapedQuestionData.entries = questionFile.exists && questionFile.content.entries ? questionFile.content.entries : "";
-        escapedQuestionData.lastModifiedTimestamp = questionFile.exists && questionFile.content.lastModifiedTimestamp ? questionFile.content.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/") : "";
         wordlesHtml += inverted_wordles.manage.renderWordleRow({
             wordleId,
-            workshopName: escapedQuestionData.workshopName,
-            question: escapedQuestionData.question,
-            entries: escapedQuestionData.entries,
-            lastModifiedTimestamp: escapedQuestionData.lastModifiedTimestamp
+            workshopName: questionFile.content.workshopName,
+            question: questionFile.content.question,
+            entries: questionFile.content.entries,
+            lastModifiedTimestamp: questionFile.content.lastModifiedTimestamp
         });
     }
     // Add all wordles to the page

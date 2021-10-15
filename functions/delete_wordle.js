@@ -24,23 +24,33 @@ exports.handler = async function (event) {
 
     try {
         const wordleFiles = ["src/_data/" + wordleId + "-question.json", "src/_data/" + wordleId + "-answers.json"];
-        let filesToDelete = [];
-        for (let i = 0; i < wordleFiles.length; i++) {
-            const fileExists = await fetchJSONFile(octokit, serverUtils.branchName, wordleFiles[i]);
-            if (fileExists.exists) {
-                filesToDelete.push({
-                    path: wordleFiles[i],
-                    operation: "delete"
-                });
-            }
-        }
+
+        // Check if the given file exists in the github repository
+        const fileExists = async (file) => {
+            const fileInfo = await fetchJSONFile(octokit, serverUtils.branchName, file);
+            return fileInfo.exists;
+        };
+
+        // The async version of array.filter(). The first one maps the array through the predicate function
+        // asynchronously, producing true/false values. Then the second step is a synchronous filter that uses
+        // the results from the first step.
+        // See https://advancedweb.hu/how-to-use-async-functions-with-array-filter-in-javascript/
+        const asyncFilter = async (arr, predicate) => Promise.all(arr.map(predicate))
+        	.then((results) => arr.filter((_v, index) => results[index]));
+
+        const filesToDelete = await asyncFilter(wordleFiles, fileExists);
 
         if (filesToDelete.length > 0) {
             await gitOpsApi.commitMultipleFiles(octokit, {
                 repoOwner: serverUtils.repoOwner,
                 repoName: serverUtils.repoName,
                 branchName: serverUtils.branchName,
-                files: filesToDelete,
+                files: filesToDelete.map(file => {
+                    return {
+                        path: file,
+                        operation: "delete"
+                    };
+                }),
                 commitMessage: "chore: [skip ci] delete wordle files with id " + wordleId
             });
             console.log("Done: the wordle with ID " + wordleId + " has been deleted.");
