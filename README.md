@@ -65,6 +65,10 @@ information for accessing the Github repository are defined in these environment
 `https://github.com/inclusive-design/inverted-wordles`. This variable needs to be manually defined when running
 the project locally via `netlify dev`. With real Netlify deployed sites, it is automatically available as a Netlify
 build time environment variable. See [the Netlify build environment variables - Git metadata](https://docs.netlify.com/configure-builds/environment-variables/#git-metadata).
+* BRANCH: Optional. The GitHub remote branch that the wordle data are fetched from. For example:
+`main`. This environment variable is automatically available as a Netlify build time environment variable with real
+Netlify deployed sites and local netlify sites started via `netlify dev`. See
+[the Netlify build environment variables - Git metadata](https://docs.netlify.com/configure-builds/environment-variables/#git-metadata).
 * GITHUB_TOKEN: The personal access token of the account for authenticating the access to the Github repository. This
 access token must have `repo` access. Refer to [the Github documentation](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 about how to create a personal access token.
@@ -75,7 +79,12 @@ a personal access token.
 #### Run with Local Netlify Endpoints
 
 Follow [Netlify instructions](https://docs.netlify.com/functions/build-with-javascript/#tools) to install tools for testing
-and deploying Netlify functions locally. Once the tool is set up, run:
+and deploying Netlify functions locally.
+
+Make sure your local branch is pushed up with the same branch name to the GitHub repository defined in the
+`REPOSITORY_URL` environment variable. The wordle data will be fetched from this remote branch.
+
+Once the tool is set up, run:
 
 ```bash
 export REPOSITORY_URL=YOUR-REPOSITORY-URL
