@@ -6,6 +6,9 @@ var inverted_wordles = {};
 
 // Populate the data on the answer question page
 inverted_wordles.setFormData = function (response, options) {
+    // Set the view wordle link
+    document.querySelector(options.selectors.viewWordle).href = "/wordle/?id=" + wordle_globals.wordleId;
+
     response.json().then(questionFile => {
         inverted_wordles.setEscapedContent(options.selectors.question, questionFile.question);
         inverted_wordles.setEscapedContent(options.selectors.entryMaxLength, questionFile.entryMaxLength);
