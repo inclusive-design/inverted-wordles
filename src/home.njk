@@ -32,33 +32,6 @@ permalink: /
     </div>
     <span id="status" role="status"></span>
 
-    {# The modal dialog for creating new wordles #}
-    <div class="dialog-backdrop no-scroll">
-        <div id="create-dialog" role="alertdialog" aria-modal="true" aria-labelledby="create_dialog_label" aria-describedby="create_dialog_desc" class="hidden">
-            <h2 id="create_dialog_label" class="dialog_label">Confirm to Create New Question</h2>
-            <div id="create_dialog_desc" class="dialog_desc">
-                <p>
-                    This will create a new webpage. It will take a couple of minutes until links are available. Are you sure you want to proceed?
-                </p>
-            </div>
-            {# aria-controls value is dynamically set to the id of the wordle row that will be created #}
-            <div class="dialog_form_actions">
-                <button type="button" id="create-confirm" aria-controls="" onclick="aria.closeDialog(this);inverted_wordles.manage.createWordle(inverted_wordles.manage.globalOptions);">
-                    <svg role="presentation">
-                        <use xlink:href="#tick"></use>
-                    </svg>
-                    Yes, go ahead
-                </button>
-                <button type="button" id="create-cancel" onclick="aria.closeDialog(this)">
-                    <svg role="presentation">
-                        <use xlink:href="#cross"></use>
-                    </svg>
-                    No, cancel
-                </button>
-            </div>
-        </div>
-    </div>
-
     {# The modal dialog for deleting wordles #}
     <div class="dialog-backdrop no-scroll">
         <div id="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete_dialog_label" aria-describedby="delete_dialog_desc" class="hidden">
@@ -127,8 +100,6 @@ inverted_wordles.manage.globalOptions = {
     deleteButtonIdPrefix: "delete-id",
     lastModifiedIdPrefix: "last-modified-id",
     wordleIdField: "wordleId",
-    createDialogId: "create-dialog",
-    createCancelId: "create-cancel",
     deleteDialogId: "delete-dialog",
     deleteCancelId: "delete-cancel",
     selectors: {

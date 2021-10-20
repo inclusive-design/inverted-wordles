@@ -1,6 +1,6 @@
 "use strict";
 
-/* global inverted_wordles, aria, uuidv4 */
+/* global inverted_wordles, uuidv4 */
 
 /**
  * Bind event listeners for the "create question" button.
@@ -8,7 +8,7 @@
  */
 inverted_wordles.manage.bindCreateEvent = function (options) {
     const createButton = document.querySelector(options.selectors.createButton);
-    createButton.addEventListener("click", evt => aria.openDialog(options.createDialogId, evt.target.id, options.createCancelId));
+    createButton.addEventListener("click", () => inverted_wordles.manage.createWordle(inverted_wordles.manage.globalOptions));
 };
 
 /**
