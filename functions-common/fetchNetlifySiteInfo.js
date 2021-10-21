@@ -18,7 +18,6 @@ exports.fetchNetlifySiteInfo = async () => {
 
     const matchedSite = netlifyResponse.data.find(oneSite => oneSite.build_settings.repo_url === process.env.REPOSITORY_URL);
     return matchedSite ? {
-        id: matchedSite.id,
-        name: matchedSite.name
+        id: matchedSite.id
     } : {};
 };

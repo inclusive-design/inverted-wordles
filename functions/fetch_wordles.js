@@ -6,7 +6,6 @@ const {
 
 const gitOpsApi = require("git-ops-api");
 const serverUtils = require("../functions-common/serverUtils.js");
-const fetchNetlifySiteInfo = require("../functions-common/fetchNetlifySiteInfo.js").fetchNetlifySiteInfo;
 const fetchJSONFile = require("../functions-common/fetchJSONFile.js").fetchJSONFile;
 
 exports.handler = async function (event) {
@@ -45,15 +44,9 @@ exports.handler = async function (event) {
             wordles[found[1]] = await fetchJSONFile(octokit, serverUtils.branchName, file.path);
         }
 
-        // Get netlify site information
-        const netlifySiteInfo = await fetchNetlifySiteInfo();
-
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                netlifySiteName: netlifySiteInfo.name,
-                wordles
-            })
+            body: JSON.stringify(wordles)
         };
     } catch (e) {
         console.log("fetch_wordles error: ", e);

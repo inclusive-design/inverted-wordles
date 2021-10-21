@@ -73,7 +73,7 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
         </div>
         <div class="view-answer-cell">
             <label for="view-answer-id-${ uniqueId }">Answers</label>
-            <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="${ inverted_wordles.instance.netlifyUrlDomain }answer/?id=${ wordleOptions.wordleId}">
+            <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="/answer/?id=${ wordleOptions.wordleId}">
                 <svg role="presentation" class="view-answer-svg">
                     <use xlink:href="#view"></use>
                 </svg>
@@ -82,7 +82,7 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
         </div>
         <div class="view-wordle-cell">
             <label for="view-wordle-id-${ uniqueId }">Wordle</label>
-            <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="${ inverted_wordles.instance.netlifyUrlDomain }wordle/?id=${ wordleOptions.wordleId}">
+            <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="/wordle/?id=${ wordleOptions.wordleId}">
                 <svg role="presentation" class="view-wordle-svg">
                     <use xlink:href="#view"></use>
                 </svg>

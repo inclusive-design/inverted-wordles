@@ -100,9 +100,8 @@ inverted_wordles.manage.initManagePage = function (options) {
                 });
             } else {
                 inverted_wordles.manage.bindNetlifyEvents(options);
-                response.json().then(wordlesInfo => {
-                    inverted_wordles.instance.netlifyUrlDomain = "https://" + wordlesInfo.netlifySiteName + ".netlify.app/";
-                    inverted_wordles.manage.initWordles(wordlesInfo.wordles, options);
+                response.json().then(wordles => {
+                    inverted_wordles.manage.initWordles(wordles, options);
                 });
             }
         },
