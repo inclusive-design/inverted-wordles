@@ -20,7 +20,7 @@
     },
     "lintspaces": {
         "newlines": {
-            "excludes": ["tests/**/images/**/*"]
+            "excludes": ["tests/**/images/**/*", "src/_data/*.json"]
         }
     }
 }

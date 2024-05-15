@@ -1,4 +1,4 @@
-/* global wordle_globals */
+/* global wordle_globals, inverted_wordles */
 
 "use strict";
 
@@ -16,7 +16,7 @@ var submitAnswer = function (dataTogo) {
 var updateStatus = function (response) {
     const statusElm = document.getElementById("status");
     statusElm.className = response.ok ? "success" : "error";
-    statusElm.innerHTML = response.ok ? "Your answer has been submitted successfully." : "There is a problem submitting your answer. Please try again later.";
+    statusElm.innerHTML = response.ok ? "<span data-i18n-textcontent=\"success_answer_submit\">" + inverted_wordles.t("success_answer_submit") + "</span>" : "<span data-i18n-textcontent=\"error_answer_submit\">" + inverted_wordles.t("error_answer_submit") + "</span>";
     if (response.ok) {
         const viewWordle = document.querySelector(".view-wordle");
         viewWordle.classList.remove("hidden");

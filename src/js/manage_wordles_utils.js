@@ -52,9 +52,10 @@ inverted_wordles.manage.reportStatus = function (message, statusElm, messageType
 /**
  * Return html of a wordle record on the landing page.
  * @param {wordleOptions} wordleOptions - Values required to render a wordle row.
+ * @param {String} currentLanguage - The current language code.
  * @return {String} A html string mapping to a wordle record on the landing page.
  */
-inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
+inverted_wordles.manage.renderWordleRow = function (wordleOptions, currentLanguage) {
     const uniqueId = uuidv4();
 
     return `
@@ -73,20 +74,20 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
         </div>
         <div class="view-answer-cell">
             <label for="view-answer-id-${ uniqueId }">Answers</label>
-            <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="/answer/?id=${ wordleOptions.wordleId}">
+            <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="/answer/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" data-i18n-link>
                 <svg role="presentation" class="view-answer-svg">
                     <use xlink:href="#view"></use>
                 </svg>
-                View
+                <span data-i18n-textcontent="view">${ inverted_wordles.t("view") }</span>
             </a>
         </div>
         <div class="view-wordle-cell">
             <label for="view-wordle-id-${ uniqueId }">Wordle</label>
-            <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="/wordle/?id=${ wordleOptions.wordleId}">
+            <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="/wordle/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" data-i18n-link>
                 <svg role="presentation" class="view-wordle-svg">
                     <use xlink:href="#view"></use>
                 </svg>
-                View
+                <span data-i18n-textcontent="view">${ inverted_wordles.t("view") }</span>
             </a>
         </div>
         <div class="last-modified-cell">
@@ -98,7 +99,7 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions) {
                 <svg role="presentation" class="view-answer-svg">
                     <use xlink:href="#cross"></use>
                 </svg>
-                Delete
+                <span data-i18n-textcontent="delete">${ inverted_wordles.t("delete") }</span>
             </button>
         </div>
         <div class="one-status" role="status"></div>

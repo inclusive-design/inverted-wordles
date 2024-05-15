@@ -24,6 +24,21 @@ header {
         font-size: rem(18);
         font-weight: 900;
     }
+
+    .language-toggle button {
+        cursor: pointer;
+        padding: 0 1rem;
+
+        &.active {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+    }
+
+    #language-toggle button.active {
+        background-color: #e0e0e0;
+        font-weight: bold;
+    }
 }
 
 // For desktop sized screens

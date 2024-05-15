@@ -13,5 +13,5 @@
         "no-loop-func": 0,
         "no-console": 0
     },
-    "ignorePatterns": ["dist", "!.eslintrc.js", "!.eleventy.js"]
+    "ignorePatterns": ["dist", "!.eslintrc.js", "!.eleventy.js", "src/_data"]
 }

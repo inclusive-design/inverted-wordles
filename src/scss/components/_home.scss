@@ -279,6 +279,10 @@ button {
         align-self: center;
         font-size: rem(24);
         margin: rem(32);
+
+        span {
+            font-size: rem(24);
+        }
     }
 }
 

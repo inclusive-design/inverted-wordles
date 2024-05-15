@@ -1,8 +1,6 @@
 "use strict";
 
-/* global wordle_globals */
-
-var inverted_wordles = {};
+/* global wordle_globals, inverted_wordles */
 
 // Populate the data on the answer question page
 inverted_wordles.setFormData = function (response, options) {
@@ -16,7 +14,7 @@ inverted_wordles.setFormData = function (response, options) {
         // Refer to https://stackoverflow.com/questions/30452263/is-there-a-mechanism-to-loop-x-times-in-es6-ecmascript-6-without-mutable-varia#answer-37417004
         // for iterating a given number of times.
         let entriesHtml = [...Array(questionFile.entries)].map((_, i) => {
-            return `<input type="text" autocomplete="false" ${ i === 0 ? "autofocus" : "" } name="answer" maxlength="${questionFile.entryMaxLength}" placeholder="Enter a word or a phrase">`;
+            return `<input type="text" autocomplete="false" ${ i === 0 ? "autofocus" : "" } name="answer" maxlength="${questionFile.entryMaxLength}" placeholder="${ inverted_wordles.t("enter_an_answer") }" data-i18n-placeholder="enter_an_answer">`;
         });
         document.querySelector(options.selectors.entryArea).innerHTML = entriesHtml.join("\n");
     });
@@ -31,7 +29,7 @@ inverted_wordles.setEscapedContent = function (selector, content) {
 inverted_wordles.reportError = function (error, statusSelector) {
     const statusElm = document.querySelector(statusSelector);
     statusElm.className = "error";
-    statusElm.innerHTML = "Error at populating the page data: " + error;
+    statusElm.innerHTML = "<span data-i18n-textcontent=\"error_load_data\">" + inverted_wordles.t("error_load_data") + "</span>" + error;
 };
 
 inverted_wordles.populateForm = function (options) {

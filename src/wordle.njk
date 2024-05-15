@@ -7,8 +7,8 @@ permalink: "/wordle/"
 
 {% block content %}
 <script>
-    var searchParams = new URLSearchParams(window.location.search);
-    var wordle_globals = {
+    let searchParams = new URLSearchParams(window.location.search);
+    const wordle_globals = {
         wordleId: searchParams.get("id")
     };
 </script>
@@ -30,9 +30,9 @@ permalink: "/wordle/"
                         {% include "./images/checkbox-selected.svg" %}
                     </span>
                 </label>
-                <label for="tts">Speak the wordle text under the pointer {% include "./images/speaker.svg" %}</label>
+                <label for="tts"><span data-i18n-textcontent="speak_wordle">Speak the wordle text under the pointer</span> {% include "./images/speaker.svg" %}</label>
             </div>
-            <span class="tts-status">*Unable to activate VoiceOver. Your browser version or config does not support web speech API**</span>
+            <span class="tts-status" data-i18n-textcontent="error_voiceover">*Unable to activate VoiceOver. Your browser version or config does not support web speech API*</span>
         </div>
 
         <div class="apply-conventional">
@@ -42,10 +42,16 @@ permalink: "/wordle/"
                     {% include "./images/checkbox-selected.svg" %}
                 </span>
             </label>
-            <label for="conventional">Apply conventional weighting</label>
+            <label for="conventional" data-i18n-textcontent="apply_weight">Apply conventional weighting</label>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block headerScripts %}
+{# For internationalization #}
+<script src="/js/translations.js"></script>
+<script src="/js/i18n.js"></script>
 {% endblock %}
 
 {% block footerScripts %}
