@@ -7,13 +7,17 @@ permalink: /
 
 {% block headerContent %}
 <div class="admin-controls">
-    <button class="create-button" id="create-button">
-        <svg role="presentation" class="create-question-svg">
-            <use xlink:href="#create"></use>
-        </svg>
-        <span>New Question</span>
-    </button>
-    <div data-netlify-identity-button></div>
+    <li>
+        <button class="create-button" id="create-button">
+            <svg role="presentation" class="create-question-svg">
+                <use xlink:href="#create"></use>
+            </svg>
+            <span>New Question</span>
+        </button>
+    </li>
+    <li>
+        <div data-netlify-identity-button></div>
+    </li>
 </div>
 {% endblock %}
 

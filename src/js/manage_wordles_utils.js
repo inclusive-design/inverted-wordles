@@ -73,21 +73,25 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions, currentLangua
             <input type="text" id="entries-id-${ uniqueId }" name="entries" value="${ wordleOptions.entries }">
         </div>
         <div class="view-answer-cell">
-            <label for="view-answer-id-${ uniqueId }">Answers</label>
             <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="/answer/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" data-i18n-link>
                 <svg role="presentation" class="view-answer-svg">
                     <use xlink:href="#view"></use>
                 </svg>
                 <span data-i18n-textcontent="view">${ inverted_wordles.t("view") }</span>
+                <label class="visually-hidden">
+                    <span data-i18n-textcontent="view_answers_page">${ inverted_wordles.t("view_answers_page") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
+                </label>
             </a>
         </div>
         <div class="view-wordle-cell">
-            <label for="view-wordle-id-${ uniqueId }">Wordle</label>
             <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="/wordle/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" data-i18n-link>
                 <svg role="presentation" class="view-wordle-svg">
                     <use xlink:href="#view"></use>
                 </svg>
                 <span data-i18n-textcontent="view">${ inverted_wordles.t("view") }</span>
+                <label class="visually-hidden">
+                    <span data-i18n-textcontent="view_wordle_page">${ inverted_wordles.t("view_wordle_page") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
+                </label>
             </a>
         </div>
         <div class="last-modified-cell">
@@ -100,6 +104,9 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions, currentLangua
                     <use xlink:href="#cross"></use>
                 </svg>
                 <span data-i18n-textcontent="delete">${ inverted_wordles.t("delete") }</span>
+                <label class="visually-hidden">
+                    <span data-i18n-textcontent="wordle_with_question">${ inverted_wordles.t("wordle_with_question") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
+                </label>
             </button>
         </div>
         <div class="one-status" role="status"></div>

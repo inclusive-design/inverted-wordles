@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //     parameters.
     inverted_wordles.updateI18nContent = function () {
         // find all elements with an attribute prefixed with "data-i18n-"
-        const translatableElements = document.querySelectorAll("[data-i18n-textcontent], [data-i18n-placeholder], [data-i18n-link]");
+        const translatableElements = document.querySelectorAll("[data-i18n-textcontent], [data-i18n-placeholder], [data-i18n-link], [data-i18n-arialabel]");
 
         translatableElements.forEach(el => {
             const key = el.dataset.i18nTextcontent || el.dataset.i18nPlaceholder;
@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 el.textContent = newly_translated;
             } else if (el.dataset.i18nPlaceholder) {
                 el.placeholder = newly_translated;
+            } else if (el.dataset.i18nAriaLabel) {
+                el["aria-label"] = newly_translated;
             } else if (el.dataset.i18nLink === "") {
                 // Note: as there isn't a value assigned to `data-i18n-link` attribute,
                 // check its value === "" is required in order to have the check return true.
@@ -58,16 +60,23 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Toggle language
-    const toggleEnButton = document.getElementById("toggle-en");
-    const toggleFrButton = document.getElementById("toggle-fr");
+    const toggleEn = document.getElementById("toggle-en");
+    const toggleFr = document.getElementById("toggle-fr");
 
-    // Style the language toggle buttons
-    inverted_wordles.styleToggleButtons = function (lang) {
-        toggleEnButton.classList.toggle("active", lang === "en");
-        toggleFrButton.classList.toggle("active", lang === "fr");
+    // Style the language toggle links
+    inverted_wordles.setLangAttributes = function (lang, clickedLink) {
+        // Update toggle links
+        clickedLink.setAttribute("aria-current", "page");
+        const nonClickedLink = clickedLink === toggleEn ? toggleFr : toggleEn;
+        nonClickedLink.removeAttribute("aria-current");
+
+        // Update <html> tag
+        const htmlElement = document.documentElement;
+        htmlElement.setAttribute("lang", lang === "en" ? "en-CA" : "fr-CA");
     };
 
-    inverted_wordles.toggleLanguage = function (newLang) {
+    inverted_wordles.toggleLanguage = function (newLang, event) {
+        event.preventDefault();
         // Update the global variable currentLanguage
         currentLanguage = newLang;
 
@@ -81,17 +90,17 @@ document.addEventListener("DOMContentLoaded", function () {
         window.history.pushState({}, "", url.toString());
 
         // Style language toggle buttons
-        inverted_wordles.styleToggleButtons(newLang);
+        inverted_wordles.setLangAttributes(newLang, event.target);
     };
 
-    toggleEnButton.addEventListener("click", () => inverted_wordles.toggleLanguage("en"));
-    toggleFrButton.addEventListener("click", () => inverted_wordles.toggleLanguage("fr"));
+    toggleEn.addEventListener("click", (event) => inverted_wordles.toggleLanguage("en", event));
+    toggleFr.addEventListener("click", (event) => inverted_wordles.toggleLanguage("fr", event));
 
     // Initial actions at the page load:
     // 1. translation;
-    // 2. style language toggle buttons
+    // 2. style language toggle links
     if (currentLanguage !== defaultLanguage) {
         inverted_wordles.updateI18nContent();
-        inverted_wordles.styleToggleButtons(currentLanguage);
+        inverted_wordles.setLangAttributes(currentLanguage, currentLanguage === "en" ? toggleEn : toggleFr);
     }
 });

@@ -5,6 +5,7 @@ var inverted_wordles = inverted_wordles || {};
 inverted_wordles.languages = {
     en: {
         "idrc_wordles": "IDRC Wordles",
+        "menu": "menu",
         "workshop_name": "Workshop Name",
         "question": "Question",
         "word_entries": "Word Entries",
@@ -14,6 +15,10 @@ inverted_wordles.languages = {
         "max_length": "Note: The max length for each answer is",
         "characters": "characters",
         "view": "View",
+        "view_answers_page": "the answers page for the question",
+        "view_wordle_page": "the wordle page for the question",
+        "from_workshop": "from the workshop",
+        "wordle_with_question": "the wordle with the question",
         "delete": "Delete",
         "submit_answer": "Submit Answer",
         "view_wordle": "View Wordle",
@@ -40,6 +45,7 @@ inverted_wordles.languages = {
     },
     fr: {
         "idrc_wordles": "Nuages de mots de l'IDRC",
+        "menu": "menu",
         "workshop_name": "Nom de l'atelier",
         "question": "Question",
         "word_entries": "Entrées de mots",
@@ -49,6 +55,10 @@ inverted_wordles.languages = {
         "max_length": "Remarque : La longueur maximale de chaque réponse est de",
         "characters": "personnages",
         "view": "Voir",
+        "view_answers_page": "la page de réponses à la question",
+        "view_wordle_page": "la page wordle pour la question",
+        "from_workshop": "de l'atelier",
+        "wordle_with_question": "le mot avec la question",
         "delete": "Supprimer",
         "submit_answer": "Soumettre la réponse",
         "view_wordle": "Voir Wordle",
