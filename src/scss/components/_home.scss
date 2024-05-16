@@ -248,7 +248,7 @@ button {
         padding: 0 rem(16);
 
         &:focus,
-        &:hover:enabled {
+        &:hover {
             background-color: #373737;
             border: rem(6) double;
             box-shadow: none;
@@ -292,7 +292,7 @@ button {
         .one-wordle {
             align-items: center;
             display: grid;
-            grid-template-columns: 3fr 3fr 1fr 1.5fr 1.5fr 2fr 1.5fr;
+            grid-template-columns: 3fr 3fr 1fr 1.5fr 1.5fr 2fr 1.7fr;
             justify-content: center;
         }
 
