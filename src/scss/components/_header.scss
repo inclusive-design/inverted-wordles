@@ -43,11 +43,11 @@ header {
     }
 
     .lang-toggle {
-        margin-right: 1rem;
+        margin-right: rem(16);
 
         a {
             color: black;
-            margin: 0 0.2rem;
+            margin: 0 rem(3);
 
             &:hover,
             &:focus {
@@ -88,7 +88,7 @@ header {
             align-items: last baseline;
 
             svg {
-                margin: 1rem 1rem 0 1rem;
+                margin: rem(16) rem(16) 0 rem(16);
             }
         }
     }

@@ -22,24 +22,26 @@ permalink: "/wordle/"
     <div class="wordle-controls">
         <div class="tts-controller">
             <div class="tts-checkbox">
-                <div class="checkbox-holder">
+                <label class="checkbox-holder">
                     <input class="fl-mapviz-checkbox" id="tts" type="checkbox">
                     <span>
                         {% include "./images/checkbox-selected.svg" %}
                     </span>
-                </div>
+                    <label class="visually-hidden">checkbox</label>
+                </label>
                 <label for="tts"><span data-i18n-textcontent="speak_wordle">Speak the wordle text under the pointer</span> {% include "./images/speaker.svg" %}</label>
             </div>
             <span class="tts-status" data-i18n-textcontent="error_voiceover">*Unable to activate VoiceOver. Your browser version or config does not support web speech API*</span>
         </div>
 
         <div class="apply-conventional">
-            <div class="checkbox-holder">
+            <label class="checkbox-holder">
                 <input class="fl-mapviz-checkbox" id="conventional" type="checkbox">
                 <span>
                     {% include "./images/checkbox-selected.svg" %}
                 </span>
-            </div>
+                <label class="visually-hidden">checkbox</label>
+            </label>
             <label for="conventional" data-i18n-textcontent="apply_weight">Apply conventional weighting</label>
         </div>
     </div>
