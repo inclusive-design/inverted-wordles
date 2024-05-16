@@ -16,7 +16,7 @@ inverted_wordles.setFormData = function (response, options) {
         let entriesHtml = [...Array(questionFile.entries)].map((_, i) => {
             return `
             <div class="answer_row">
-                <label for="answer_${ i }"><span data-i18n-textcontent="answer">${ inverted_wordles.t("answer") }</span> ${ i + 1 }: </label>
+                <label for="answer_${ i }"><span data-i18n-textcontent="answer">${ inverted_wordles.t("answer") }</span> ${ i + 1 } </label>
                 <input type="text" autocomplete="false" ${ i === 0 ? "autofocus" : "" } name="answer" id="answer_${ i }" maxlength="${questionFile.entryMaxLength}" placeholder="${ inverted_wordles.t("enter_an_answer") }" data-i18n-placeholder="enter_an_answer">
             </div>
             `;

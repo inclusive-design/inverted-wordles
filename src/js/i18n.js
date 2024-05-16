@@ -14,7 +14,7 @@ const userSelectedLang = urlSearchParams.get("lang");
 let currentLanguage = userSelectedLang ? userSelectedLang :
     supportedLanguages.includes(currentBrowserLang) ? currentBrowserLang : defaultLanguage;
 
-// Global variable to keep track of the translation object
+// Global variable to keep track of all translations for the current selected language
 let translations = inverted_wordles.languages[currentLanguage] || inverted_wordles.languages.en;
 
 // Translate function
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // data-i18n-link: use for <a> links that lead to other pages. Their `href`
     //     URL needs to be updated by updating `lang=currentLanguage` in search
     //     parameters.
+    // data-i18n-arialabel: update `aria-label` value
     inverted_wordles.updateI18nContent = function () {
         // find all elements with an attribute prefixed with "data-i18n-"
         const translatableElements = document.querySelectorAll("[data-i18n-textcontent], [data-i18n-placeholder], [data-i18n-link], [data-i18n-arialabel]");

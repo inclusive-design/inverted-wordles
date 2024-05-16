@@ -130,3 +130,42 @@ To lint the source code, run:
 ```bash
 npm run lint
 ```
+
+### Internationalization
+
+The website supports bilingual content in English and French. The implementation of internationalization (i18n)
+is achieved through two scripts:
+
+1. `src/js/translations.js`: This script defines a global variable `inverted_wordles.languages` that contains
+all phrase translations for English and French. When adding or updating a phrase, you need to update this object
+accordingly.
+
+2. `src/js/i18n.js`: This script defines the following global variables and functions:
+
+* `supportedLanguages`: An array containing the supported language codes, e.g., `["en", "fr"]`.
+* `defaultLanguage`: The default language code to be used at page load, e.g., `"en"`.
+* `currentLanguage`: The user's selected language code, falling back to `defaultLanguage` if no preference is set.
+* `translations`: An object that stores the translations for the current selected language.
+* `inverted_wordles.t`*: A translation function that returns the translated phrase for a given phrase key based
+on the current language.
+
+This script is responsible for translating the website content to the selected language upon page load and language
+change events. The following special HTML attributes are used to identify phrases and elements that need to be
+translated:
+
+* `data-i18n-textcontent`: Updates the `textContent` of the element with the translated phrase.
+* `data-i18n-placeholder`: Updates the value of the `placeholder` attribute with the translated phrase.
+* `data-i18n-link`: Used for <a> links that lead to other pages. The href URL is updated by appending or updating
+the `lang` query parameter with the `currentLanguage` value.
+* `data-i18n-arialabel`: Updates the `aria-label` value with the translated phrase.
+
+## Accessibility
+
+This website has been tested for accessibility using the following methods:
+
+* Automated Testing: The "WAVE" accessibility evaluation tool was used to identify potential accessibility issues
+on the website.
+* Keyboard Navigation: Thorough testing was conducted to ensure that all website functionalities can be accessed
+and operated using only the keyboard.
+* Screen Reader Testing: The website was tested with VoiceOver, a built-in screen reader on macOS, to verify its
+compatibility with assistive technologies for users with visual impairments.
