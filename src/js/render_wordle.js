@@ -1,8 +1,6 @@
 "use strict";
 
-/* global d3, wordle_globals */
-
-var inverted_wordles = {};
+/* global d3, wordle_globals, inverted_wordles */
 
 inverted_wordles.stringTemplateRegex = /\${([^\}]*)}/g;
 

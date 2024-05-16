@@ -3,10 +3,6 @@
     flex-direction: column;
     margin: auto;
 
-    h1 {
-        margin: auto;
-    }
-
     .wordle-controls {
         display: flex;
         flex-direction: column;
@@ -48,6 +44,12 @@
                 display: block;
             }
         }
+    }
+
+    .tts-checkbox,
+    .apply-conventional {
+        display: flex;
+        flex-direction: row;
     }
 
     .wordleRender svg {

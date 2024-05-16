@@ -13,8 +13,6 @@ permalink: "/wordle/"
     };
 </script>
 <div class="wordle">
-    <h1>{{ question.question }}</h1>
-
     <div class="wordleRender">
         {# Use "viewBox" and "preserveAspectRatio" to ensure the svg fits into viewports with different aspect ratios for the responsive design. #}
         <svg width="1024" height="768" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet">
@@ -24,24 +22,24 @@ permalink: "/wordle/"
     <div class="wordle-controls">
         <div class="tts-controller">
             <div class="tts-checkbox">
-                <label class="checkbox-holder">
+                <div class="checkbox-holder">
                     <input class="fl-mapviz-checkbox" id="tts" type="checkbox">
                     <span>
                         {% include "./images/checkbox-selected.svg" %}
                     </span>
-                </label>
+                </div>
                 <label for="tts"><span data-i18n-textcontent="speak_wordle">Speak the wordle text under the pointer</span> {% include "./images/speaker.svg" %}</label>
             </div>
             <span class="tts-status" data-i18n-textcontent="error_voiceover">*Unable to activate VoiceOver. Your browser version or config does not support web speech API*</span>
         </div>
 
         <div class="apply-conventional">
-            <label class="checkbox-holder">
+            <div class="checkbox-holder">
                 <input class="fl-mapviz-checkbox" id="conventional" type="checkbox">
                 <span>
                     {% include "./images/checkbox-selected.svg" %}
                 </span>
-            </label>
+            </div>
             <label for="conventional" data-i18n-textcontent="apply_weight">Apply conventional weighting</label>
         </div>
     </div>
