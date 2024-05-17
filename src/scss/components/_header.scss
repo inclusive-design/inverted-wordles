@@ -1,16 +1,12 @@
 header {
-    align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
-    ul {
-        display: flex;
-    }
 
     .main-menu {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        padding: 0 rem(8);
     }
 
     ul[role="list"] {
@@ -62,11 +58,17 @@ header {
     }
 }
 
-// For desktop sized screens
-@media screen and (min-width: 1024px) {
+// For mid-sized screens
+@media screen and (min-width: 600px) {
     header {
         flex-direction: row;
+        justify-content: space-between;
+    }
+}
 
+// For desktop sized screens
+@media screen and (min-width: 1150px) {
+    header {
         a.logo svg {
             width: rem(58);
         }
@@ -74,15 +76,11 @@ header {
         .logo-text {
             font-size: rem(30);
         }
-
-        .main-menu {
-            flex-direction: row;
-        }
     }
 }
 
 // For small size screens such as iphone 5
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 360px) {
     header {
         a.logo {
             align-items: last baseline;

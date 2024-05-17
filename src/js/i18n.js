@@ -24,6 +24,12 @@ inverted_wordles.t = function (key) {
     return translations[key] || `[Missing translation for ${key}]`;
 };
 
+inverted_wordles.updateLinkHref = function (el, currentLanguage) {
+    const url = new URL(el.href);
+    url.searchParams.set("lang", currentLanguage);
+    el.href = url.toString();
+};
+
 document.addEventListener("DOMContentLoaded", function () {
     // Update dynamic contents with the proper language translations.
     // Note: this function depends on a properly-set global variable `translations`.
@@ -53,9 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (el.dataset.i18nLink === "") {
                 // Note: as there isn't a value assigned to `data-i18n-link` attribute,
                 // check its value === "" is required in order to have the check return true.
-                const url = new URL(el.href);
-                url.searchParams.set("lang", currentLanguage);
-                el.href = url.toString();
+                inverted_wordles.updateLinkHref(el, currentLanguage);
             }
         });
     };

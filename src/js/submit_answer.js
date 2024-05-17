@@ -1,4 +1,4 @@
-/* global wordle_globals, inverted_wordles */
+/* global wordle_globals, inverted_wordles, currentLanguage */
 
 "use strict";
 
@@ -20,6 +20,7 @@ var updateStatus = function (response) {
     if (response.ok) {
         const viewWordle = document.querySelector(".view-wordle");
         viewWordle.classList.remove("hidden");
+        inverted_wordles.updateLinkHref(viewWordle, currentLanguage);
     }
 };
 
