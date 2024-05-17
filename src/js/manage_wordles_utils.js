@@ -73,41 +73,43 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions, currentLangua
             <input type="text" id="entries-id-${ uniqueId }" name="entries" value="${ wordleOptions.entries }">
         </div>
         <div class="view-answer-cell">
-            <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="/answer/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" data-i18n-link>
+            <a id="view-answer-id-${ uniqueId }" class="button view-answer" href="/answer/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" 
+                data-i18n-link aria-labelledby="view-answer-id-${ uniqueId }-label">
                 <svg role="presentation" class="view-answer-svg">
                     <use xlink:href="#view"></use>
                 </svg>
                 <span data-i18n-textcontent="view">${ inverted_wordles.t("view") }</span>
-                <label class="visually-hidden">
-                    <span data-i18n-textcontent="view_answers_page">${ inverted_wordles.t("view_answers_page") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
-                </label>
             </a>
+            <label class="visually-hidden" id="view-answer-id-${ uniqueId }-label">
+                <span data-i18n-textcontent="view_answers_page">${ inverted_wordles.t("view_answers_page") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
+            </label>
         </div>
         <div class="view-wordle-cell">
-            <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="/wordle/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" data-i18n-link>
+            <a id="view-wordle-id-${ uniqueId }" class="button view-wordle" href="/wordle/?id=${ wordleOptions.wordleId}&lang=${ currentLanguage }" 
+                data-i18n-link aria-labelledby="view-wordle-id-${ uniqueId }-label">
                 <svg role="presentation" class="view-wordle-svg">
                     <use xlink:href="#view"></use>
                 </svg>
                 <span data-i18n-textcontent="view">${ inverted_wordles.t("view") }</span>
-                <label class="visually-hidden">
-                    <span data-i18n-textcontent="view_wordle_page">${ inverted_wordles.t("view_wordle_page") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
-                </label>
             </a>
+            <label class="visually-hidden" id="view-wordle-id-${ uniqueId }-label">
+                <span data-i18n-textcontent="view_wordle_page">${ inverted_wordles.t("view_wordle_page") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
+            </label>
         </div>
         <div class="last-modified-cell">
             <label for="last-modified-id-${ uniqueId }">Last Modified</label>
             <span id="last-modified-id-${ uniqueId }">${ inverted_wordles.manage.formatDate(wordleOptions.lastModifiedTimestamp) }</span>
         </div>
         <div class="delete-cell">
-            <button id="delete-id-${ uniqueId }" class="delete-button">
+            <button id="delete-id-${ uniqueId }" class="delete-button" aria-labelledby="delete-id-${ uniqueId }-label">
                 <svg role="presentation" class="view-answer-svg">
                     <use xlink:href="#cross"></use>
                 </svg>
                 <span data-i18n-textcontent="delete">${ inverted_wordles.t("delete") }</span>
-                <label class="visually-hidden">
-                    <span data-i18n-textcontent="wordle_with_question">${ inverted_wordles.t("wordle_with_question") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
-                </label>
             </button>
+            <label class="visually-hidden" id="delete-id-${ uniqueId }-label">
+                <span data-i18n-textcontent="wordle_with_question">${ inverted_wordles.t("delete_wordle_with_question") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }"
+            </label>
         </div>
         <div class="one-status" role="status"></div>
         <input type="hidden" name="wordleId" value="${ wordleOptions.wordleId }">
