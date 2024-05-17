@@ -202,6 +202,8 @@ inverted_wordles.handleResponse = function (instance, response) {
         } else {
             console.log("No change in answer count");
         }
+    }, function () {
+        console.log("Error parsing the fetch answer response. Check the response especially the wordle id: ", response);
     });
 };
 

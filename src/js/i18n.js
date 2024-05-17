@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //     URL needs to be updated by updating `lang=currentLanguage` in search
     //     parameters.
     // data-i18n-arialabel: update `aria-label` value
-    inverted_wordles.updateI18nContent = function () {
+    inverted_wordles.handleI18nDataAttributes = function () {
         // find all elements with an attribute prefixed with "data-i18n-"
         const translatableElements = document.querySelectorAll("[data-i18n-textcontent], [data-i18n-placeholder], [data-i18n-link], [data-i18n-arialabel]");
 
@@ -68,16 +68,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleEn = document.getElementById("toggle-en");
     const toggleFr = document.getElementById("toggle-fr");
 
-    // Style the language toggle links
-    inverted_wordles.setLangAttributes = function (lang, clickedLink) {
+    // Update language related attributes and values
+    inverted_wordles.updateLangRelated = function (lang, clickedLink) {
         // Update toggle links
         clickedLink.setAttribute("aria-current", "page");
         const nonClickedLink = clickedLink === toggleEn ? toggleFr : toggleEn;
         nonClickedLink.removeAttribute("aria-current");
 
-        // Update <html> tag
+        // Update <html> tag to set proper "lang" value
         const htmlElement = document.documentElement;
         htmlElement.setAttribute("lang", lang === "en" ? "en-CA" : "fr-CA");
+
+        // Update the page title to the current language translation
+        const currentURL = window.location.href;
+
+        if (currentURL.includes("/wordle/")) {
+            document.title = inverted_wordles.t("inverted_wordle") + " | " + inverted_wordles.t("inverted_wordles");
+        } else if (currentURL.includes("/question/")) {
+            document.title = inverted_wordles.t("answer_wordle_question") + " | " + inverted_wordles.t("inverted_wordles");
+        } else {
+            document.title = inverted_wordles.t("manage_wordles") + " | " + inverted_wordles.t("inverted_wordles");
+        }
     };
 
     inverted_wordles.toggleLanguage = function (newLang, event) {
@@ -87,15 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Load the translations for the new language
         translations = inverted_wordles.languages[currentLanguage] || inverted_wordles.languages.en;
-        inverted_wordles.updateI18nContent();
+        inverted_wordles.handleI18nDataAttributes();
 
         // Update the URL
         const url = new URL(window.location);
         url.searchParams.set("lang", currentLanguage);
         window.history.pushState({}, "", url.toString());
 
-        // Style language toggle buttons
-        inverted_wordles.setLangAttributes(newLang, event.target);
+        // Update language related information
+        inverted_wordles.updateLangRelated(newLang, event.target);
     };
 
     toggleEn.addEventListener("click", (event) => inverted_wordles.toggleLanguage("en", event));
@@ -103,9 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial actions at the page load:
     // 1. translation;
-    // 2. style language toggle links
+    // 2. Update language related information
     if (currentLanguage !== defaultLanguage) {
-        inverted_wordles.updateI18nContent();
-        inverted_wordles.setLangAttributes(currentLanguage, currentLanguage === "en" ? toggleEn : toggleFr);
+        inverted_wordles.handleI18nDataAttributes();
+        inverted_wordles.updateLangRelated(currentLanguage, currentLanguage === "en" ? toggleEn : toggleFr);
     }
 });
