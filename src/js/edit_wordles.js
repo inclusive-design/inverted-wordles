@@ -24,6 +24,10 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                 let dataTogo = {};
                 dataTogo[evt.target.name] = evt.target.value;
                 dataTogo.wordleId = parentContainer.querySelector("[name=\"" + options.wordleIdField + "\"]").value;
+                // update the corresponding labels with the changed workshop name or question
+                if (["workshop-name", "question"].includes(evt.target.name)) {
+                    document.querySelectorAll("." + evt.target.id + "-label").forEach(elm => elm.textContent = inverted_wordles.manage.escapeHtml(evt.target.value));
+                }
 
                 fetch("/api/save_question", {
                     method: "POST",
