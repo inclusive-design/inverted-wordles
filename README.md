@@ -161,11 +161,51 @@ the `lang` query parameter with the `currentLanguage` value.
 
 ## Accessibility
 
-This website has been tested for accessibility using the following methods:
+This website meets WCAG 2.0 Level AA conformance.
 
-* Keyboard Navigation: Thorough testing was conducted to ensure that all website functionalities can be accessed
-and operated using only the keyboard.
-* Screen Reader Testing: The website was tested with VoiceOver, a built-in screen reader on macOS, to verify its
-compatibility with assistive technologies for users with visual impairments.
-* Automated Testing Tool: The "WAVE" accessibility evaluation tool was used to identify potential accessibility issues
-on the website.
+### Accessibility Testing Summary:
+
+**Icon Legend:**
+
+* :heavy_check_mark: No violations found
+* X: Violations found
+* -: Not applicable
+
+| Succecss Criterion | Manage Wordles | Submit Answers | View Wordle |
+| -------- | ------- | -------- | ------- |
+| 1.1.1 Non-text content | - | - | - |
+| 1.2.1 Audio-only and video-only | - | - | - |
+| 1.2.2. Captions | - | - | - |
+| 1.2.3 Audio Description or Text Alternative | - | - | - |
+| 1.3.1. Information and relationships | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 1.3.2 Meaningful Sequence | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 1.3.3 Sensory Characteristics | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 1.4.1. Use of Colour | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 1.4.2. Audio Control | - | - | - |
+| 1.4.3 Contrast Minimum | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 1.4.4 Resize text | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 1.4.5 Images of Text | - | - | - |
+| 2.1.1 Keyboard | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.1.2 Keyboard trap | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.2.1 Timing Adjustable | - | - | - |
+| 2.2.2 Pause, Stop, Hide | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.3.1. Flahing content | - | - | - |
+| 2.4.1 Bypass blocks | - | - | - |
+| 2.4.2 Page titled | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.4.3. Focus order | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.4.4. Link purpose | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.4.5 Multiple Ways | - | - | - |
+| 2.4.6 Headings and Labels | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 2.4.7. Focus Visible | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.1.1 Langauge | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.1.2. Language of Parts | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.2.1 On Focus | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.2.2. On input | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.2.3 Consistent Navigation | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.2.4 Consistent Identification | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.3.1 Error Identification | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.3.2 Labels or Instructions | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.3.3 Error suggestion | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 3.3.4 Error Prevention | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 4.1.1 Parsing** | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
+| 4.1.2 Name Role Value | :heavy_check_mark | :heavy_check_mark | :heavy_check_mark |
