@@ -207,5 +207,5 @@ This website meets WCAG 2.0 Level AA conformance.
 | 3.3.2 Labels or Instructions | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 3.3.3 Error suggestion | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 3.3.4 Error Prevention | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| 4.1.1 Parsing** | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 4.1.1 Parsing | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 4.1.2 Name Role Value | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
