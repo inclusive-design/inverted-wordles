@@ -163,7 +163,7 @@ the `lang` query parameter with the `currentLanguage` value.
 
 This website meets WCAG 2.0 Level AA conformance.
 
-### Accessibility Testing Summary:
+### Accessibility Testing Summary
 
 **Icon Legend:**
 
