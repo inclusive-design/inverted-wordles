@@ -188,8 +188,8 @@ This website meets WCAG 2.0 Level AA conformance.
 | 2.1.1 Keyboard | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 2.1.2 Keyboard trap | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 2.2.1 Timing Adjustable | - | - | - |
-| 2.2.2 Pause, Stop, Hide | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| 2.3.1. Flahing content | - | - | - |
+| 2.2.2 Pause, Stop, Hide | - | - | - |
+| 2.3.1. Flashing content | - | - | - |
 | 2.4.1 Bypass blocks | - | - | - |
 | 2.4.2 Page titled | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 2.4.3. Focus order | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
