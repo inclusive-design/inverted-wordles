@@ -36,9 +36,16 @@ header {
 
     .admin-controls {
         align-items: center;
+
+        ul {
+            display: flex;
+            flex-direction: row;
+        }
     }
 
     .lang-toggle {
+        display: flex;
+        flex-direction: row;
         margin-right: rem(16);
 
         a {

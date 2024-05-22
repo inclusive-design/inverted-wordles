@@ -6,19 +6,21 @@ permalink: /
 {% extends 'layouts/base.njk' %}
 
 {% block headerContent %}
-<div class="admin-controls">
-    <li>
-        <button class="create-button" id="create-button">
-            <svg role="presentation" class="create-question-svg">
-                <use xlink:href="#create"></use>
-            </svg>
-            <span>New Question</span>
-        </button>
-    </li>
-    <li>
-        <div data-netlify-identity-button></div>
-    </li>
-</div>
+<li class="admin-controls">
+    <ul role="list">
+        <li>
+            <button class="create-button" id="create-button">
+                <svg role="presentation" class="create-question-svg">
+                    <use xlink:href="#create"></use>
+                </svg>
+                <span>New Question</span>
+            </button>
+        </li>
+        <li>
+            <div data-netlify-identity-button></div>
+        </li>
+    </ul>
+</li>
 {% endblock %}
 
 {% block content %}
