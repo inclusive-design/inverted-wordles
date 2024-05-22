@@ -104,7 +104,7 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions, currentLangua
                 <span data-i18n-textcontent="delete">${ inverted_wordles.t("delete") }</span>
             </button>
             <label class="visually-hidden" id="delete-label-${ uniqueId }">
-                <span data-i18n-textcontent="wordle_with_question">${ inverted_wordles.t("delete_wordle_with_question") }</span> "<span class="question-id-${ uniqueId }-label">${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }</span>" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "<span class="workshop-name-id-${ uniqueId }-label">${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }</span>"
+                <span data-i18n-textcontent="delete_wordle_with_question">${ inverted_wordles.t("delete_wordle_with_question") }</span> "<span class="question-id-${ uniqueId }-label">${ inverted_wordles.manage.escapeHtml(wordleOptions.question) }</span>" <span data-i18n-textcontent="from_workshop">${ inverted_wordles.t("from_workshop") }</span> "<span class="workshop-name-id-${ uniqueId }-label">${ inverted_wordles.manage.escapeHtml(wordleOptions.workshopName) }</span>"
             </label>
         </div>
         <div class="one-status" role="status"></div>
