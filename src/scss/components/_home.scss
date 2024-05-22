@@ -65,7 +65,7 @@ button {
     background-color: white;
     border: none;
     border-radius: rem(33);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
 
     &:focus,
     &:hover:enabled {
@@ -244,7 +244,7 @@ button {
     .delete-button {
         align-self: center;
         border-radius: rem(33);
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
         padding: 0 rem(16);
 
         &:focus,
@@ -306,11 +306,6 @@ button {
             span {
                 height: rem(56);
                 margin: 1rem 0;
-            }
-
-            // Hide all table cell labels that are only visible in mobile view
-            & label {
-                display: none;
             }
         }
 

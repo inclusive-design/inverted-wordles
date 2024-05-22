@@ -163,9 +163,9 @@ the `lang` query parameter with the `currentLanguage` value.
 
 This website has been tested for accessibility using the following methods:
 
-* Automated Testing: The "WAVE" accessibility evaluation tool was used to identify potential accessibility issues
-on the website.
 * Keyboard Navigation: Thorough testing was conducted to ensure that all website functionalities can be accessed
 and operated using only the keyboard.
 * Screen Reader Testing: The website was tested with VoiceOver, a built-in screen reader on macOS, to verify its
 compatibility with assistive technologies for users with visual impairments.
+* Automated Testing Tool: The "WAVE" accessibility evaluation tool was used to identify potential accessibility issues
+on the website.

@@ -23,6 +23,13 @@ permalink: /
 
 {% block content %}
 <div class="home">
+    <h1 data-i18n-textcontent="manage_wordles">Manage Wordles</h1>
+
+    <div class="visually-hidden" id="workshop-name-label" data-i18n-textcontent="workshop_name">Workshop Name</div>
+    <div class="visually-hidden" id="question-label" data-i18n-textcontent="question">Question</div>
+    <div class="visually-hidden" id="entries-label" data-i18n-textcontent="word_entries">Word Entries</div>
+    <div class="visually-hidden" id="last-modified-label" data-i18n-textcontent="last_modified">Last Modified</div>
+
     <div class="wordles">
         <div class="header">
             <span data-i18n-textcontent="workshop_name">Workshop Name</span>
@@ -91,6 +98,7 @@ permalink: /
         <circle cx="10.5" cy="10.5" r="9.5" stroke="#0080A4" stroke-width="2" stroke-dasharray="4 2"/>
     </symbol>
 </svg>
+
 {% endblock %}
 
 {% block headerScripts %}
