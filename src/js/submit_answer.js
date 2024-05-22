@@ -14,6 +14,7 @@ var submitAnswer = function (dataTogo) {
 };
 
 var updateStatus = function (response) {
+    console.log("response: ", response);
     const statusElm = document.getElementById("status");
     statusElm.className = response.ok ? "success" : "error";
     statusElm.innerHTML = response.ok ? "<span data-i18n-textcontent=\"success_answer_submit\">" + inverted_wordles.t("success_answer_submit") + "</span>" : "<span data-i18n-textcontent=\"error_answer_submit\">" + inverted_wordles.t("error_answer_submit") + "</span>";
@@ -41,6 +42,13 @@ document.querySelector("form").addEventListener("submit", (e) => {
             dataTogo.answers.push(currentAnswer);
         }
     }
-    console.log("About to save answers at " + new Date() + " with id " + dataTogo.requestId);
-    submitAnswer(dataTogo);
+
+    if (dataTogo.answers.length === 0) {
+        const statusElm = document.getElementById("status");
+        statusElm.className = "error";
+        statusElm.innerHTML = "<span data-i18n-textcontent=\"error_at_leaset_one_answer\">" + inverted_wordles.t("error_at_leaset_one_answer") + "</span>";
+    } else {
+        console.log("About to save answers at " + new Date() + " with id " + dataTogo.requestId);
+        submitAnswer(dataTogo);
+    }
 });

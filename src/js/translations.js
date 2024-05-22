@@ -45,6 +45,7 @@ inverted_wordles.languages = {
         "error_new_edits": "*FAILED: New edits FAILED. Error: ",
         "not_netlify_site": "Note: Current Github repository is not a Netlify site. New questions cannot be created.",
         "error_fetch_wordles": "Error at fetching wordles: ",
+        "error_at_leaset_one_answer": "Please submit at least one answer.",
         "page_not_found": "Page Not Found",
         "page_not_found_detail": "The page you requested could not be found."
     },
@@ -90,6 +91,7 @@ inverted_wordles.languages = {
         "error_new_edits": "*ÉCHEC: Nouvelles éditions FAILD. Erreur: ",
         "not_netlify_site": "Note: Le dépôt Github actuel n'est pas un site Netlify. Il n'est pas possible de créer de nouvelles questions.",
         "error_fetch_wordles": "Erreur lors de l'extraction du nuage de mots: ",
+        "error_at_leaset_one_answer": "Veuillez soumettre au moins une réponse.",
         "page_not_found": "Page non trouvée",
         "page_not_found_detail": "La page demandée n'a pu être trouvée."
     }
