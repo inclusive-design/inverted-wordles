@@ -1,32 +1,45 @@
 ---
-title: Home
+title: Manage Wordles
 permalink: /
 ---
 
 {% extends 'layouts/base.njk' %}
 
 {% block headerContent %}
-<div class="admin-controls">
-    <button class="create-button" id="create-button">
-        <svg role="presentation" class="create-question-svg">
-            <use xlink:href="#create"></use>
-        </svg>
-        New Question
-    </button>
-    <div data-netlify-identity-button></div>
-</div>
+<li class="admin-controls">
+    <ul role="list">
+        <li>
+            <button class="create-button" id="create-button">
+                <svg role="presentation" class="create-question-svg">
+                    <use xlink:href="#create"></use>
+                </svg>
+                <span>New Question</span>
+            </button>
+        </li>
+        <li>
+            <div data-netlify-identity-button></div>
+        </li>
+    </ul>
+</li>
 {% endblock %}
 
 {% block content %}
 <div class="home">
+    <h1 data-i18n-textcontent="manage_wordles">Manage Wordles</h1>
+
+    <div class="visually-hidden" id="workshop-name-label" data-i18n-textcontent="workshop_name">Workshop Name</div>
+    <div class="visually-hidden" id="question-label" data-i18n-textcontent="question">Question</div>
+    <div class="visually-hidden" id="entries-label" data-i18n-textcontent="word_entries">Word Entries</div>
+    <div class="visually-hidden" id="last-modified-label" data-i18n-textcontent="last_modified">Last Modified</div>
+
     <div class="wordles">
         <div class="header">
-            <span>Workshop Name</span>
-            <span>Question</span>
-            <span>Word Entries</span>
-            <span>Answers</span>
-            <span>Wordle</span>
-            <span>Last Modified</span>
+            <span data-i18n-textcontent="workshop_name">Workshop Name</span>
+            <span data-i18n-textcontent="question">Question</span>
+            <span data-i18n-textcontent="word_entries">Word Entries</span>
+            <span data-i18n-textcontent="answers">Answers</span>
+            <span data-i18n-textcontent="wordle">Wordle</span>
+            <span data-i18n-textcontent="last_modified">Last Modified</span>
             <span></span>
         </div>
     </div>
@@ -35,9 +48,9 @@ permalink: /
     {# The modal dialog for deleting wordles #}
     <div class="dialog-backdrop no-scroll">
         <div id="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete_dialog_label" aria-describedby="delete_dialog_desc" class="hidden">
-            <h2 id="delete_dialog_label" class="dialog_label">Confirm to Delete</h2>
+            <h2 id="delete_dialog_label" class="dialog_label" data-i18n-textcontent="confirm_delete">Confirm to Delete</h2>
             <div id="delete_dialog_desc" class="dialog_desc">
-                <p>
+                <p data-i18n-textcontent="confirm_delete_detail">
                     This will delete the question link permanently and you will not be able to view the answers or the wordle. Are you sure you want to delete?
                 </p>
             </div>
@@ -49,13 +62,13 @@ permalink: /
                     <svg role="presentation">
                         <use xlink:href="#tick"></use>
                     </svg>
-                    Yes, delete the question
+                    <span data-i18n-textcontent="confirm_delete_yes">Yes, delete the question</span>
                 </button>
                 <button type="button" id="delete-cancel" onclick="aria.closeDialog(this)">
                     <svg role="presentation">
                         <use xlink:href="#cross"></use>
                     </svg>
-                    No, keep the question
+                    <span data-i18n-textcontent="confirm_delete_no">No, keep the question</span>
                 </button>
             </div>
         </div>
@@ -87,6 +100,7 @@ permalink: /
         <circle cx="10.5" cy="10.5" r="9.5" stroke="#0080A4" stroke-width="2" stroke-dasharray="4 2"/>
     </symbol>
 </svg>
+
 {% endblock %}
 
 {% block headerScripts %}
@@ -104,7 +118,6 @@ inverted_wordles.manage.globalOptions = {
     deleteCancelId: "delete-cancel",
     selectors: {
         wordlesArea: ".wordles",
-        createButton: ".create-button",
         deleteButton: ".delete-button",
         deleteConfirm: "#delete-confirm",
         deleteCancel: "#delete-cancel",
@@ -121,6 +134,9 @@ inverted_wordles.manage.globalOptions = {
 {# For modal dialogs #}
 <script src="/lib/utils.js"></script>
 <script src="/lib/dialog.js"></script>
+{# For internationalization #}
+<script src="/js/translations.js"></script>
+<script src="/js/i18n.js"></script>
 {# For managing wordles #}
 <script src="/js/manage_wordles_utils.js"></script>
 <script src="/js/login_handler.js"></script>

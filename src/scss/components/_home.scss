@@ -65,7 +65,7 @@ button {
     background-color: white;
     border: none;
     border-radius: rem(33);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
 
     &:focus,
     &:hover:enabled {
@@ -105,7 +105,7 @@ button {
 
         height: rem(48);
         padding: 0 rem(8);
-        width: rem(256);
+        width: rem(272);
 
         &:focus,
         &:hover:enabled {
@@ -244,11 +244,11 @@ button {
     .delete-button {
         align-self: center;
         border-radius: rem(33);
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
         padding: 0 rem(16);
 
         &:focus,
-        &:hover:enabled {
+        &:hover {
             background-color: #373737;
             border: rem(6) double;
             box-shadow: none;
@@ -279,6 +279,10 @@ button {
         align-self: center;
         font-size: rem(24);
         margin: rem(32);
+
+        span {
+            font-size: rem(24);
+        }
     }
 }
 
@@ -288,7 +292,7 @@ button {
         .one-wordle {
             align-items: center;
             display: grid;
-            grid-template-columns: 3fr 3fr 1fr 1.5fr 1.5fr 2fr 1.5fr;
+            grid-template-columns: 3fr 3fr 1fr 1.5fr 1.5fr 2fr 1.7fr;
             justify-content: center;
         }
 
@@ -302,11 +306,6 @@ button {
             span {
                 height: rem(56);
                 margin: 1rem 0;
-            }
-
-            // Hide all table cell labels that are only visible in mobile view
-            & label {
-                display: none;
             }
         }
 

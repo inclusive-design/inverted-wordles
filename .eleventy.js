@@ -21,6 +21,7 @@ module.exports = function (eleventyConfig) {
 
     // Configure passthrough file copy.
     eleventyConfig.addPassthroughCopy({"manifest.json": "manifest.json"});
+    eleventyConfig.addPassthroughCopy({"src/images/logo.svg": "icon.svg"});
     eleventyConfig.addPassthroughCopy({"src/js": "js"});
     eleventyConfig.addPassthroughCopy({"src/lib": "lib"});
 

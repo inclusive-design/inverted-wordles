@@ -24,6 +24,10 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                 let dataTogo = {};
                 dataTogo[evt.target.name] = evt.target.value;
                 dataTogo.wordleId = parentContainer.querySelector("[name=\"" + options.wordleIdField + "\"]").value;
+                // update the corresponding labels with the changed workshop name or question
+                if (["workshop-name", "question"].includes(evt.target.name)) {
+                    document.querySelectorAll("." + evt.target.id + "-label").forEach(elm => elm.textContent = inverted_wordles.manage.escapeHtml(evt.target.value));
+                }
 
                 fetch("/api/save_question", {
                     method: "POST",
@@ -39,6 +43,7 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                         if (response.status >= 400 && response.status < 600) {
                             response.json().then(res => {
                                 inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + res.error.message + "*", oneStatusElm, "error");
+                                inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_new_edits\">" + inverted_wordles.t("error_new_edits") + "</span>" + res.error.message + "*", oneStatusElm, "error");
                             });
                         } else {
                             response.json().then(res => {
@@ -46,13 +51,13 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                                 const lastModifiedElm = currentInput.parentElement.parentElement.querySelector("[id^=\"" + options.lastModifiedIdPrefix + "\"]");
                                 lastModifiedElm.textContent = inverted_wordles.manage.formatDate(res.lastModifiedTimestamp);
                                 // Report the success status
-                                inverted_wordles.manage.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, "success");
+                                inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"success_new_edits\">" + inverted_wordles.t("success_new_edits") + "</span>", oneStatusElm, "success");
                             });
                         }
                     },
                     error => {
                         error.json().then(err => {
-                            inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + err.error + "*", oneStatusElm, "error");
+                            inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_new_edits\">" + inverted_wordles.t("error_new_edits") + "</span>" + err.error + "*", oneStatusElm, "error");
                         });
                     }
                 );

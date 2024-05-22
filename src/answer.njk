@@ -1,36 +1,45 @@
 ---
-title: Answer A Question
+title: Answer A Wordle Question
 permalink: "/answer/"
 ---
 
 {% extends 'layouts/base.njk' %}
 
 {% block content %}
-<script>
-    var searchParams = new URLSearchParams(window.location.search);
-    var wordle_globals = {
-        wordleId: searchParams.get("id")
-    };
-</script>
-
 <div class="answer">
     <form id="answersForm">
         <h1 class="question"></h1>
-        <span class="note">Note: The max length for each answer is <span class="entry-max-length"></span> characters.</span>
+        <span class="note"><span data-i18n-textcontent="max_length">Note: The max length for each answer is</span> <span class="entry-max-length"></span> <span data-i18n-textcontent="characters">characters</span>.</span>
 
         <fieldset class="answer_area">
             <legend class="question"></legend>
             <div class="question-entry-area"></div>
         </fieldset>
 
-        <button class="submit-answer" type="submit">Submit Answer</button>
-        <span id="status" role="status"></span>
-        <a class="button view-wordle hidden" href="/wordle/">
-            {% include "./images/view.svg" %}
-            View Wordle
-        </a>
+        <button class="submit-answer" type="submit" data-i18n-textcontent="submit_answer" aria-controls="submit-status">Submit Answer</button>
+        
+        <div role="region" id="submit-status" aria-live="polite">
+            <span id="status" role="status"></span>
+            <a class="button view-wordle hidden" href="/wordle/" data-i18n-link>
+                {% include "./images/view.svg" %}
+                <span data-i18n-textcontent="view_wordle">View Wordle</span>
+            </a>
+        </div>
     </form>
 </div>
+{% endblock %}
+
+{% block headerScripts %}
+{# For internationalization #}
+<script>
+    let searchParams = new URLSearchParams(window.location.search);
+    const wordle_globals = {
+        wordleId: searchParams.get("id")
+    };
+</script>
+
+<script src="/js/translations.js"></script>
+<script src="/js/i18n.js"></script>
 {% endblock %}
 
 {% block footerScripts %}

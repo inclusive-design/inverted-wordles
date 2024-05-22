@@ -1,9 +1,18 @@
 header {
-    align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+
+    .main-menu {
+        display: flex;
+        flex-direction: row;
+        padding: 0 rem(8);
+    }
+
+    ul[role="list"] {
+        align-items: center;
+        list-style: none;
+    }
 
     a.logo {
         align-items: baseline;
@@ -24,10 +33,48 @@ header {
         font-size: rem(18);
         font-weight: 900;
     }
+
+    .admin-controls {
+        align-items: center;
+
+        ul {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    .lang-toggle {
+        display: flex;
+        flex-direction: row;
+        margin-right: rem(16);
+
+        a {
+            color: black;
+            margin: 0 rem(3);
+
+            &:hover,
+            &:focus {
+                background-color: #373737;
+                color: #fff;
+            }
+        }
+    }
+
+    [aria-current="page"] {
+        text-decoration: none;
+    }
+}
+
+// For mid-sized screens
+@media screen and (min-width: 600px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 // For desktop sized screens
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1150px) {
     header {
         a.logo svg {
             width: rem(58);
@@ -40,13 +87,13 @@ header {
 }
 
 // For small size screens such as iphone 5
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 360px) {
     header {
         a.logo {
             align-items: last baseline;
 
             svg {
-                margin: 1rem 1rem 0 1rem;
+                margin: rem(16) rem(16) 0 rem(16);
             }
         }
     }

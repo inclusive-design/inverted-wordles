@@ -1,6 +1,6 @@
 "use strict";
 
-/* global inverted_wordles, uuidv4 */
+/* global inverted_wordles, uuidv4, currentLanguage */
 
 /**
  * Bind event listeners for the "create question" button.
@@ -26,7 +26,7 @@ inverted_wordles.manage.createWordle = function (options) {
         question: "",
         entries: 0,
         lastModifiedTimestamp: inverted_wordles.manage.formatDate(lastModifiedTimestamp)
-    });
+    }, currentLanguage);
 
     // append the new row to the wordle list
     // Using insertAdjacentHTML() instead of innerHTML prevents the browser from re-evaluating the entire wordlesArea.
@@ -58,7 +58,7 @@ inverted_wordles.manage.createWordle = function (options) {
         // See https://github.com/whatwg/fetch/issues/18
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + res.error.message, generalStatusElm, "error");
+                inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_create_wordle\">" + inverted_wordles.t("error_create_wordle") + "</span>" + res.error.message, generalStatusElm, "error");
             });
         } else {
             response.json().then(res => {
@@ -71,7 +71,7 @@ inverted_wordles.manage.createWordle = function (options) {
                     question: "",
                     entries: 0,
                     lastModifiedTimestamp
-                });
+                }, currentLanguage);
 
                 // append the new row to the wordle list
                 // Using insertAdjacentHTML() instead of innerHTML prevents the browser from re-evaluating the entire wordlesArea.
@@ -87,7 +87,7 @@ inverted_wordles.manage.createWordle = function (options) {
         }
     }, error => {
         error.json().then(err => {
-            inverted_wordles.manage.reportStatus("Error at creating a new wordle: " + err.error, generalStatusElm, "error");
+            inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_create_wordle\">" + inverted_wordles.t("error_create_wordle") + "</span>" + err.error, generalStatusElm, "error");
         });
     });
 };

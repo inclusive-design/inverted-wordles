@@ -133,6 +133,7 @@ aria.Utils = aria.Utils || {};
    */
   aria.Dialog = function (dialogId, focusAfterClosed, focusFirst) {
     this.dialogNode = document.getElementById(dialogId);
+    focusAfterClosed = focusAfterClosed || this.dialogNode;
     if (this.dialogNode === null) {
       throw new Error('No element found with id="' + dialogId + '".');
     }

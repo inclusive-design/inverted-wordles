@@ -24,10 +24,18 @@
         flex-direction: column;
     }
 
+    .answer_row {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: rem(16);
+    }
+
     input {
+        flex-grow: 2;
         font-size: rem(12);
         height: rem(48);
-        margin-bottom: rem(16);
+        margin-left: rem(16);
         padding: rem(32);
     }
 
@@ -51,10 +59,9 @@
     .view-wordle {
         align-self: center;
         border-radius: rem(4);
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
         font-size: rem(24);
-        padding: rem(8);
-        width: rem(215);
+        padding: rem(8) rem(16);
 
         &:focus,
         &:hover {
@@ -69,10 +76,16 @@
         }
     }
 
-    #status {
-        align-self: center;
-        font-size: rem(24);
+    #submit-status {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
         margin: rem(32);
+
+        #status {
+            font-size: rem(24);
+            margin-bottom: rem(32);
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 "use strict";
 
-/* global inverted_wordles */
+/* global inverted_wordles, currentLanguage */
 
 /**
  * An object that contains a list of wordles.
@@ -36,7 +36,7 @@ inverted_wordles.manage.renderWordles = function (wordles, options) {
             question: questionFile.content.question,
             entries: questionFile.content.entries,
             lastModifiedTimestamp: questionFile.content.lastModifiedTimestamp
-        });
+        }, currentLanguage);
     }
     // Add all wordles to the page
     document.querySelector(wordlesAreaSelector).innerHTML = wordlesHtml;
@@ -55,14 +55,14 @@ inverted_wordles.manage.checkNetlifySite = function (options) {
     }).then(response => {
         if (response.status >= 400 && response.status < 600) {
             response.json().then(res => {
-                inverted_wordles.manage.reportStatus("Error at checking the Netlify site: " + res.error.message, generalStatusElm, "error");
+                inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_check_netlify\">" + inverted_wordles.t("error_check_netlify") + "</span>" + res.error.message, generalStatusElm, "error");
             });
         } else {
             response.json().then(res => {
                 if (!res.isNetlifySite) {
                     // Disable the "new question" button
                     document.querySelector(options.selectors.createButton).disabled = true;
-                    inverted_wordles.manage.reportStatus("Note: Current Github repository is not a Netlify site. New questions cannot be created.", generalStatusElm, "info");
+                    inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"not_netlify_site\">" + inverted_wordles.t("not_netlify_site") + "</span>", generalStatusElm, "info");
                 }
             });
         }
@@ -96,7 +96,7 @@ inverted_wordles.manage.initManagePage = function (options) {
             if (response.status >= 400 && response.status < 600) {
                 const generalStatusElm = document.querySelector(options.selectors.status);
                 response.json().then(res => {
-                    inverted_wordles.manage.reportStatus("Error at fetching wordles: " + res.error.message, generalStatusElm, "error");
+                    inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_fetch_wordles\">" + inverted_wordles.t("error_fetch_wordles") + "</span>" + (res.message ? res.message : res.error.message), generalStatusElm, "error");
                 });
             } else {
                 inverted_wordles.manage.bindNetlifyEvents(options);
@@ -105,6 +105,6 @@ inverted_wordles.manage.initManagePage = function (options) {
                 });
             }
         },
-        error => inverted_wordles.manage.reportStatus("Error at fetching wordles: " + error, document.querySelector(options.selectors.status), "error")
+        error => inverted_wordles.manage.reportStatus("<span data-i18n-textcontent=\"error_fetch_wordles\">" + inverted_wordles.t("error_fetch_wordles") + "</span>" + error, document.querySelector(options.selectors.status), "error")
     );
 };

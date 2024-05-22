@@ -1,8 +1,6 @@
 "use strict";
 
-/* global d3, wordle_globals */
-
-var inverted_wordles = {};
+/* global d3, wordle_globals, inverted_wordles */
 
 inverted_wordles.stringTemplateRegex = /\${([^\}]*)}/g;
 
@@ -204,6 +202,8 @@ inverted_wordles.handleResponse = function (instance, response) {
         } else {
             console.log("No change in answer count");
         }
+    }, function () {
+        console.log("Error parsing the fetch answer response. Check the response especially the wordle id: ", response);
     });
 };
 

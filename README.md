@@ -130,3 +130,82 @@ To lint the source code, run:
 ```bash
 npm run lint
 ```
+
+### Internationalization
+
+The website supports bilingual content in English and French. The implementation of internationalization (i18n)
+is achieved through two scripts:
+
+1. `src/js/translations.js`: This script defines a global variable `inverted_wordles.languages` that contains
+all phrase translations for English and French. When adding or updating a phrase, you need to update this object
+accordingly.
+
+2. `src/js/i18n.js`: This script defines the following global variables and functions:
+
+* `supportedLanguages`: An array containing the supported language codes, e.g., `["en", "fr"]`.
+* `defaultLanguage`: The default language code to be used at page load, e.g., `"en"`.
+* `currentLanguage`: The user's selected language code, falling back to `defaultLanguage` if no preference is set.
+* `translations`: An object that stores the translations for the current selected language.
+* `inverted_wordles.t`*: A translation function that returns the translated phrase for a given phrase key based
+on the current language.
+
+This script is responsible for translating the website content to the selected language upon page load and language
+change events. The following special HTML attributes are used to identify phrases and elements that need to be
+translated:
+
+* `data-i18n-textcontent`: Updates the `textContent` of the element with the translated phrase.
+* `data-i18n-placeholder`: Updates the value of the `placeholder` attribute with the translated phrase.
+* `data-i18n-link`: Used for <a> links that lead to other pages. The href URL is updated by appending or updating
+the `lang` query parameter with the `currentLanguage` value.
+* `data-i18n-arialabel`: Updates the `aria-label` value with the translated phrase.
+
+## Accessibility
+
+This website meets WCAG 2.0 Level AA conformance.
+
+### Accessibility Testing Summary
+
+**Icon Legend:**
+
+* :heavy_check_mark:: No violations found
+* X: Violations found
+* -: Not applicable
+
+| Succecss Criterion | Manage Wordles | Submit Answers | View Wordle |
+| -------- | ------- | -------- | ------- |
+| 1.1.1 Non-text content | - | - | - |
+| 1.2.1 Audio-only and video-only | - | - | - |
+| 1.2.2. Captions | - | - | - |
+| 1.2.3 Audio Description or Text Alternative | - | - | - |
+| 1.3.1. Information and relationships | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 1.3.2 Meaningful Sequence | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 1.3.3 Sensory Characteristics | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 1.4.1. Use of Colour | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 1.4.2. Audio Control | - | - | - |
+| 1.4.3 Contrast Minimum | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 1.4.4 Resize text | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 1.4.5 Images of Text | - | - | - |
+| 2.1.1 Keyboard | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.1.2 Keyboard trap | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.2.1 Timing Adjustable | - | - | - |
+| 2.2.2 Pause, Stop, Hide | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.3.1. Flahing content | - | - | - |
+| 2.4.1 Bypass blocks | - | - | - |
+| 2.4.2 Page titled | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.4.3. Focus order | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.4.4. Link purpose | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.4.5 Multiple Ways | - | - | - |
+| 2.4.6 Headings and Labels | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2.4.7. Focus Visible | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.1.1 Langauge | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.1.2. Language of Parts | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.2.1 On Focus | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.2.2. On input | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.2.3 Consistent Navigation | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.2.4 Consistent Identification | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.3.1 Error Identification | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.3.2 Labels or Instructions | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.3.3 Error suggestion | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 3.3.4 Error Prevention | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 4.1.1 Parsing | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 4.1.2 Name Role Value | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
