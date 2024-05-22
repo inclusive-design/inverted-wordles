@@ -16,12 +16,15 @@ permalink: "/answer/"
             <div class="question-entry-area"></div>
         </fieldset>
 
-        <button class="submit-answer" type="submit" data-i18n-textcontent="submit_answer">Submit Answer</button>
-        <span id="status" role="status"></span>
-        <a class="button view-wordle hidden" href="/wordle/" data-i18n-link>
-            {% include "./images/view.svg" %}
-            <span data-i18n-textcontent="view_wordle">View Wordle</span>
-        </a>
+        <button class="submit-answer" type="submit" data-i18n-textcontent="submit_answer" aria-controls="submit-status">Submit Answer</button>
+        
+        <div role="region" id="submit-status" aria-live="polite">
+            <span id="status" role="status"></span>
+            <a class="button view-wordle hidden" href="/wordle/" data-i18n-link>
+                {% include "./images/view.svg" %}
+                <span data-i18n-textcontent="view_wordle">View Wordle</span>
+            </a>
+        </div>
     </form>
 </div>
 {% endblock %}
