@@ -116,7 +116,7 @@ inverted_wordles.calculatePitch = function (thisFontSize, sortedUniqueFontSizes)
  */
 inverted_wordles.bindTTS = function (instance, textElements) {
     textElements.forEach(elm => {
-        // Speak the text when the text gains a focus or under a pointer.
+        // Speak the word cloud text when the text gains a focus or under a pointer.
         // Note: The "pointerover" event covers the mouseover event and pointer over events via user's fingers
         // and other means. See https://stackoverflow.com/questions/22773548/difference-between-the-mouseover-and-pointerover-in-visualstatemanager
         ["pointerover", "focus"].forEach(evt => {

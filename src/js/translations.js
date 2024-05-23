@@ -26,7 +26,7 @@ inverted_wordles.languages = {
         delete: "Delete",
         submit_answer: "Submit Answer",
         view_wordle: "View Word Cloud",
-        speak_wordle: "Speak the text under the pointer",
+        speak_wordle: "Speak the word cloud text under the pointer",
         apply_weight: "Apply conventional weighting",
         error_voiceover:
       "*Unable to activate VoiceOver. Your browser version or config does not support web speech API*",
