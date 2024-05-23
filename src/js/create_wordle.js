@@ -12,14 +12,14 @@ inverted_wordles.manage.bindCreateEvent = function (options) {
 };
 
 /**
- * Create a wordle.
+ * Create a word cloud.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.createWordle = function (options) {
     const wordleId = uuidv4();
     const lastModifiedTimestamp = new Date().toISOString();
 
-    // create a new wordle
+    // create a new word cloud
     const newWordleRow = inverted_wordles.manage.renderWordleRow({
         wordleId,
         workshopName: "",
@@ -28,7 +28,7 @@ inverted_wordles.manage.createWordle = function (options) {
         lastModifiedTimestamp: inverted_wordles.manage.formatDate(lastModifiedTimestamp)
     }, currentLanguage);
 
-    // append the new row to the wordle list
+    // append the new row to the word cloud list
     // Using insertAdjacentHTML() instead of innerHTML prevents the browser from re-evaluating the entire wordlesArea.
     // It helps to keep value changes and retain event listeners on other row elements.
     // See: https://stackoverflow.com/questions/38945032/append-htmltext-to-element-without-affecting-siblings
@@ -36,14 +36,14 @@ inverted_wordles.manage.createWordle = function (options) {
 };
 
 /**
- * Create a wordle.
+ * Create a word cloud.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.createWordle = function (options) {
     const generalStatusElm = document.querySelector(options.selectors.status);
     const wordleId = uuidv4();
 
-    // create a wordle question
+    // create a word cloud question
     fetch("/api/create_question", {
         method: "POST",
         headers: {
@@ -64,7 +64,7 @@ inverted_wordles.manage.createWordle = function (options) {
             response.json().then(res => {
                 const lastModifiedTimestamp = inverted_wordles.manage.formatDate(res.lastModifiedTimestamp);
 
-                // Append the new wordle row to the wordle list
+                // Append the new word cloud row to the word cloud list
                 const newWordleRow = inverted_wordles.manage.renderWordleRow({
                     wordleId: res.wordleId,
                     workshopName: "",
@@ -73,13 +73,13 @@ inverted_wordles.manage.createWordle = function (options) {
                     lastModifiedTimestamp
                 }, currentLanguage);
 
-                // append the new row to the wordle list
+                // append the new row to the word cloud list
                 // Using insertAdjacentHTML() instead of innerHTML prevents the browser from re-evaluating the entire wordlesArea.
                 // It helps to keep value changes and retain event listeners on other row elements.
                 // See: https://stackoverflow.com/questions/38945032/append-htmltext-to-element-without-affecting-siblings
                 document.querySelector(options.selectors.wordlesArea).insertAdjacentHTML("beforeend", newWordleRow);
 
-                // Bind events for input elements and buttons on the new wordle row
+                // Bind events for input elements and buttons on the new word cloud row
                 const wordleRow = inverted_wordles.manage.findWordleRowByWordleId(res.wordleId, options);
                 inverted_wordles.manage.bindInputFieldEvents(wordleRow, options);
                 inverted_wordles.manage.bindDeleteEvents(wordleRow, options);

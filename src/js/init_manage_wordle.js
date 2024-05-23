@@ -3,24 +3,24 @@
 /* global inverted_wordles, currentLanguage */
 
 /**
- * An object that contains a list of wordles.
+ * An object that contains a list of word clouds.
  * @typedef {Object} Wordle
- * A single wordle.
+ * A single word cloud.
  * @property {Object} content - The content of src/_data/question.json.
  * @property {Boolean} exists - Indicate whether src/_data/question.json exists.
  * @property {String} sha - The sha for src/_data/question.json.
  */
 
 /**
- * An object that contains a list of wordles.
+ * An object that contains a list of word clouds.
  * @typedef {Object} Wordles
- * A complete list of wordles.
- * @property {Wordle} wordleId - The wordle ID. Used as a key for each wordle.
+ * A complete list of word clouds.
+ * @property {Wordle} wordleId - The word cloud ID. Used as a key for each word cloud.
  */
 
 /**
- * Render a list of wordles.
- * @param {Wordles} wordles - A list of wordles keyed by wodle ids.
+ * Render a list of word clouds.
+ * @param {Wordles} wordles - A list of word clouds keyed by wodle ids.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.renderWordles = function (wordles, options) {
@@ -28,7 +28,7 @@ inverted_wordles.manage.renderWordles = function (wordles, options) {
 
     let wordlesHtml = document.querySelector(wordlesAreaSelector).innerHTML;
 
-    // Loop through all wordles to render
+    // Loop through all word clouds to render
     for (const [wordleId, questionFile] of Object.entries(wordles)) {
         wordlesHtml += inverted_wordles.manage.renderWordleRow({
             wordleId,
@@ -38,7 +38,7 @@ inverted_wordles.manage.renderWordles = function (wordles, options) {
             lastModifiedTimestamp: questionFile.content.lastModifiedTimestamp
         }, currentLanguage);
     }
-    // Add all wordles to the page
+    // Add all word clouds to the page
     document.querySelector(wordlesAreaSelector).innerHTML = wordlesHtml;
 };
 
@@ -70,8 +70,8 @@ inverted_wordles.manage.checkNetlifySite = function (options) {
 };
 
 /**
- * Build the wordle list.
- * @param {Wordles} wordles - A list of wordles keyed by wordle ids.
+ * Build the word cloud list.
+ * @param {Wordles} wordles - A list of word clouds keyed by word cloud ids.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.initWordles = function (wordles, options) {
@@ -87,7 +87,7 @@ inverted_wordles.manage.initWordles = function (wordles, options) {
 };
 
 /**
- * Initialize the manage wordles page by fetching and rendering all wordles.
+ * Initialize the manage word clouds page by fetching and rendering all word clouds.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */
 inverted_wordles.manage.initManagePage = function (options) {

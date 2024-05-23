@@ -47,10 +47,10 @@ inverted_wordles.countAnswers = function (counts) {
     return counts.reduce((a, rec) => a + rec.count, 0);
 };
 
-/** Render the layout constructed from makeLayout into the DOM element designated in the supplied Wordle instance
- * @param {d3Layout} layout - The layout object for the Wordle
+/** Render the layout constructed from makeLayout into the DOM element designated in the supplied word cloud instance
+ * @param {d3Layout} layout - The layout object for the word cloud
  * @param {Array} words - Array of "word" objects holding text/size defining the layout
- * @param {WordleInstance} instance - The Wordle instance for which the layout is to be rendered
+ * @param {WordleInstance} instance - The word cloud instance for which the layout is to be rendered
  */
 inverted_wordles.drawLayout = function (layout, words, instance) {
     instance.element.innerHTML = ""; // TODO: move the "g" generation into static code
@@ -86,9 +86,9 @@ inverted_wordles.getFontSizeValue = function (elm) {
 };
 
 /** Find font sizes of all text nodes and sort unique values into an array. The array is returned by attaching
- * to the wordle instance
+ * to the word cloud instance
  * @param {WordleInstance} instance - The singleton instance
- * @param {Element[]} textElements - An array of DOM elements for wordle texts
+ * @param {Element[]} textElements - An array of DOM elements for word cloud texts
  */
 inverted_wordles.getSortedUniqueFontSizes = function (instance, textElements) {
     let fontSizes = [];
@@ -109,14 +109,14 @@ inverted_wordles.calculatePitch = function (thisFontSize, sortedUniqueFontSizes)
     return sortedUniqueFontSizes.length === 1 ? 1 : 2 * sortedUniqueFontSizes.indexOf(thisFontSize) / (sortedUniqueFontSizes.length - 1);
 };
 
-/** Use web speech API to read wordle texts. The pitch of the voice represents the font size of the text
+/** Use web speech API to read word cloud texts. The pitch of the voice represents the font size of the text
  * The larger the font size, the higer should be the pitch.
- * @param {WordleInstance} instance - The Wordle instance that the speechSynthesis is retrieved from
- * @param {Element[]} textElements - An array of DOM elements for wordle texts
+ * @param {WordleInstance} instance - The word cloud instance that the speechSynthesis is retrieved from
+ * @param {Element[]} textElements - An array of DOM elements for word cloud texts
  */
 inverted_wordles.bindTTS = function (instance, textElements) {
     textElements.forEach(elm => {
-        // Speak the wordle text when the text gains a focus or under a pointer.
+        // Speak the text when the text gains a focus or under a pointer.
         // Note: The "pointerover" event covers the mouseover event and pointer over events via user's fingers
         // and other means. See https://stackoverflow.com/questions/22773548/difference-between-the-mouseover-and-pointerover-in-visualstatemanager
         ["pointerover", "focus"].forEach(evt => {
@@ -137,9 +137,9 @@ inverted_wordles.bindTTS = function (instance, textElements) {
     });
 };
 
-/** Construct the d3 cloud layout object from the supplied Wordle instance
- * @param {WordleInstance} instance - The Wordle instance for which the layout is to be constructed
- * @return {d3Layout} The layout object for the Wordle
+/** Construct the d3 cloud layout object from the supplied word cloud instance
+ * @param {WordleInstance} instance - The word cloud instance for which the layout is to be constructed
+ * @return {d3Layout} The layout object for the word cloud
  */
 inverted_wordles.makeLayout = function (instance) {
     var maxCount = Math.max.apply(null, instance.answerCounts.map(entry => entry.count));
@@ -176,19 +176,19 @@ inverted_wordles.makeLayout = function (instance) {
     inverted_wordles.drawLayout(layout, laidWords, instance);
 
     const textElements = document.querySelectorAll("text.wordle-text");
-    // Make wordle texts tabbable by setting tabindex to "0"
+    // Make word cloud texts tabbable by setting tabindex to "0"
     textElements.forEach(elm => {
         elm.setAttribute("tabindex", "0");
     });
 
-    // Enable text-to-speed for wordle texts
+    // Enable text-to-speed for word cloud texts
     inverted_wordles.getSortedUniqueFontSizes(instance, textElements);
     inverted_wordles.bindTTS(instance, textElements);
     return layout;
 };
 
-/** Given the XHR response, render a wordle instance into its configured selector
- * @param {WordleInstance} instance - The wordle instance
+/** Given the XHR response, render a word cloud instance into its configured selector
+ * @param {WordleInstance} instance - The word cloud instance
  * @param {FetchResponse} response - Fetch response for the answers file from github
  */
 inverted_wordles.handleResponse = function (instance, response) {
@@ -203,7 +203,7 @@ inverted_wordles.handleResponse = function (instance, response) {
             console.log("No change in answer count");
         }
     }, function () {
-        console.log("Error parsing the fetch answer response. Check the response especially the wordle id: ", response);
+        console.log("Error parsing the fetch answer response. Check the response especially the word cloud id: ", response);
     });
 };
 
@@ -211,9 +211,9 @@ inverted_wordles.handleResponse = function (instance, response) {
 // as written up at https://issues.fluidproject.org/browse/FLUID-6626
 
 /** Fetch the answers file from github and perform an initial render of the world into the supplied selector. Initialise
- * data in the Wordle instance, and resolving github coordinates from the `wordle_globals` global
+ * data in the word cloud instance, and resolving github coordinates from the `wordle_globals` global
  * rendered into the initial markup
- * @param {WordleInstance} instance - The wordle instance to be initialised
+ * @param {WordleInstance} instance - The word cloud instance to be initialised
  */
 inverted_wordles.fetchAnswers = function (instance) {
     var url = "/api/fetch_answer/" + wordle_globals.wordleId;
@@ -236,9 +236,9 @@ inverted_wordles.checkTTS = function (synth, selectors) {
     }
 };
 
-/** Bind the global wordle instance to the "conventional layout" checkbox
+/** Bind the global word cloud instance to the "conventional layout" checkbox
  * @param {String} selector - Selector to the checkbox to be bound
- * @param {WordleInstance} instance - The wordle instance
+ * @param {WordleInstance} instance - The word cloud instance
  */
 inverted_wordles.bindConventional = function (selector, instance) {
     var element = document.querySelector(selector);
@@ -251,9 +251,9 @@ inverted_wordles.bindConventional = function (selector, instance) {
     });
 };
 
-/** Bind the global wordle instance to the "Enable Pointer VoiceOver" checkbox
+/** Bind the global word cloud instance to the "Enable Pointer VoiceOver" checkbox
  * @param {String} selector - Selector to the checkbox to be bound
- * @param {WordleInstance} instance - The wordle instance
+ * @param {WordleInstance} instance - The word cloud instance
  */
 inverted_wordles.bindTTSInput = function (selector, instance) {
     var element = document.querySelector(selector);
@@ -280,7 +280,7 @@ inverted_wordles.initWordle = function (options) {
     }, 10 * 60 * 1000);
 };
 
-// Represents the singleton "instance" of the Wordle, which will be progressively initialised by calls starting at
+// Represents the singleton "instance" of the word cloud, which will be progressively initialised by calls starting at
 // inverted_wordles.initWordle
 inverted_wordles.instance = {
     // DOM element holding the rendered SVG
@@ -289,7 +289,7 @@ inverted_wordles.instance = {
     answerCounts: [],
     // Whether the word sizing strategy uses the "inverted" approach (the default, false) or the "conventional" where size scales with count
     conventional: false,
-    // Whether the pointer VoiceOver for wordle texts is enabled
+    // Whether the pointer VoiceOver for word cloud texts is enabled
     tts: false,
     // The intervalID for polling github for updates
     pollInterval: null,
@@ -297,12 +297,12 @@ inverted_wordles.instance = {
     cancelPoll: null,
     // Scaling factor to ensure fit of all words
     scale: 1.0,
-    // Colours for filling wordle texts
+    // Colours for filling word cloud texts
     colours: ["#4D806F", "#1B7E83", "#0080A3", "#1365B0", "#5E56A2", "#7870A4", "#6E6E6E", "#505050"],
     // Rotate directions
     rotate: [0, -90],
-    // Speech Synthesis for reading wordle texts
+    // Speech Synthesis for reading word cloud texts
     synth: window.speechSynthesis,
-    // An array of sorted and unique of wordle text font sizes
+    // An array of sorted and unique of word cloud text font sizes
     sortedUniqueFontSizes: null
 };

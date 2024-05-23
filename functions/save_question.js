@@ -65,7 +65,7 @@ exports.handler = async function (event) {
             branchName: branch,
             filePath: questionFilePath,
             fileContent: JSON.stringify(newQuestionFileInfo),
-            commitMessage: "chore: [skip ci] update " + questionFilePath + " via the manage wordles page",
+            commitMessage: "chore: [skip ci] update " + questionFilePath + " via the manage word clouds page",
             sha: questionFileInfo.sha
         });
 
