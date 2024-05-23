@@ -25,7 +25,7 @@ inverted_wordles.languages = {
         delete_wordle_with_question: "Delete a word cloud with the question",
         delete: "Delete",
         submit_answer: "Submit Answer",
-        view_wordle: "View Word Cloud",
+        view_wordle: "View A Word Cloud",
         speak_wordle: "Speak the word cloud text under the pointer",
         apply_weight: "Apply conventional weighting",
         error_voiceover:
@@ -75,7 +75,7 @@ inverted_wordles.languages = {
         delete_wordle_with_question: "Supprimer un nuage de mots avec la question",
         delete: "Supprimer",
         submit_answer: "Soumettre la réponse",
-        view_wordle: "Voir le nuage de mots",
+        view_wordle: "Voir un nuage de mots",
         speak_wordle: "Prononcez le texte du nuage de mots sous le pointeur",
         apply_weight: "Appliquer la pondération conventionnelle",
         error_voiceover:

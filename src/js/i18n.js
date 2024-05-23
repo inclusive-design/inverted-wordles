@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (currentURL.includes("/wordle/")) {
             document.title = inverted_wordles.t("view_wordle") + " | " + inverted_wordles.t("inverted_wordles");
-        } else if (currentURL.includes("/question/")) {
+        } else if (currentURL.includes("/answer/")) {
             document.title = inverted_wordles.t("answer_wordle_question") + " | " + inverted_wordles.t("inverted_wordles");
         } else {
             document.title = inverted_wordles.t("manage_wordles") + " | " + inverted_wordles.t("inverted_wordles");

@@ -171,7 +171,7 @@ This website meets WCAG 2.0 Level AA conformance.
 * X: Violations found
 * -: Not applicable
 
-| Succecss Criterion | Manage Word Clouds | Submit Answers | View Word Cloud |
+| Succecss Criterion | Manage Word Clouds | Answer A Word Cloud's Question | View A Word Cloud |
 | -------- | ------- | -------- | ------- |
 | 1.1.1 Non-text content | - | - | - |
 | 1.2.1 Audio-only and video-only | - | - | - |
