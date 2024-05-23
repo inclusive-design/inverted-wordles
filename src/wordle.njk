@@ -1,5 +1,5 @@
 ---
-title: Inverted Wordle
+title: View A Word Cloud
 permalink: "/wordle/"
 ---
 
@@ -13,7 +13,7 @@ permalink: "/wordle/"
     };
 </script>
 <div class="wordle">
-    <h1 data-i18n-textcontent="view_wordle">View Wordle</h1>
+    <h1 data-i18n-textcontent="view_wordle">View A Word Cloud</h1>
     <div class="wordleRender">
         {# Use "viewBox" and "preserveAspectRatio" to ensure the svg fits into viewports with different aspect ratios for the responsive design. #}
         <svg width="1024" height="768" viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet">
@@ -30,7 +30,7 @@ permalink: "/wordle/"
                     </span>
                     <label class="visually-hidden">checkbox</label>
                 </label>
-                <label for="tts"><span data-i18n-textcontent="speak_wordle">Speak the wordle text under the pointer</span> {% include "./images/speaker.svg" %}</label>
+                <label for="tts"><span data-i18n-textcontent="speak_wordle">Speak the word cloud text under the pointer</span> {% include "./images/speaker.svg" %}</label>
             </div>
             <span class="tts-status" data-i18n-textcontent="error_voiceover">*Unable to activate VoiceOver. Your browser version or config does not support web speech API*</span>
         </div>

@@ -1,5 +1,5 @@
 {
-    "title": "Inverted Wordles",
-    "description": "Build inverted wordles that collect people answers to a given question and highlight minority answers.",
+    "title": "Inverted Word Clouds",
+    "description": "Build inverted word clouds that collect people answers to a given question and highlight minority answers.",
     "author": "Inclusive Design Research Centre"
 }

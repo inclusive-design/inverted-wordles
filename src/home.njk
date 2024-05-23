@@ -1,5 +1,5 @@
 ---
-title: Manage Wordles
+title: Manage Word Clouds
 permalink: /
 ---
 
@@ -25,7 +25,7 @@ permalink: /
 
 {% block content %}
 <div class="home">
-    <h1 data-i18n-textcontent="manage_wordles">Manage Wordles</h1>
+    <h1 data-i18n-textcontent="manage_wordles">Manage Word Clouds</h1>
 
     <div class="visually-hidden" id="workshop-name-label" data-i18n-textcontent="workshop_name">Workshop Name</div>
     <div class="visually-hidden" id="question-label" data-i18n-textcontent="question">Question</div>
@@ -38,24 +38,24 @@ permalink: /
             <span data-i18n-textcontent="question">Question</span>
             <span data-i18n-textcontent="word_entries">Word Entries</span>
             <span data-i18n-textcontent="answers">Answers</span>
-            <span data-i18n-textcontent="wordle">Wordle</span>
+            <span data-i18n-textcontent="wordle">Word Cloud</span>
             <span data-i18n-textcontent="last_modified">Last Modified</span>
             <span></span>
         </div>
     </div>
     <span id="status" role="status"></span>
 
-    {# The modal dialog for deleting wordles #}
+    {# The modal dialog for deleting word clouds #}
     <div class="dialog-backdrop no-scroll">
         <div id="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete_dialog_label" aria-describedby="delete_dialog_desc" class="hidden">
             <h2 id="delete_dialog_label" class="dialog_label" data-i18n-textcontent="confirm_delete">Confirm to Delete</h2>
             <div id="delete_dialog_desc" class="dialog_desc">
                 <p data-i18n-textcontent="confirm_delete_detail">
-                    This will delete the question link permanently and you will not be able to view the answers or the wordle. Are you sure you want to delete?
+                    This will delete the question link permanently and you will not be able to view the answers or the word cloud. Are you sure you want to delete?
                 </p>
             </div>
-            {# The value of the wordle id is dynamically set when opening the dialog #}
-            {# aria-controls value is dynamically set to the id of the wordle row that will be deleted #}
+            {# The value of the word cloud id is dynamically set when opening the dialog #}
+            {# aria-controls value is dynamically set to the id of the word cloud row that will be deleted #}
             <div class="dialog_form_actions">
                 <input type="hidden" name="wordleId" value="">
                 <button type="button" id="delete-confirm" aria-controls="" onclick="inverted_wordles.manage.deleteClicked(this, inverted_wordles.manage.globalOptions)">
@@ -137,7 +137,7 @@ inverted_wordles.manage.globalOptions = {
 {# For internationalization #}
 <script src="/js/translations.js"></script>
 <script src="/js/i18n.js"></script>
-{# For managing wordles #}
+{# For managing word clouds #}
 <script src="/js/manage_wordles_utils.js"></script>
 <script src="/js/login_handler.js"></script>
 <script src="/js/edit_wordles.js"></script>

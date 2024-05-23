@@ -6,8 +6,8 @@
  * Bind onChange events for user controlled input fields found in the given container. It is the caller's
  * responsibility to ensure this function is called only once on each newly generated block of markup.
  * Currently, this function is called in two cases:
- * 1. At the page load when all wordles are rendered;
- * 2. When a new wordle is created and added to the wordle list.
+ * 1. At the page load when all word clouds are rendered;
+ * 2. When a new word cloud is created and added to the word cloud list.
  * @param {DOMElement} containerElm - The DOM element of the holding container to find input fields.
  * @param {Object} options - The value of inverted_wordles.manage.globalOptions.
  */

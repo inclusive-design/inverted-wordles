@@ -40,9 +40,9 @@ inverted_wordles.manage.reportStatus = function (message, statusElm, messageType
 };
 
 /**
- * An object that contains required values to render a wordle row.
+ * An object that contains required values to render a word cloud row.
  * @typedef {Object} wordleOptions
- * @param {String} wordleId - The wordle Id.
+ * @param {String} wordleId - The word cloud Id.
  * @param {String} workshopName - The workshop name.
  * @param {String} question - The question.
  * @param {Number} entries - A number of entries for a question.
@@ -113,14 +113,14 @@ inverted_wordles.manage.renderWordleRow = function (wordleOptions, currentLangua
 };
 
 /**
- * Find the wordle row on the wordle list based on the given wordle id.
- * @param {String} wordleId - The wordle ID.
+ * Find the wordle row on the wordle list based on the given word cloud id.
+ * @param {String} wordleId - The word cloud ID.
  * @param {String} options - The value of inverted_wordles.manage.globalOptions.
  * @return {DOMElement} The DOM element of a wordle row.
  */
 inverted_wordles.manage.findWordleRowByWordleId = function (wordleId, options) {
     const wordlesListElm = document.querySelector(options.selectors.wordlesArea);
-    // On the wordle list, find the row with the same wordle id
+    // On the wordle list, find the row with the same word cloud id
     const wordleIdElm = wordlesListElm.querySelector("input[name=\"" + options.wordleIdField + "\"][value=\"" + wordleId + "\"]");
     // Return the wordle row element
     return wordleIdElm.parentElement;

@@ -1,15 +1,15 @@
-# Inverted Wordles
+# Inverted Word Clouds
 
 This project allows users to create word cloud questions. Answers to each question will be gathered to build an
-inverted Wordle that highlights minority answers.
+inverted Word Cloud that highlights minority answers.
 
 The front end of the project is built with [Eleventy](https://11ty.dev/). The website is deployed on
-[Netlify](https://www.netlify.com/). The wordle data is saved in [the inclusive-design/inverted-wordles GitHub
+[Netlify](https://www.netlify.com/). The word cloud data is saved in [the inclusive-design/inverted-wordles GitHub
 repository](https://github.com/inclusive-design/inverted-wordles/).
 
-When a new wordle question is created or an existing wordle question is modified, the new/updated question is pushed
-into the GitHub repository that triggers Netlify to deploy/re-deploy the wordle website. The detail of the architecture
-of this project can be found at [Inverted Wordles Architecture wiki page](https://wiki.fluidproject.org/display/fluid/Inverted+Wordles+Architecture).
+When a new word cloud question is created or an existing word cloud question is modified, the new/updated question is pushed
+into the GitHub repository that triggers Netlify to deploy/re-deploy the word cloud website. The detail of the architecture
+of this project can be found at [Inverted Word Clouds Architecture wiki page](https://fluidproject.atlassian.net/wiki/spaces/fluid/pages/11588419/Inverted+Word+Clouds+Architecture).
 
 ## Install
 
@@ -58,14 +58,14 @@ The website will be available at http://localhost:3000
 
 #### Environment Variables
 
-This project uses individual Github branch to save the question and answers for each wordle case. The required
+This project uses individual Github branch to save the question and answers for each word cloud case. The required
 information for accessing the Github repository are defined in these environment variables:
 
-* REPOSITORY_URL: Optional. The GitHub repository URL that wordles are operated on. For example:
+* REPOSITORY_URL: Optional. The GitHub repository URL that word clouds are operated on. For example:
 `https://github.com/inclusive-design/inverted-wordles`. This variable needs to be manually defined when running
 the project locally via `netlify dev`. With real Netlify deployed sites, it is automatically available as a Netlify
 build time environment variable. See [the Netlify build environment variables - Git metadata](https://docs.netlify.com/configure-builds/environment-variables/#git-metadata).
-* BRANCH: Optional. The GitHub remote branch that the wordle data are fetched from. For example:
+* BRANCH: Optional. The GitHub remote branch that the word cloud data are fetched from. For example:
 `main`. This environment variable is automatically available as a Netlify build time environment variable with real
 Netlify deployed sites and local netlify sites started via `netlify dev`. See
 [the Netlify build environment variables - Git metadata](https://docs.netlify.com/configure-builds/environment-variables/#git-metadata).
@@ -82,7 +82,7 @@ Follow [Netlify instructions](https://docs.netlify.com/functions/build-with-java
 and deploying Netlify functions locally.
 
 Make sure your local branch is pushed up with the same branch name to the GitHub repository defined in the
-`REPOSITORY_URL` environment variable. The wordle data will be fetched from this remote branch.
+`REPOSITORY_URL` environment variable. The word cloud data will be fetched from this remote branch.
 
 Once the tool is set up, run:
 
@@ -171,7 +171,7 @@ This website meets WCAG 2.0 Level AA conformance.
 * X: Violations found
 * -: Not applicable
 
-| Succecss Criterion | Manage Wordles | Submit Answers | View Wordle |
+| Succecss Criterion | Manage Word Clouds | Answer A Word Cloud's Question | View A Word Cloud |
 | -------- | ------- | -------- | ------- |
 | 1.1.1 Non-text content | - | - | - |
 | 1.2.1 Audio-only and video-only | - | - | - |

@@ -14,12 +14,12 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 }
 ```
 
-## Fetch Wordles (GET /api/fetch_wordles)
+## Fetch Word Clouds (GET /api/fetch_wordles)
 
-* **description**: Fetch the netlify site name and all wordles.
+* **description**: Fetch the netlify site name and all word clouds.
 * **method:** `GET`
 * **route:** `/api/fetch_wordles`
-* **return:** A JSON document containing all wordles.
+* **return:** A JSON document containing all word clouds.
 
 ```json
 {
@@ -42,13 +42,13 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 }
 ```
 
-## Fetch a Wordle Question (GET /api/fetch_question/:wordleId)
+## Fetch a Word Cloud Question (GET /api/fetch_question/:wordleId)
 
-* **description**: Fetch a wordle question.
+* **description**: Fetch a word cloud question.
 * **method:** `GET`
 * **route:** `/api/fetch_question/:wordleId` where:
-    * `wordleId`: A wordle ID.
-* **return:** A JSON document containing the question information of a wordle.
+    * `wordleId`: A word cloud ID.
+* **return:** A JSON document containing the question information of a word cloud.
 
 ```json
 {
@@ -61,12 +61,12 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 }
 ```
 
-## Fetch Answers for a Wordle (GET /api/fetch_answer/:wordleId)
+## Fetch Answers for a Word Cloud (GET /api/fetch_answer/:wordleId)
 
-* **description**: Fetch answers for a wordle.
+* **description**: Fetch answers for a word cloud.
 * **method:** `GET`
 * **route:** `/api/fetch_answer/:wordleId` where:
-    * `wordleId`: A wordle ID.
+    * `wordleId`: A word cloud ID.
 * **return:** A JSON document containing answers.
 
 ```json
@@ -80,12 +80,12 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 
 ## Save a Wordle Question (POST /api/save_question)
 
-* **description**: Save the updated question information for a wordle.
+* **description**: Save the updated question information for a word cloud.
 * **method:** `POST`
 * **route:** `/api/save_question` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `wordleId`: The wordle ID.
+    * `wordleId`: The word cloud ID.
     * `workshop-name`: Optional. The workshop name.
-    * `question`: Optional. The wordle question.
+    * `question`: Optional. The word cloud question.
     * `entries`: Optional. Number of answers allowed when answering this question.
 * **return:** A JSON document containing the updated content of the question file.
 
@@ -100,13 +100,13 @@ site. If it is, the value is `true`. Otherwise, the state is `false`.
 }
 ```
 
-## Save Answers for a Wordle (POST /api/save_answers)
+## Save Answers for a Word Cloud (POST /api/save_answers)
 
-* **description**: Fetch answers for a wordle. If the answer file for this wordle doesn't exist, create it. Otherwise,
-update the answers file with new answers.
+* **description**: Fetch answers for a word cloud. If the answer file for this word cloud doesn't exist, create it.
+Otherwise, update the answers file with new answers.
 * **method:** `POST`
 * **route:** `/api/save_answers` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `wordleId`: The wordle ID.
+    * `wordleId`: The word cloud ID.
     * `requestId`: a string of a request id.
     * `answers`: an array containing answers
 * **return:** A JSON document containing answers.
@@ -119,18 +119,18 @@ update the answers file with new answers.
 }
 ```
 
-## Create a New Wordle (POST /api/create_question)
+## Create a New Word Cloud (POST /api/create_question)
 
 * **description**: Create a new wordle question.
 * **method:** `POST`
 * **route:** `/api/create_question` with these parameters in the `POST` body using the `application/json` Content-Type.
-    * `wordleId`: A wordle ID.
+    * `wordleId`: A word cloud ID.
 ```
 {
     "wordleId": "77d4f4bc-5b98-4e1f-9348-d684a6431877"
 }
 ```
-* **return:** A JSON document containing the wordle ID that has been created, along with a timestamp of when it's
+* **return:** A JSON document containing the word cloud ID that has been created, along with a timestamp of when it's
 created.
 
 ```json
@@ -140,12 +140,12 @@ created.
 }
 ```
 
-## Delete a Wordle (DELETE /api/delete_wordle/:wordleId)
+## Delete a Word Cloud (DELETE /api/delete_wordle/:wordleId)
 
-* **description**: Delete a wordle.
+* **description**: Delete a word cloud.
 * **method:** `DELETE`
 * **route:** `/api/delete_wordle/:wordleId` where:
-    * `wordleId`: A wordle ID.
+    * `wordleId`: A word cloud ID.
 * **return:** A success message when a deletion completes successfully.
 
 ```json
