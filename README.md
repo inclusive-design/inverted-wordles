@@ -11,6 +11,82 @@ When a new word cloud question is created or an existing word cloud question is 
 into the GitHub repository that triggers Netlify to deploy/re-deploy the word cloud website. The detail of the architecture
 of this project can be found at [Inverted Word Clouds Architecture wiki page](https://fluidproject.atlassian.net/wiki/spaces/fluid/pages/11588419/Inverted+Word+Clouds+Architecture).
 
+The live website lives at [https://inverted-wordclouds.inclusivedesign.ca/](https://inverted-wordclouds.inclusivedesign.ca/).
+
+## How to Use
+
+### Create a Word Cloud
+
+Creating word clouds requires login access. Accessing it on the "Manage Word Clouds" homepage.
+
+**Steps**
+
+1. **Login** using the provided credentials.
+    - After logging in, the "Login" button will change to a "Logout" button.
+2. **Create a New Question**:
+    - Click the "+ New Question" button, which appears next to the "Logout" button.
+    - A new row with empty fields will be added at the bottom of the word cloud table.
+3. **Fill in the Details**:
+    - Complete the "Workshop Name", "Question", and "Word Entries" fields.
+    - The "Word Entries" field specifies the number of answers a workshop attendee can submit.
+
+**Note**:
+- Each value will be automatically saved when you finish typing and leave the field. 
+- Saving may take a moment, depending on your internet speed.
+- After creating the word cloud, refresh the page to ensure all values are correctly saved in their respective fields.
+
+### Delete a Word Cloud
+
+Deleting word clouds requires login access.  Accessing it on the "Manage Word Clouds" homepage.
+
+**Steps**
+
+1. **Login** using the provided credentials.
+    - After logging in, the "Login" button will change to a "Logout" button.
+2. **Locate the Word Cloud**:
+    - In the word cloud table, find the row corresponding to the word cloud you want to delete.
+3. **Delete the Word Cloud**:
+    - Click the "X Delete" button in the rightmost column of the selected row to delete the word cloud.
+
+### Submit Answers to A Word Cloud's Question
+
+Submitting answers doesn't require login access. The URL of the submission page is in the format "/answer/?id=xxx".
+
+**Steps**
+
+1. **Find the Submit Answers Page for the Word Cloud**:
+    - In the word cloud table, locate the row corresponding to the word cloud for which you want workshop
+    attendees to submit answers.
+2. **Locate the Submit Answers Page**:
+    - Click the "View" button in the "Answers" column of the desired row, which will take you to the Submit
+    Answers page.
+    - Provide the URL of the Submit Answers page to the workshop attendees.
+3. **Workshop Attendees Submit Answers**:
+    - Workshop attendees open the submit answers page to submit their answers.
+    - The max length for each answer is 80 characters.
+    - The number of answer fields shown on the page corresponds to the "Word Entries" value of the predefined
+    word cloud. If the number of fields is incorrect or no input fields are displayed, go to the "Manage Word
+    Clouds" page to check and update the "Word Entries" value.
+
+### View a Word Cloud
+
+Viewing word clouds doesn't require login access. The URL of the view page is in the format "/wordle/?id=xxx".
+
+**Steps**
+
+1. **Find the View Page for the Word Cloud**:
+    - In the word cloud table, locate the row corresponding to the word cloud you want to view.
+2. **Locate the View Page**:
+    - Click the "View" button in the "Word Cloud" column of the desired row to go to the view page.
+    - This page auto-refreshes every 5 seconds by polling submitted answers to ensure newly submitted answers
+    are captured and displayed.
+3. **Settings on the Page**:
+    - There are two settings at the bottom of this page:
+        - **"Speak the word cloud text under the pointer"**: Controls whether the text under the mouse pointer
+        will be read out when you move the mouse cursor over the text in the word cloud area. The larger the
+        font size, the higher the voice pitch.
+        - **"Apply conventional weighting"**: When enabled, more frequently submitted words will be highlighted.
+
 ## Install
 
 To work on the project, you need to install [NodeJS and NPM](https://nodejs.org/en/download/) for your operating
