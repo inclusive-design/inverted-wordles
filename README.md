@@ -17,7 +17,7 @@ The live website lives at [https://inverted-wordclouds.inclusivedesign.ca/](http
 
 ### Create a Word Cloud
 
-Creating word clouds requires login access. Accessing it on the "Manage Word Clouds" homepage.
+Creating word clouds requires login access. Access it on the "Manage Word Clouds" homepage.
 
 **Steps**
 
@@ -37,7 +37,7 @@ Creating word clouds requires login access. Accessing it on the "Manage Word Clo
 
 ### Delete a Word Cloud
 
-Deleting word clouds requires login access.  Accessing it on the "Manage Word Clouds" homepage.
+Deleting word clouds requires login access.  Access it on the "Manage Word Clouds" homepage.
 
 **Steps**
 
