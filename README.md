@@ -87,6 +87,23 @@ Viewing word clouds doesn't require login access. The URL of the view page is in
         font size, the higher the voice pitch.
         - **"Apply conventional weighting"**: When enabled, more frequently submitted words will be highlighted.
 
+### Simulate a Word Cloud
+
+You can find a Node.js script to generate or update existing word cloud answers.
+
+**Steps**
+
+1. **Find a Specific Word Cloud's Question File name**:
+    - In this repository, you can find a specific word cloud's question data file under _data directory; they have suffic of -question.
+2. **Get File Name of the Answers to the Word Cloud**:
+    - From the step 1, you can get the answers file by replacing the -question with -answers; for example, a word cloud that has a question file named xxxx-xxxx-question.json have an answers file named xxxx-xxxx-answers.json.
+3. **Use the Script Located in the Scripts Directory**:
+    - Inside of the scripts directory of this repository, you can find a scripted named updateAnswers.js. You can use this script to simulate a word cloud.
+4. **Script Instruction**:
+    - You can run the script by typing `node src/scripts/updateAnswers.js <filename> <n> <answer1> <answer2> ...` at the root directory. It takes parameters filename, n, and answers you want to simulate a word cloud with. The parameter filename is the file name you got from the step 2, the n parameter is the number of responses for the answers. 
+5. **Example**:
+    - `node src/scripts/updateAnswers.js xxxx-xxxx-answers.json 2 answer1 answer2 answer3 ...` would append 2 responses of answer1, answer2 and answer3 to the answers file.
+
 ## Install
 
 To work on the project, you need to install [NodeJS and NPM](https://nodejs.org/en/download/) for your operating
