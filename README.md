@@ -89,20 +89,22 @@ Viewing word clouds doesn't require login access. The URL of the view page is in
 
 ### Simulate a Word Cloud
 
-You can find a Node.js script to generate or update existing word cloud answers.
+You can find a Node.js script named updateAnswers.js in [src/scripts/](https://github.com/inclusive-design/inverted-wordles/tree/main/src/scripts/) directory to generate or update existing word cloud answers.
 
 **Steps**
 
 1. **Find a Specific Word Cloud's Question File name**:
-    - In this repository, you can find a specific word cloud's question data file under _data directory; they have suffic of -question.
+    - In this repository, you can find a specific word cloud's question data file under [src/_data](https://github.com/inclusive-design/inverted-wordles/tree/main/src/_data) directory; they have suffic of -question.
 2. **Get File Name of the Answers to the Word Cloud**:
-    - From the step 1, you can get the answers file by replacing the -question with -answers; for example, a word cloud that has a question file named xxxx-xxxx-question.json have an answers file named xxxx-xxxx-answers.json.
-3. **Use the Script Located in the Scripts Directory**:
-    - Inside of the scripts directory of this repository, you can find a scripted named updateAnswers.js. You can use this script to simulate a word cloud.
+    - From the step 1, you can get the answers file by replacing the -question with -answers; for example, a word cloud that has a question file named xxxx-xxxx-question.json has an answers file named xxxx-xxxx-answers.json.
+3. **Use the Script Located in the src/scripts Directory**:
+    - Inside of the [src/scripts/](https://github.com/inclusive-design/inverted-wordles/tree/main/src/scripts/) directory of this repository, you can find a scripted named updateAnswers.js. You can use this script to simulate a word cloud.
 4. **Script Instruction**:
-    - You can run the script by typing `node src/scripts/updateAnswers.js <filename> <n> <answer1> <answer2> ...` at the root directory. It takes parameters filename, n, and answers you want to simulate a word cloud with. The parameter filename is the file name you got from the step 2, the n parameter is the number of responses for the answers. 
+    - You can run the script by typing `node src/scripts/updateAnswers.js <filename> <n> <answer1> <answer2> ...` at the root directory. It takes parameters filename, n, and answers you want to simulate a word cloud with. The parameter filename is the file name you got from the step 2, the n parameter is the number of responses for the answers. Please note that if the answer has space characters, make sure to enclose it with quotation marks. 
 5. **Example**:
     - `node src/scripts/updateAnswers.js xxxx-xxxx-answers.json 2 answer1 answer2 answer3 ...` would append 2 responses of answer1, answer2 and answer3 to the answers file.
+6. **View the Word Cloud**:
+    - Once the answers file is generated/updated, you can create a pull request against the [main branch](https://github.com/inclusive-design/inverted-wordles) with the file, and when the pull request get merged, you can view the word cloud in `https://inverted-wordclouds.inclusivedesign.ca/wordle/?id=xxxx-xxxx` (here id parameter is the file name without -answers suffix).
 
 ## Install
 

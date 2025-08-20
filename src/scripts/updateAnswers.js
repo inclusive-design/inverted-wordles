@@ -1,3 +1,24 @@
+/**
+ * updateAnswers.js
+ * 
+ * This script generates or updates a JSON file in the `src/_data` directory.
+ * 
+ * Usage:
+ *  node src/scripts/updateAnswers.js <filename> <n> <answer1> <answer2> ...
+ * 
+ * Parameters:
+ * 
+ *  <filename> - The name of the JSON file to create or update, without file extension.
+ *  <n> - Number of entries to generate.
+ *  <answer...> - One or more answer strings.
+ * 
+ * Example:
+ *  node src/scripts/updateAnswers.js example-wordle-answers 3 "answer1" "answer2"
+ * 
+ *  creates or updates `src/_data/example-wordle-answers.json` with 3 new entries of answer1 and answer2.
+ * 
+ */
+
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const path = require('path');
