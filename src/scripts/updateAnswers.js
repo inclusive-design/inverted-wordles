@@ -33,7 +33,7 @@ if (!filename) {
     process.exit(1);
 }
 
-if (filename && filename.toLowerCase().endsWith('.json')) {
+if (filename && filename.toLowerCase().endsWith(".json")) {
     filename = filename.slice(0, -5);
 }
 
